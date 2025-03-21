@@ -14,15 +14,20 @@
         <div class="navbar">
             <a href="{{ url_for('homepage') }}"> Home </a>
         </div>
-        <form action="login.php" method="get" class="lform">
+
+        <form action="" method="post" class="lform">
             <h1>LOGIN</h1> 
-            <input type="email" placeholder="Email" required class="email">
-            <input type="password" placeholder="Senha" required class="senha">
+            {{ form.csrf_token }}
+
+            {{ form.email(placeholder='Email', class='email') }}
+
+            {{ form.senha(placeholder='Senha', class='senha') }}
             <a href="#" class="esqueci">Esqueceu a senha?</a>
-            <div class="btn-cadastrar">
-                <button type="submit">Entrar</button>
+            <div class="div-btn-cadastrar">
+                {{ form.btnSubmit(class='btn-cadastrar') }}
             </div>
         </form>
+    
     </div>
 
     <div class="direito">

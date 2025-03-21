@@ -7,6 +7,10 @@
     <div class="menu">
         <a href="#conteudos">Conteudo ETE</a>
         <a href="#">Navegação</a>
-        <a href="{{ url_for('login') }}">Login</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('homepage') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
     </div>
 </nav>

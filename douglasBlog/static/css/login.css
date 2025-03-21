@@ -98,14 +98,14 @@ h1{
     font-weight: bold;
 }
 
-.btn-cadastrar{
+.div-btn-cadastrar{
     width: 22vw;
     height: 6vh;
     margin-top: 7vh;
     display: flex;
     justify-content: flex-end;
 }
-.btn-cadastrar button{
+.btn-cadastrar{
     width: 8vw;
     height: 6vh;
     border-radius: 20px;
