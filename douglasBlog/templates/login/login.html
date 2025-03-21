@@ -1,0 +1,39 @@
+{% extends 'base/html.html' %}
+
+{% block link %}
+<link rel="stylesheet" href="../../static/css/login.css">
+{% endblock %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+<section class="content">
+        
+    <div class="esquerdo">
+        <div class="navbar">
+            <a href="{{ url_for('homepage') }}"> Home </a>
+        </div>
+        <form action="login.php" method="get" class="lform">
+            <h1>LOGIN</h1> 
+            <input type="email" placeholder="Email" required class="email">
+            <input type="password" placeholder="Senha" required class="senha">
+            <a href="#" class="esqueci">Esqueceu a senha?</a>
+            <div class="btn-cadastrar">
+                <button type="submit">Entrar</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="direito">
+        <div class="div-1">
+            <div class="circ1"></div>
+            <div class="circ2"></div>
+            <div class="circ3"></div>
+            <img src="../../static/media/icones/astro.svg" alt="astronauta" class="astro">
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

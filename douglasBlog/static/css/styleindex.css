@@ -1,0 +1,310 @@
+@import url('https://fonts.cdnfonts.com/css/seven-segment');
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #F0EDE8;
+    font-size: 25px;
+    
+}
+
+main{
+    position: relative;
+    overflow: hidden;
+}
+main::before{
+    content: "";
+    position: absolute;
+    top: -53vh;
+    left: 61vw;
+    height: 500vw;
+    width: 500vw;
+    
+    background-size: cover;
+    background: url(../media/bg/temp.svg) no-repeat center center;
+
+    opacity: 30%;
+    transform: translate(-50%, -50%) rotate(-35deg) scale(0.75);
+    z-index: -1;
+}
+
+
+.navbar {
+    position: sticky;
+    top:0;
+    z-index: 9999999;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    height: 75px;
+    background-color: #102e4a;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius:20px;
+}
+
+.logo {
+    flex: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    text-align: left;
+    align-items: left;
+    font-size: 15px;
+    color: #F0EDE8;
+    padding: 20px;
+    justify-content: center;
+    font-family: 'Seven Segment', sans-serif;
+}
+
+.foguete {
+    margin: auto;
+    margin-right: -15%;
+    margin-left: -10%;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
+
+.logo h1{
+    padding-top: 10%;
+}
+
+
+.menu {
+    flex: 70%;
+    width: auto;
+    font-size: 18px;
+    color:#F0EDE8;
+    padding: 20px;
+    font-family:    "PT Serif", serif;
+    text-align: right;
+    padding-right: 5%;
+}
+
+.menu a{
+    text-decoration: none;
+    color: #F0EDE8;
+    margin-left: 20px;
+}
+
+
+
+/* Main content */
+.header {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px 5% 50px;
+
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+
+}
+.header::before, .header::after{
+    content: "";
+    position: absolute;
+    top: 19vh;
+    left: 87vw;
+    height: 500vw;
+    width: 500vw;
+    
+    background-size: cover;
+    background: url(../media/bg/temp.svg) no-repeat center center;
+
+    opacity: 30%;
+    transform: translate(-50%, -50%) rotate(-35deg) scale(0.75);
+    z-index: -1;
+}
+.header::after{
+    top: 90vh;
+    left: 112.5vw;
+}
+
+/* Lado esquerdo com título e descrição */
+.esquerdo {
+    flex: 50%;
+    margin-top: 50px;
+    padding-right: 1.5%;
+}
+.titulo {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #003B5C;
+    text-align: center;
+}
+
+.descricao {
+    font-size: 1.1rem;
+    color: #333;
+    margin-top: 20px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+
+/* Lado direito com os retângulos */
+.direito {
+    flex: 50%;
+    display: flex;
+    flex-flow: row wrap;
+    padding-left: 1.5%;
+}
+
+.div-1 {
+    flex: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.retcentral {
+    width: 90%;
+    height: 450px;
+    background-color: #C7D5E0;
+    border-radius: 18px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 1.5em;
+    color: #003B5C;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.div-2    {
+    flex: 40%;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    padding-left: 5%;
+}
+
+.ret2, .ret3 {
+    width: 100%;
+    height: 300px;
+    background-color: #c6d5df;
+    border-radius: 18px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 1.5em;
+    color: #a4b6c2;
+    font-weight: bold;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.ret3{
+    height: 230px;
+}
+
+
+/* conteudos */
+
+.conteudos{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content:flex-start;
+    align-items: center;
+
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.conteudos::before, .conteudos::after{
+        
+    content: "";
+    position: absolute;
+
+    top: 112vh;
+    left: 10.3vw;
+    width: 500%;
+    height: 500%;
+
+    background-size: cover;
+    background: url(../media/bg/temp.svg) no-repeat center center;
+    
+    transform: translate(-50%, -50%) rotate(35deg) scale(0.75);
+    opacity: 15%;
+    z-index: -1;
+}
+.conteudos::after{
+    top: -10vh;
+    left: 112.5vw;
+
+    opacity: 30%;
+    transform: translate(-50%, -50%) rotate(-35deg) scale(0.75);
+    z-index: -1;
+}
+
+.conteudos-top h2{
+    text-align: center;
+    }
+.conteudos-top p{
+    max-width: 500px;
+    color: rgb(143, 142, 142);
+    text-align: center;
+    font-size: 20px;
+}
+
+
+
+.conteudos-bottom{
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    padding-top: 10vh;
+}
+
+.turma{
+    justify-items: center;
+    align-items: center;
+    width: 20vw;
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.circle{
+    border-radius: 50%;
+    width: 10vw;
+    height: 10vw;
+    background-color: #91a7b6;
+    
+    align-content: center;
+    
+}
+.circle p{
+    text-align: center;
+    color: #102e4a;
+    font-size: 150%;
+    font-weight: 700;
+}
+
+.turma .container{
+    text-align: center;
+    margin-top: 1vh;
+}
+
+.turma .container p{
+    color: rgb(70, 69, 69);
+    font-size: 16px;
+    margin-top: 1vh;
+}
