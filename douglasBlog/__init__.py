@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 login_manager = LoginManager(app)
-login_manager.login_view = 'login' #Se usuario nao estiver logado, sera redirecionado para esta view
+login_manager.login_view = 'homepage' #Se usuario nao estiver logado, sera redirecionado para esta view
 bcrypt = Bcrypt(app)
 
 

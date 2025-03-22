@@ -1,0 +1,61 @@
+.navbar {
+    position: sticky;
+    top:0;
+    z-index: 9999999;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    height: 75px;
+    background-color: #102e4a;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius:20px;
+}
+
+.logo {
+    flex: 5%;
+    display: flex;
+    flex-direction: row;
+    flex-flow: row;
+    text-align: left;
+    align-items: left;
+    font-size: 15px;
+    color: #F0EDE8;
+    padding: 20px;
+    justify-content: center;
+    font-family: 'Seven Segment', sans-serif;
+}
+
+.foguete {
+    margin: auto;
+    margin-right: -15%;
+    margin-left: -10%;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+}
+
+.logo h1{
+    padding-top: 10%;
+}
+
+
+.menu {
+    flex: 70%;
+    width: auto;
+    font-size: 18px;
+    color:#F0EDE8;
+    padding: 20px;
+    font-family:    "PT Serif", serif;
+    text-align: right;
+    padding-right: 5%;
+}
+
+.menu a{
+    text-decoration: none;
+    color: #F0EDE8;
+    margin-left: 20px;
+}

@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from flask_login import current_user
 
 from douglasBlog import db, bcrypt
-from douglasBlog.models import User
+from douglasBlog.models import User, Postagem
 
 
 
@@ -29,9 +29,22 @@ class LoginForm(FlaskForm):
                 raise Exception('Senha incorreta.')
         else:
             raise Exception('Usuário não encontrado.')
-        
 
 
+class PostagemForm(FlaskForm):
+    titulo = StringField('Título', validators=[DataRequired()])
+    conteudo = TextAreaField('Conteúdo')
+    btnSubmit = SubmitField('Publicar')
+
+    def save(self, user_id):
+        postagem = Postagem(
+            titulo = self.titulo.data,
+            conteudo = self.conteudo.data,
+            user_id = user_id
+        )
+
+        db.session.add(postagem)
+        db.session.commit()
 
 
 

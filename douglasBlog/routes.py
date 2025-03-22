@@ -3,13 +3,14 @@ from flask import render_template, url_for, request, redirect, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from douglasBlog.models import User
-from douglasBlog.forms import LoginForm
+from douglasBlog.forms import LoginForm, PostagemForm
 
 # Rota para homepage
 @app.route('/')
 def homepage():
 
     return render_template('index.html')
+
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -24,3 +25,24 @@ def login():
     print(form.errors)
 
     return render_template('login/login.html', form=form)
+
+
+@app.route('/logout/')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('homepage'))
+
+
+@app.route('/criar-postagem/', methods=['GET', 'POST'])
+@login_required
+def criarPostagem():
+    if current_user.admin == False:
+        return redirect(url_for('homepage'))
+    form = PostagemForm()
+
+    if form.validate_on_submit():
+        form.save(current_user.id)
+        return redirect(url_for('homepage'))
+
+    return render_template('admin/criar-postagem.html', form=form)
