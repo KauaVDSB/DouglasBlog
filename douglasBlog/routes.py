@@ -45,7 +45,7 @@ def criarPostagem():
         form.save(current_user.id)
         return redirect(url_for('homepage'))
 
-    return render_template('admin/criar-postagem.html', form=form)
+    return render_template('admin/posts/criar-postagem.html', form=form)
 
 @app.route('/get-posts/')
 def getDados():
