@@ -58,7 +58,7 @@ body {
 
 /* Botão de abrir (fora do menu) */
 .menu-toggle.open {
-    display: block;
+    display: none;
 }
 
 /* Botão de fechar (dentro do menu) */
