@@ -1,0 +1,23 @@
+{% extends 'base/html.html' %}
+
+
+{% block link %}
+{% endblock%}
+
+{% block title %} Dashboard Admin {% endblock %}
+
+{% block content %}
+
+{% include 'base/navbar.html' %}
+
+<main>
+
+
+    <a href="{{ url_for('criarPostagem') }}">Criar Postagens</a>
+</main>
+
+
+
+
+
+{% endblock %}

@@ -11,6 +11,11 @@ def homepage():
 
     return render_template('index.html')
 
+@app.route('/#<string:section>')
+def homepageSection(section):
+
+    return render_template('index.html', section=section)
+
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -52,3 +57,16 @@ def getDados():
     posts = Postagem.query.all()
 
     return jsonify([{"autor": post.user.nome, "titulo": post.titulo, "conteudo": post.conteudo} for post in posts])
+
+
+
+
+
+
+
+@app.route('/admin/douglas-blog/dashboard/')
+@login_required
+def dashboard():
+
+
+    return render_template('admin/dashboard.html')

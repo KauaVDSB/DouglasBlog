@@ -42,47 +42,8 @@
 
 
 
-<script>
-    // Aqui vamos criar o editor de texto com a identificacao de "conteudo"
-    ClassicEditor.create(document.querySelector('#conteudo'), {
-        // ckfinder: {
-            // Neste arquivo vamos configurar o PHP que vai fazer o envio da imagem para a pasta "imagens/"
-            // uploadUrl: 'upload_imagem.php'
-        // },
-        mediaEmbed: {
-            // Faz com que videos e outras midias aparecam como previa dentro do editor
-            previewsInData: true
-        }
-    }).catch(error => {
-        // .catch e usado pra capturar qualquer erro que aconteca no codigo
-        // "error =>" e a funcao que sera chamada se esse erro acontecer...
-        // => significa "RECEBE", ou seja, a funcao vai receber o erro
-        console.error(error); // Exibe o erro no console do navegador, se ocorrer algum problema
-    });
-</script>
+<script src="../../../static/js/get-posts.js"></script>
+<script src="../../../static/js/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    // Requisição dos dados da db
-    fetch('/get-posts/')
-    .then(response => response.json())
-    .then(posts => {
-        const container_posts = document.getElementById('resultado');
-        posts.forEach(post => {
-            // Renderiza no html
-            const conteudoPost = document.createElement('div');
-            container_posts.innerHTML = container_posts.innerHTML + `
-            <h2> ${post.titulo} </h2>
-            <h4> ${post.autor} </h4>
-
-            ${post.conteudo}
-            <hr>
-            `;
-            
-            // Adiciona ao container
-            container_posts.appendChild(conteudoPost);
-        });
-    })
-    .catch(error => console.error("Erro ao exibir postagens: ", error));
-</script>
 
 {% endblock %}
