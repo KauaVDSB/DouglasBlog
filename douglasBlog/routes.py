@@ -1,8 +1,8 @@
 from douglasBlog import app, db
-from flask import render_template, url_for, request, redirect, flash
+from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
-from douglasBlog.models import User
+from douglasBlog.models import User, Postagem
 from douglasBlog.forms import LoginForm, PostagemForm
 
 # Rota para homepage
@@ -46,3 +46,9 @@ def criarPostagem():
         return redirect(url_for('homepage'))
 
     return render_template('admin/criar-postagem.html', form=form)
+
+@app.route('/get-posts/')
+def getDados():
+    posts = Postagem.query.all()
+
+    return jsonify([{"autor": post.user.nome, "titulo": post.titulo, "conteudo": post.conteudo} for post in posts])

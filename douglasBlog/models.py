@@ -26,7 +26,7 @@ class User(db.Model, UserMixin):
 class Postagem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String, nullable=True)
-    conteudo = db.Column(db.String, nullable=True)
+    conteudo = db.Column(db.Text, nullable=True)
     data_postagem = db.Column(db.DateTime, default=datetime.now())
     # Referencia a tabela User para obter informacoes
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) 
