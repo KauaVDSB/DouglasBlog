@@ -1,0 +1,119 @@
+@import url('https://fonts.cdnfonts.com/css/seven-segment');
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #F0EDE8;
+    font-size: 25px;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 12vh;
+    background-color: #102e4a;
+    padding: 0 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: #F0EDE8;
+}
+
+.foguete {
+    height: 10vh;
+    max-height: 64px;
+}
+
+.logo h1 {
+    margin: 0 0 0 15px;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Seven Segment', sans-serif;
+}
+
+/* Botões de toggle */
+.menu-toggle {
+    font-size: 24px;
+    color: #F0EDE8;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Botão de abrir (fora do menu) */
+.menu-toggle.open {
+    display: block;
+}
+
+/* Botão de fechar (dentro do menu) */
+.menu-toggle.close {
+    display: none;
+    align-self: flex-end;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Menu */
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #F0EDE8;
+}
+
+/* Estilos para telas pequenas */
+@media (max-width: 768px) {
+    .menu {
+        display: none; /* Esconde o menu por padrão */
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100%;
+        width: 250px;
+        flex-direction: column;
+        background-color: #102e4a;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .menu.active {
+        display: flex; /* Mostra o menu quando ativado */
+    }
+
+    .menu-toggle.open {
+        display: block; /* Botão de abrir visível fora do menu */
+    }
+
+    .menu.active + .menu-toggle.open {
+        display: none; /* Esconde o botão de abrir quando o menu está aberto */
+    }
+
+    .menu.active .menu-toggle.close {
+        display: block; /* Exibe o botão de fechar dentro do menu */
+    }
+
+    .menu a {
+        font-size: 18px;
+        margin: 10px 0;
+    }
+}

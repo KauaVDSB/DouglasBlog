@@ -9,12 +9,12 @@ from douglasBlog.forms import LoginForm, PostagemForm
 @app.route('/')
 def homepage():
 
-    return render_template('index.html')
+    return render_template('view/index.html')
 
 @app.route('/#<string:section>')
 def homepageSection(section):
 
-    return render_template('index.html', section=section)
+    return render_template('view/index.html', section=section)
 
 
 

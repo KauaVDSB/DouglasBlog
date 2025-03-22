@@ -1,0 +1,46 @@
+<link rel="stylesheet" href="../../static/css/new-navbar.css">
+
+<nav class="navbar">
+    <div class="logo">
+        <img class="foguete" src="../../../static/media/icones/foguete-f0ede8.svg" alt="logo">
+        <h1>888</h1>
+    </div>
+
+    <div class="menu">
+        <button class="menu-toggle close" aria-label="Close menu">✖</button> <!-- Botão de fechar no menu -->
+        <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a>
+        <a href="{{ url_for('logout') }}">Navegação</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+    </div>
+
+    <button class="menu-toggle open" aria-label="Open menu">☰</button> <!-- Botão de abrir fora do menu -->
+</nav>
+
+<script>
+// Ativa/desativa o menu lateral
+    // Seleção de elementos
+    const openButton = document.querySelector('.menu-toggle.open');
+    const closeButton = document.querySelector('.menu-toggle.close');
+    const menu = document.querySelector('.menu');
+
+    // Abre o menu ao clicar no botão
+    openButton.addEventListener('click', () => {
+        menu.classList.add('active');
+    });
+
+    // Fecha o menu ao clicar fora do menu
+    closeButton.addEventListener('click', () => {
+        menu.classList.remove('active');
+    });
+
+    // Fecha o menu ao clicar em algum link
+    menu.addEventListener('click', (event) => {
+        if (event.target.tagName === 'A'){
+            menu.classList.remove('active');
+        }
+    });
+</script>

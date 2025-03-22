@@ -1,55 +1,79 @@
+@import url('https://fonts.cdnfonts.com/css/seven-segment');
+
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #F0EDE8;
+    font-size: 25px;
+}
+
 .navbar {
     position: sticky;
-    top:0;
+    top: 0;
     z-index: 9999999;
+
     display: flex;
-    flex-direction: row;
     flex-flow: row;
-    height: 75px;
-    background-color: #102e4a;
     justify-content: space-around;
     align-items: center;
-    font-size: 20px;
+
+    height: 12vh;
+    min-height: 70px;
+    max-height: 80px;
+    margin-bottom: 1vh;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius:20px;
+
+    background-color: #102e4a;
 }
 
 .logo {
     flex: 5%;
     display: flex;
-    flex-direction: row;
     flex-flow: row;
-    text-align: left;
-    align-items: left;
-    font-size: 15px;
-    color: #F0EDE8;
+
+    height: inherit;
     padding: 20px;
-    justify-content: center;
-    font-family: 'Seven Segment', sans-serif;
+    padding-left: 5%;
+
+    align-items: center;
+    justify-content: left;
+    
+    color: #F0EDE8;
 }
 
 .foguete {
-    margin: auto;
-    margin-right: -15%;
-    margin-left: -10%;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    height: 100%;
+    position: absolute;
+    height: 10vh;
+    min-height: 60px;
+    max-height: 64px;
 }
 
 .logo h1{
-    padding-top: 10%;
+    position: relative;
+    margin: 25px 0 0 25px;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Seven Segment', sans-serif;
 }
-
 
 .menu {
     flex: 70%;
-    width: auto;
     font-size: 18px;
     color:#F0EDE8;
     padding: 20px;
-    font-family:    "PT Serif", serif;
+    font-family: 'PT Serif', serif;
     text-align: right;
     padding-right: 5%;
 }
@@ -58,4 +82,7 @@
     text-decoration: none;
     color: #F0EDE8;
     margin-left: 20px;
+}
+.menu a:nth-child(1){
+    margin-left: 0;
 }
