@@ -39,24 +39,6 @@ def logout():
     return redirect(url_for('homepage'))
 
 
-@app.route('/criar-postagem/', methods=['GET', 'POST'])
-@login_required
-def criarPostagem():
-    if current_user.admin == False:
-        return redirect(url_for('homepage'))
-    form = PostagemForm()
-
-    if form.validate_on_submit():
-        form.save(current_user.id)
-        return redirect(url_for('homepage'))
-
-    return render_template('admin/posts/criar-postagem.html', form=form)
-
-@app.route('/get-posts/')
-def getDados():
-    posts = Postagem.query.all()
-
-    return jsonify([{"autor": post.user.nome, "titulo": post.titulo, "conteudo": post.conteudo} for post in posts])
 
 
 
@@ -70,3 +52,23 @@ def dashboard():
 
 
     return render_template('admin/dashboard.html')
+
+
+@app.route('/criar-postagem/', methods=['GET', 'POST'])
+@login_required
+def criarPostagem():
+    if current_user.admin == False:
+        return redirect(url_for('homepage'))
+    form = PostagemForm()
+    
+    if form.validate_on_submit():
+        form.save(current_user.id)
+        return redirect(url_for('homepage'))
+
+    return render_template('admin/posts/criar-postagem.html', form=form)
+
+@app.route('/get-posts/')
+def getDados():
+    posts = Postagem.query.all()
+
+    return jsonify([{"autor": post.user.nome, "titulo": post.titulo, "conteudo": post.conteudo} for post in posts])
