@@ -7,8 +7,27 @@
 {% block content %}
     {% include 'base/navbar.html' %}
 
+<header>
+    <h1>
+        {{ post.titulo }}
+    </h1>
+
+    <span>
+        {{ post.user.nome }} {{ post.user.sobrenome }}
+    </span>
+    <br>
+    <span>{{ post.data_resumo() }}</span>
+    <hr>
+
+    <main style="overflow-wrap: break-word;">
+        <div id="container-conteudo" class="container-conteudo">
+            
+        </div>
+    </main>
+    
+</header>
 
 
-{{ post.titulo }}
+<script src="{{ url_for('static', filename='js/detalhe-post.js') }}"></script>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-const posts_por_pagina = 5;
+const posts_por_pagina = 6;
 let pagina_atual = 1;
 let pagina_total = 1;
 
@@ -20,7 +20,8 @@ async function carregarPosts(page) {
     post_container.innerHTML = ''; // Limpa posts antigos
     posts.forEach(post => {
         const post_div = document.createElement('div');
-        post_div.className = 'post-div';
+        post_div.style = 'overflow-wrap: break-word;'
+        post_div.className = 'post-div col-4';
 
         const link = document.createElement('a');
         link.href = post.link;
@@ -32,7 +33,6 @@ async function carregarPosts(page) {
         prev_conteudo.textContent = post.conteudo;
 
         post_container.appendChild(post_div);
-        post_container.append(document.createElement('hr'));
         post_div.appendChild(link);
         link.appendChild(titulo);
         link.appendChild(prev_conteudo);

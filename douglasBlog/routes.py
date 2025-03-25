@@ -42,10 +42,6 @@ def logout():
 
 
 
-
-
-
-
 @app.route('/admin/douglas-blog/dashboard/')
 @login_required
 def dashboard():
@@ -91,7 +87,7 @@ def api_get_listaPosts():
     try:
         # Parametros para carregamento de posts na pagina:
         pagina = int(request.args.get('page', 1)) # Recebe o número da página pelo cabeçalho
-        posts_por_pagina = 5 # Número de posts carregados na página
+        posts_por_pagina = 6 # Número de posts carregados na página
         inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
 
         # Extraindo os posts
