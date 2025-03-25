@@ -2,7 +2,7 @@
 fetch('/get-posts/')
 .then(response => response.json())
 .then(posts => {
-    const container_posts = document.getElementById('resultado');
+    const container_posts = document.getElementById('lista-posts');
     posts.forEach(post => {
         // Renderiza no html
         const conteudoPost = document.createElement('div');

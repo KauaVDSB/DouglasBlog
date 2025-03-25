@@ -13,4 +13,4 @@ ClassicEditor.create(document.querySelector('#conteudo'), {
     // "error =>" e a funcao que sera chamada se esse erro acontecer...
     // => significa "RECEBE", ou seja, a funcao vai receber o erro
     console.error(error); // Exibe o erro no console do navegador, se ocorrer algum problema
-});
+}); 

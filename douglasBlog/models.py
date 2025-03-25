@@ -1,6 +1,8 @@
 from douglasBlog import db, login_manager
 from datetime import datetime
-from flask_login import UserMixin, login_user, logout_user, current_user 
+from flask_login import UserMixin, login_user, logout_user, current_user
+
+import re
 
 
 
@@ -29,4 +31,12 @@ class Postagem(db.Model):
     conteudo = db.Column(db.Text, nullable=True)
     data_postagem = db.Column(db.DateTime, default=datetime.now())
     # Referencia a tabela User para obter informacoes
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True) 
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+
+    def conteudoResumo(self):
+        len_conteudo = len(self.conteudo)
+        post_conteudo = re.sub(r'<[^>]*?>', '', self.conteudo)  # Remove tags HTML
+        if len_conteudo > 60:
+            return f"{post_conteudo[:37]}..."
+        else:
+            return post_conteudo

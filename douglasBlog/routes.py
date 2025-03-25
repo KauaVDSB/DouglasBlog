@@ -54,9 +54,9 @@ def dashboard():
     return render_template('admin/dashboard.html')
 
 
-@app.route('/criar-postagem/', methods=['GET', 'POST'])
+@app.route('/admin/douglas-blog/posts/admin/criar/', methods=['GET', 'POST'])
 @login_required
-def criarPostagem():
+def criarPosts():
     if current_user.admin == False:
         return redirect(url_for('homepage'))
     form = PostagemForm()
@@ -65,7 +65,53 @@ def criarPostagem():
         form.save(current_user.id)
         return redirect(url_for('homepage'))
 
-    return render_template('admin/posts/criar-postagem.html', form=form)
+    return render_template('admin/criar-posts.html', form=form)
+
+
+@app.route('/posts/lista/')
+def listaPosts():
+
+    posts = Postagem.query.all()
+
+    return render_template('view/lista-posts.html', posts=posts)
+
+# Função para serializar o objeto Postagem para formato JSON
+def post_to_dict(post):
+    return {
+        "id": post.id,
+        "titulo": post.titulo,
+        "conteudo": post.conteudoResumo()
+    }
+
+@app.route('/api/get/lista-posts', methods=['GET'])
+def api_get_listaPosts():
+    try:
+        # Parametros para carregamento de posts na pagina:
+        pagina = int(request.args.get('page', 1)) # Recebe o número da página pelo cabeçalho
+        posts_por_pagina = 5 # Número de posts carregados na página
+        inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
+
+        # Extraindo os posts
+        posts_carregados = Postagem.query.offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
+        posts_carregados_dict = [post_to_dict(post) for post in posts_carregados] # Converte para dict
+
+
+        # Contando total de posts
+        posts_total = Postagem.query.count()
+
+
+        # Criando a resposta JSON
+        response = jsonify(posts_carregados_dict) # Converte lista de posts em json
+        response.headers['X-Total-Count'] = posts_total # Envia para o cabeçalho o total de posts
+
+        return response
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500 # Retorna erro como json em caso de falha.
+    
+
+
+
 
 @app.route('/get-posts/')
 def getDados():

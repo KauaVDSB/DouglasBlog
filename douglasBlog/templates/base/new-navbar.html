@@ -9,7 +9,7 @@
     <div class="menu">
         <button class="menu-toggle close" aria-label="Close menu">✖</button> <!-- Botão de fechar no menu -->
         <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a>
-        <a href="{{ url_for('logout') }}">Navegação</a>
+        <a href="{{ url_for('listaPosts') }}">Blog</a>
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
         {% else %}
