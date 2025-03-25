@@ -21,11 +21,21 @@ async function carregarPosts(page) {
     posts.forEach(post => {
         const post_div = document.createElement('div');
         post_div.className = 'post-div';
-        post_div.innerHTML = `
-        <h2 class="txt-titulo">${post.titulo}</h2>
-        <p class="txt-conteudo">${post.conteudo}</p>
-        `;
+
+        const link = document.createElement('a');
+        link.href = post.link;
+
+        const titulo = document.createElement('h2');
+        titulo.textContent = post.titulo;
+
+        const prev_conteudo = document.createElement('p');
+        prev_conteudo.textContent = post.conteudo;
+
         post_container.appendChild(post_div);
+        post_container.append(document.createElement('hr'));
+        post_div.appendChild(link);
+        link.appendChild(titulo);
+        link.appendChild(prev_conteudo);
     });
 
     // Atualiza botões de paginação

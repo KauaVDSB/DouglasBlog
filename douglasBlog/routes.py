@@ -54,7 +54,7 @@ def dashboard():
     return render_template('admin/dashboard.html')
 
 
-@app.route('/admin/douglas-blog/posts/admin/criar/', methods=['GET', 'POST'])
+@app.route('/admin/douglas-blog/posts/criar/', methods=['GET', 'POST'])
 @login_required
 def criarPosts():
     if current_user.admin == False:
@@ -63,25 +63,28 @@ def criarPosts():
     
     if form.validate_on_submit():
         form.save(current_user.id)
-        return redirect(url_for('homepage'))
+        return redirect(url_for('listaPosts'))
 
     return render_template('admin/criar-posts.html', form=form)
 
 
-@app.route('/posts/lista/')
-def listaPosts():
 
-    posts = Postagem.query.all()
 
-    return render_template('view/lista-posts.html', posts=posts)
 
 # Função para serializar o objeto Postagem para formato JSON
-def post_to_dict(post):
+def converter_lista_post_para_dict(post):
     return {
         "id": post.id,
         "titulo": post.titulo,
-        "conteudo": post.conteudoResumo()
+        "conteudo": post.conteudoResumo(),
+        "link": url_for('verPosts', post_titulo=post.titulo, post_id=post.id)
     }
+
+@app.route('/posts/lista/')
+def listaPosts():
+
+    return render_template('view/lista-posts.html')
+
 
 @app.route('/api/get/lista-posts', methods=['GET'])
 def api_get_listaPosts():
@@ -93,7 +96,7 @@ def api_get_listaPosts():
 
         # Extraindo os posts
         posts_carregados = Postagem.query.offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
-        posts_carregados_dict = [post_to_dict(post) for post in posts_carregados] # Converte para dict
+        posts_carregados_dict = [converter_lista_post_para_dict(post) for post in posts_carregados] # Converte para dict
 
 
         # Contando total de posts
@@ -112,9 +115,30 @@ def api_get_listaPosts():
 
 
 
+# Função para serializar o objeto Postagem para formato JSON
+def converter_post_para_dict(post):
+    return {
+        "id": post.id,
+        "titulo": post.titulo,
+        "conteudo": post.conteudo,
+        "data_postagem": post.data_resumo(),
+        "user_id": post.user_id
+    }
 
-@app.route('/get-posts/')
-def getDados():
-    posts = Postagem.query.all()
+@app.route('/posts/view/<string:post_titulo>/<int:post_id>/')
+def verPosts(post_titulo, post_id):
+    post_detail = Postagem.query.get(post_id)
 
-    return jsonify([{"autor": post.user.nome, "titulo": post.titulo, "conteudo": post.conteudo} for post in posts])
+    return render_template('view/posts.html', post=post_detail)
+
+
+
+@app.route('/api/get/ver-posts/<int:id>')
+def api_get_verPosts(id):
+    post = Postagem.query.get_or_404(id)
+    post_dict = converter_post_para_dict(post)
+
+    # Resposta JSON
+    response = jsonify(post_dict)
+
+    return response

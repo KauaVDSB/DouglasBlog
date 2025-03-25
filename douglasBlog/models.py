@@ -40,3 +40,9 @@ class Postagem(db.Model):
             return f"{post_conteudo[:37]}..."
         else:
             return post_conteudo
+        
+    def data_resumo(self):
+        data = str(self.data_postagem)[:16].replace(':', 'h')
+        data = data.replace('-', '/')
+        dataOrdem = data[8:10] + '/' + data[5:8] + data[:4] + data[10:]
+        return dataOrdem
