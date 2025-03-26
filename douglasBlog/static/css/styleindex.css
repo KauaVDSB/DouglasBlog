@@ -239,6 +239,10 @@ main::before{
     margin-top: 1vh;
 }
 
+.turma .container strong{
+    color: #000;
+}
+
 .turma .container p{
     color: rgb(70, 69, 69);
     font-size: 16px;

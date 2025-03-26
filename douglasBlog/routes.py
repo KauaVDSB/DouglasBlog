@@ -64,9 +64,28 @@ def criarPosts():
     return render_template('admin/criar-posts.html', form=form)
 
 
+# ------------------------------------------------------------- #
+        # VIEW/
+            # / MATERIAIS
+
+                    # TURMAS.HTML
+@app.route('/materiais/turmas/<int:turma>/')
+def materiaisTurmas(turma):
+    return render_template('view/materiais/turmas.html')
 
 
-# VIEW/LISTA-POSTS.HTML
+
+
+
+
+
+
+
+
+
+            # /POSTS/
+
+                # /LISTA-POSTS.HTML
 @app.route('/posts/lista/')
 def listaPosts():
 
@@ -113,7 +132,7 @@ def api_get_listaPosts():
 
 
 
-# VIEW/POST.HTML
+                # VIEW/POST.HTML
 @app.route('/posts/view/<string:post_titulo>/<int:post_id>/')
 def verPost(post_titulo, post_id):
     post_detail = Postagem.query.get(post_id)
