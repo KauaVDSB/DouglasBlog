@@ -3,7 +3,7 @@ const post_id = parametro[parametro.length -2];
 
 // Função async para carregar o post
 async function carregarPost(){
-    const response = await fetch(`/api/get/ver-posts/${post_id}`);
+    const response = await fetch(`/api/get/ver-post/${post_id}`);
     const post = await response.json();
 
 

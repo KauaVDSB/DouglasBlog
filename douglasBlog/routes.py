@@ -66,6 +66,12 @@ def criarPosts():
 
 
 
+# VIEW/LISTA-POSTS.HTML
+@app.route('/posts/lista/')
+def listaPosts():
+
+    return render_template('view/posts/lista-posts.html')
+
 
 # Função para serializar o objeto Postagem para formato JSON
 def converter_lista_post_para_dict(post):
@@ -73,13 +79,8 @@ def converter_lista_post_para_dict(post):
         "id": post.id,
         "titulo": post.titulo,
         "conteudo": post.conteudoResumo(),
-        "link": url_for('verPosts', post_titulo=post.titulo, post_id=post.id)
+        "link": url_for('verPost', post_titulo=post.titulo, post_id=post.id)
     }
-
-@app.route('/posts/lista/')
-def listaPosts():
-
-    return render_template('view/lista-posts.html')
 
 
 @app.route('/api/get/lista-posts', methods=['GET'])
@@ -111,6 +112,15 @@ def api_get_listaPosts():
 
 
 
+
+# VIEW/POST.HTML
+@app.route('/posts/view/<string:post_titulo>/<int:post_id>/')
+def verPost(post_titulo, post_id):
+    post_detail = Postagem.query.get(post_id)
+
+    return render_template('view/posts/post.html', post=post_detail)
+
+
 # Função para serializar o objeto Postagem para formato JSON
 def converter_post_para_dict(post):
     return {
@@ -121,16 +131,9 @@ def converter_post_para_dict(post):
         "user_id": post.user_id
     }
 
-@app.route('/posts/view/<string:post_titulo>/<int:post_id>/')
-def verPosts(post_titulo, post_id):
-    post_detail = Postagem.query.get(post_id)
 
-    return render_template('view/posts.html', post=post_detail)
-
-
-
-@app.route('/api/get/ver-posts/<int:id>')
-def api_get_verPosts(id):
+@app.route('/api/get/ver-post/<int:id>')
+def api_get_verPost(id):
     post = Postagem.query.get_or_404(id)
     post_dict = converter_post_para_dict(post)
 

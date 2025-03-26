@@ -1,0 +1,14 @@
+# Query: /api/get/ver-posts/
+# ContextLines: 1
+
+2 results - 2 files
+
+douglasBlog\routes.py:
+  134  
+  135: @app.route('/api/get/ver-post/<int:id>')
+  136  def api_get_verPost(id):
+
+douglasBlog\static\js\detalhe-post.js:
+  5  async function carregarPost(){
+  6:     const response = await fetch(`/api/get/ver-post/${post_id}`);
+  7      const post = await response.json();
