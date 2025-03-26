@@ -61,7 +61,7 @@ def criarPosts():
         form.save(current_user.id)
         return redirect(url_for('listaPosts'))
 
-    return render_template('admin/criar-posts.html', form=form)
+    return render_template('admin/criar/criar-posts.html', form=form)
 
 
 # ------------------------------------------------------------- #

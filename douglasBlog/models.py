@@ -46,3 +46,18 @@ class Postagem(db.Model):
         data = data.replace('-', '/')
         dataOrdem = data[8:10] + '/' + data[5:8] + data[:4] + data[10:]
         return dataOrdem
+
+
+class Material(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    destino = db.Column(db.String, nullable=True)
+    titulo = db.Column(db.String, nullable=True)
+    materiais = db.Column(db.Text, nullable=True)
+    data_criacao = db.Column(db.DateTime, default=datetime.now())
+
+
+    def data_resumo(self):
+        data = str(self.data_criacao)[:16].replace(':', 'h')
+        data = data.replace('-', '/')
+        dataOrdem = data[8:10] + '/' + data[5:8] + data[:4] + data[10:]
+        return dataOrdem
