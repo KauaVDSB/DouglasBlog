@@ -2,7 +2,7 @@ from douglasBlog import app, db
 from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
-from douglasBlog.models import User, Postagem
+from douglasBlog.models import User, Postagem, Material
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
 
 # Rota para homepage
@@ -85,7 +85,34 @@ def materiaisTurmas(turma):
     return render_template('view/materiais/turmas.html')
 
 
+def converter_lista_materiais_para_dict(material):
+    return {
+        "id": material.id,
+        "destino": material.destino,
+        "titulo": material.titulo,
+        "materiais": material.materiais,
+        "data_criacao": material.data_criacao
+    }
 
+
+@app.route('/api/get/lista-materiais/<int:destino>', methods=['GET'])
+def api_get_listaMateriais(destino):
+    try:
+        # extraindo os materiais
+        materiais = Material.query.filter_by(destino=int(destino))
+        materiais_dict = [converter_lista_materiais_para_dict(material) for material in materiais]
+        print(materiais_dict)
+
+        materiais_total = materiais.count()
+
+        # criando resposta JSON
+        response = jsonify(materiais_dict)
+        response.headers['X-Total-Count'] = materiais_total
+
+        return response
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 
