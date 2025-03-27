@@ -50,7 +50,7 @@ class Postagem(db.Model):
 
 class Material(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    destino = db.Column(db.String, nullable=True)
+    destino = db.Column(db.Integer, nullable=True)
     titulo = db.Column(db.String, nullable=True)
     materiais = db.Column(db.Text, nullable=True)
     data_criacao = db.Column(db.DateTime, default=datetime.now())

@@ -3,7 +3,7 @@ from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
 from douglasBlog.models import User, Postagem
-from douglasBlog.forms import LoginForm, PostagemForm
+from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
 
 # Rota para homepage
 @app.route('/')
@@ -62,6 +62,17 @@ def criarPosts():
         return redirect(url_for('listaPosts'))
 
     return render_template('admin/criar/criar-posts.html', form=form)
+
+
+@app.route('/admin/douglas-blog/materiais/criar/', methods=['GET', 'POST'])
+def criarMateriais():
+    form = MateriaisForm()
+
+    if form.validate_on_submit():
+        form.save()
+        return redirect(url_for('dashboard'))
+
+    return render_template('admin/criar/criar-materiais.html', form=form)
 
 
 # ------------------------------------------------------------- #

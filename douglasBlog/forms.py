@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField
 
 # Para validar email, baixar biblioteca email_validator
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from flask_login import current_user
 
 from douglasBlog import db, bcrypt
-from douglasBlog.models import User, Postagem
+from douglasBlog.models import User, Postagem, Material
 
 
 
@@ -45,6 +45,30 @@ class PostagemForm(FlaskForm):
 
         db.session.add(postagem)
         db.session.commit()
+
+
+class MateriaisForm(FlaskForm):
+    destino = SelectField(u'Destino', choices=[
+        (1, '1º Ano'), (2, '2º ano'), (3, '3º ano'), (4, 'Olímpiadas')
+        ], validators=[DataRequired()])
+    titulo = StringField('Título', validators=[DataRequired()])
+    aula = StringField('Link da aula')
+    mapa_mental = StringField('Mapa Mental')
+    lista_exercicios = StringField('Lista de Exercícios')
+    btnSubmit = SubmitField('Enviar')
+
+    def save(self):
+        if (self.aula.data or self.mapa_mental.data or self.lista_exercicios.data):
+            material = Material(
+                destino = self.destino.data,
+                titulo = self.titulo.data,
+                materiais = self.aula.data + self.mapa_mental.data + self.lista_exercicios.data
+            )
+
+            db.session.add(material)
+            db.session.commit()
+        else:
+            raise Exception('Nenhum material enviado...')
 
 
 
