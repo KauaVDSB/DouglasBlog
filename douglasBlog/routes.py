@@ -82,6 +82,7 @@ def criarMateriais():
                     # TURMAS.HTML
 @app.route('/materiais/turmas/<int:turma>/')
 def materiaisTurmas(turma):
+    
     return render_template('view/materiais/turmas.html')
 
 

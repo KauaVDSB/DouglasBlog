@@ -1,23 +1,19 @@
-const parametro = window.location.pathname.split('/');
-const destino = parametro[parametro.length - 2];
-
-
 function verificarAula(material_aula, conteudo_container){
-    conteudo_aula = material_aula.replace(`<div class='container-aula'>`, "")
+    const conteudo_aula = material_aula.replace(`<div class='container-aula'>`, "")
     const container_aula = document.createElement('div');
     container_aula.className = 'container-aula';
     container_aula.textContent = conteudo_aula;
     conteudo_container.appendChild(container_aula);
 }
 function verificarMapa(material_mapa_mental, conteudo_container){
-    conteudo_mapa_mental = material_mapa_mental.replace(`<div class='container-mapa-mental'>`, "")
+    const conteudo_mapa_mental = material_mapa_mental.replace(`<div class='container-mapa-mental'>`, "")
     const container_mapa_mental = document.createElement('div');
     container_mapa_mental.className = 'container-aula';
     container_mapa_mental.textContent = conteudo_mapa_mental;
     conteudo_container.appendChild(container_mapa_mental);
 }
 function verificarLista(material_lista_exercicios, conteudo_container){
-    conteudo_lista_exercicios = material_lista_exercicios.replace(`<div class='container-lista-exercicios'>`, "")
+    const conteudo_lista_exercicios = material_lista_exercicios.replace(`<div class='container-lista-exercicios'>`, "")
     const container_lista_exercicios = document.createElement('div');
     container_lista_exercicios.className = 'container-aula';
     container_lista_exercicios.textContent = conteudo_lista_exercicios;
