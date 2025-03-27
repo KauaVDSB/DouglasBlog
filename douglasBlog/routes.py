@@ -87,15 +87,21 @@ def materiaisTurmas(turma):
 
 def converter_lista_materiais_para_dict(material):
     lista_materiais = material.materiais.split("KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF")
-    materiais = ""
     for item in range(len(lista_materiais)):
-        materiais = materiais + lista_materiais[item]
+        if "div class='container-aula'>" in lista_materiais[item]:
+            aula = lista_materiais[item]
+        elif "div class='container-mapa-mental'>" in lista_materiais[item]:
+            mapa_mental = lista_materiais[item]
+        elif "div class='container-lista-exercicios'>" in lista_materiais[item]:
+            lista_exercicios = lista_materiais[item]
 
     return {
         "id": material.id,
         "destino": material.destino,
         "titulo": material.titulo,
-        "materiais": materiais,
+        "aula": aula,
+        "mapa_mental": mapa_mental,
+        "lista_exercicios": lista_exercicios,
         "data_criacao": material.data_criacao
     }
 
@@ -106,13 +112,11 @@ def api_get_listaMateriais(destino):
         # extraindo os materiais
         materiais = Material.query.filter_by(destino=int(destino))
         materiais_dict = [converter_lista_materiais_para_dict(material) for material in materiais]
-
         materiais_total = materiais.count()
 
         # criando resposta JSON
         response = jsonify(materiais_dict)
         response.headers['X-Total-Count'] = materiais_total
-
         return response
     
     except Exception as e:

@@ -2,37 +2,26 @@ const parametro = window.location.pathname.split('/');
 const destino = parametro[parametro.length - 2];
 
 
-function verificarAula(conteudo_material, conteudo_container){
-    let inicio = conteudo_material.indexOf(`<div class='container-aula'>`);
-    let fim = conteudo_material.indexOf(`<div class='container-mapa-mental'>`);
-    console.log(conteudo_material.slice(inicio + `<div class='container-aula'>`.length, fim));
-    conteudo_material = conteudo_material.slice(0, inicio) + conteudo_material.slice(inicio + `<div class='container-aula'>`.length, fim);
+function verificarAula(material_aula, conteudo_container){
+    conteudo_aula = material_aula.replace(`<div class='container-aula'>`, "")
     const container_aula = document.createElement('div');
     container_aula.className = 'container-aula';
-    container_aula.textContent = conteudo_material;
+    container_aula.textContent = conteudo_aula;
     conteudo_container.appendChild(container_aula);
-    console.log("essa foi a aula");
 }
-function verificarMapa(conteudo_material, conteudo_container){
-    let inicio = conteudo_material.indexOf(`<div class='container-mapa-mental'>`);
-    let fim = conteudo_material.indexOf(`<div class='container-lista-exercicios'>`);
-    console.log(conteudo_material.slice(inicio + `<div class='container-mapa-mental'>`.length, fim));
-    conteudo_material = conteudo_material.slice(inicio + `<div class='container-mapa-mental'>`.length, fim);
+function verificarMapa(material_mapa_mental, conteudo_container){
+    conteudo_mapa_mental = material_mapa_mental.replace(`<div class='container-mapa-mental'>`, "")
     const container_mapa_mental = document.createElement('div');
-    container_mapa_mental.className = 'container-mapa-mental';
-    container_mapa_mental.textContent = conteudo_material;
+    container_mapa_mental.className = 'container-aula';
+    container_mapa_mental.textContent = conteudo_mapa_mental;
     conteudo_container.appendChild(container_mapa_mental);
-    console.log("esse foi o mapa");
 }
-function verificarLista(conteudo_material, conteudo_container){
-    let inicio = conteudo_material.indexOf(`<div class='container-lista-exercicios'>`);
-    console.log(conteudo_material.slice(inicio + `<div class='container-lista-exercicios'>`.length));
-    conteudo_material = conteudo_material.slice(inicio + `<div class='container-lista-exercicios'>`.length);
+function verificarLista(material_lista_exercicios, conteudo_container){
+    conteudo_lista_exercicios = material_lista_exercicios.replace(`<div class='container-lista-exercicios'>`, "")
     const container_lista_exercicios = document.createElement('div');
-    container_lista_exercicios.className = 'container-lista-exercicios';
-    container_lista_exercicios.textContent = conteudo_material;
+    container_lista_exercicios.className = 'container-aula';
+    container_lista_exercicios.textContent = conteudo_lista_exercicios;
     conteudo_container.appendChild(container_lista_exercicios);
-    console.log("essa foi a lista");
 }
 
 // Carregamento dos materiais
@@ -56,15 +45,14 @@ async function carregarMateriais(destino) {
         // Criar split dos materiais para verificar quais são existentes.
         const conteudo_container = document.createElement('div');
         conteudo_container.className = 'conteudo-container';
-        let conteudo_material = material.materiais;
-        if (conteudo_material.includes(`<div class='container-aula'>`)){
-            verificarAula(conteudo_material, conteudo_container);
+        if (material.aula){
+            verificarAula(material.aula, conteudo_container);
         }
-        if (conteudo_material.includes(`<div class='container-mapa-mental'>`)){
-            verificarMapa(conteudo_material, conteudo_container);
+        if (material.mapa_mental){
+            verificarMapa(material.mapa_mental, conteudo_container);
         }
-        if (conteudo_material.includes(`<div class='container-lista-exercicios'>`)){
-            verificarLista(conteudo_material, conteudo_container);
+        if (material.lista_exercicios){
+            verificarLista(material.lista_exercicios, conteudo_container);
         }
 
         material_container.appendChild(material_div);
