@@ -57,18 +57,40 @@ class MateriaisForm(FlaskForm):
     lista_exercicios = StringField('Lista de Exercícios')
     btnSubmit = SubmitField('Enviar')
 
+
+    def verificarMaterial(self):
+        lista_conteudos = [self.aula.data, self.mapa_mental.data, self.lista_exercicios.data]
+        tem_material = []
+        materiais = ""
+        for conteudo in range(len(lista_conteudos)):
+            if lista_conteudos[conteudo] != "":
+                tem_material = tem_material + [conteudo]
+            
+
+        if (len(tem_material) > 0):
+            for conteudo in range(len(tem_material)):
+                if tem_material[conteudo] == 0:
+                    materiais = materiais + "<div class='container-aula'>" + self.aula.data + " KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF "
+                elif tem_material[conteudo] == 1:
+                    materiais = materiais + "<div class='container-mapa-mental'>" + self.mapa_mental.data + " KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF "
+                else:
+                    materiais = materiais + "<div class='container-lista-exercicios'>" + self.lista_exercicios.data
+            return materiais
+        else:
+            return Exception('Nenhum material enviado...')
+
+
     def save(self):
-        if (self.aula.data or self.mapa_mental.data or self.lista_exercicios.data):
+        materiais = self.verificarMaterial()
+        if materiais != '':
             material = Material(
                 destino = self.destino.data,
                 titulo = self.titulo.data,
-                materiais = self.aula.data + self.mapa_mental.data + self.lista_exercicios.data
+                materiais = materiais
             )
 
             db.session.add(material)
             db.session.commit()
-        else:
-            raise Exception('Nenhum material enviado...')
 
 
 
