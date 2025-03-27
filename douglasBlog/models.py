@@ -28,6 +28,7 @@ class User(db.Model, UserMixin):
 class Postagem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String, nullable=True)
+    imagem = db.Column(db.String)
     conteudo = db.Column(db.Text, nullable=True)
     data_postagem = db.Column(db.DateTime, default=datetime.now())
     # Referencia a tabela User para obter informacoes

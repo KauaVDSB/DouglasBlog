@@ -1,13 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField
-
+from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField, FileField
 # Para validar email, baixar biblioteca email_validator
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 
 from flask_login import current_user
 
-from douglasBlog import db, bcrypt
+from douglasBlog import app, db, bcrypt
 from douglasBlog.models import User, Postagem, Material
+
+import os
+from werkzeug.utils import secure_filename
 
 
 
@@ -33,16 +35,33 @@ class LoginForm(FlaskForm):
 
 class PostagemForm(FlaskForm):
     titulo = StringField('Título', validators=[DataRequired()])
+    imagem = FileField('Imagem')
     conteudo = TextAreaField('Conteúdo')
     btnSubmit = SubmitField('Publicar')
 
     def save(self, user_id):
+        imagem = self.imagem.data
+        print(imagem)
+        nome_seguro = secure_filename(imagem.filename)
         postagem = Postagem(
             titulo = self.titulo.data,
+            imagem = nome_seguro,
             conteudo = self.conteudo.data,
             user_id = user_id
         )
 
+        caminho = os.path.join(
+            # Pasta do projeto
+            os.path.abspath(os.path.dirname(__file__)),
+            # Pasta de UPLOAD
+            app.config['UPLOAD_FILES'],
+            # Pasta do post
+            'post',
+            # Arquivo
+            nome_seguro
+        )
+
+        imagem.save(caminho)
         db.session.add(postagem)
         db.session.commit()
 

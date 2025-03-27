@@ -20,12 +20,15 @@
     </div>
     <div class="row">
 
-        <form action="" method="post" class="col-12 mt-4 p-4 rounded border shadow">
+        <form action="" method="post" enctype="multipart/form-data" class="col-12 mt-4 p-4 rounded border shadow">
             
             {{ form.csrf_token }}
             
             {{ form.titulo.label() }}
             {{ form.titulo(class="form-control col-12 mb-3") }}
+
+            {{ form.imagem.label() }}
+            {{ form.imagem(class="form-control") }}
             
             {{ form.conteudo.label() }}
             {{ form.conteudo(class="form-control col-12 mt-3", id="conteudo", rows="10", cols="80") }}
