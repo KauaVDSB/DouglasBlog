@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base/navbar.css') }}">
 
 <nav class="navbar">
     <div class="logo">
@@ -6,7 +6,8 @@
         <h1>888</h1>
     </div>
 
-    <div class="menu">
+    <div id="menu-navbar" class="menu">
+        <button id="openButton" class="menu-toggle close" aria-label="Close menu">✖</button>
         <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a>
         <a href="{{ url_for('listaPosts') }}">Blog</a>
         {% if current_user.is_authenticated %}
@@ -15,4 +16,8 @@
             <a href="{{ url_for('login') }}">Login</a>
         {% endif %}
     </div>
+
+    <button id="closeButton" class="menu-toggle open" aria-label="Open menu">☰</button>
 </nav>
+
+<script src="{{ url_for('static', filename='js/base/navbar-mobile.js') }}"></script>

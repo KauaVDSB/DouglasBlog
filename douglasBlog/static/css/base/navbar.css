@@ -1,5 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/seven-segment');
 
+
 * {
     box-sizing: border-box;
 }
@@ -21,33 +22,73 @@ body {
     position: sticky;
     top: 0;
     z-index: 9999999;
+
     display: flex;
+    flex-flow: row;
     justify-content: space-between;
     align-items: center;
+    padding: 0 5%;
+
     height: 12vh;
+    min-height: 75px;
+    max-height: 80px;
+    margin-bottom: 1vh;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius:20px;
+
     background-color: #102e4a;
-    padding: 0 10px;
 }
 
 .logo {
+    /* flex: 20%; */
     display: flex;
+    position: relative;
+
+    justify-content: left;
     align-items: center;
+
+    height: 75px;
+
     color: #F0EDE8;
 }
 
 .foguete {
+    position: absolute;
     height: 10vh;
+    min-height: 60px;
     max-height: 64px;
 }
 
-.logo h1 {
-    margin: 0 0 0 15px;
+.logo h1{
+    /* background-color: yellowgreen; */
+    position: absolute;
+    margin: 25px 0 0 25px;
     font-size: 22px;
     font-weight: bold;
     font-family: 'Seven Segment', sans-serif;
 }
 
+.menu {
+    /* flex: 80%; */
+    font-size: 18px;
+    /* color:#F0EDE8; */
+    /* padding: 20px; */
+    /* gap: 20px; */
+    font-family: 'PT Serif', serif;
+    /* text-align: right; */
+}
+
+.menu a{
+    text-decoration: none;
+    color: #F0EDE8;
+    margin-left: 20px;
+}
+.menu a:nth-child(1){
+    margin-left: 0;
+}
+
 /* Botões de toggle */
+
 .menu-toggle {
     font-size: 24px;
     color: #F0EDE8;
@@ -56,40 +97,28 @@ body {
     cursor: pointer;
 }
 
-/* Botão de abrir (fora do menu) */
-.menu-toggle.open {
+.menu-toggle.open, .menu-toggle.close {
     display: none;
 }
 
-/* Botão de fechar (dentro do menu) */
 .menu-toggle.close {
-    display: none;
     align-self: flex-end;
     font-size: 28px;
     margin-bottom: 20px;
 }
 
-/* Menu */
-.menu {
-    display: flex;
-    gap: 20px;
-}
 
-.menu a {
-    text-decoration: none;
-    color: #F0EDE8;
-}
-
-/* Estilos para telas pequenas */
+/* DISPOSITIVOS MENORES QUE 768px */
 @media (max-width: 768px) {
     .menu {
-        display: none; /* Esconde o menu por padrão */
+        display: none;
         position: fixed;
         top: 0;
         right: 0;
-        height: 100%;
-        width: 250px;
         flex-direction: column;
+
+        height: 100%;
+        width: 200px;
         background-color: #102e4a;
         padding: 20px;
         gap: 15px;
@@ -97,22 +126,22 @@ body {
     }
 
     .menu.active {
-        display: flex; /* Mostra o menu quando ativado */
+        display: flex;
     }
 
     .menu-toggle.open {
-        display: block; /* Botão de abrir visível fora do menu */
+        display: block;
     }
 
     .menu.active + .menu-toggle.open {
-        display: none; /* Esconde o botão de abrir quando o menu está aberto */
+        display: none;
     }
 
     .menu.active .menu-toggle.close {
-        display: block; /* Exibe o botão de fechar dentro do menu */
+        display: block;
     }
 
-    .menu a {
+    .menu a{
         font-size: 18px;
         margin: 10px 0;
     }
