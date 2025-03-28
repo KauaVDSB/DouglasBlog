@@ -10,7 +10,7 @@
     {% include 'base/navbar.html' %}
 
 
-    <form action="" method="post" class="row">
+    <form action="" method="post" enctype="multipart/form-data" class="row">
         {{ form.csrf_token }}
 
         {{ form.destino.label() }}

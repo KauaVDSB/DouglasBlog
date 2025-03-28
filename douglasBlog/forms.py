@@ -72,10 +72,29 @@ class MateriaisForm(FlaskForm):
         ], validators=[DataRequired()])
     titulo = StringField('Título', validators=[DataRequired()])
     aula = StringField('Link da aula')
-    mapa_mental = StringField('Mapa Mental')
-    lista_exercicios = StringField('Lista de Exercícios')
+    mapa_mental = FileField('Mapa Mental')
+    lista_exercicios = FileField('Lista de Exercícios')
     btnSubmit = SubmitField('Enviar')
 
+
+    def caminhoArquivo(self, arquivo):
+        arquivo_recebido = arquivo
+        print(arquivo_recebido)
+        nome_seguro = secure_filename(arquivo_recebido.filename)
+
+        caminho = os.path.join(
+            # Pasta do projeto
+            os.path.abspath(os.path.dirname(__file__)),
+            # Pasta de UPLOAD
+            app.config['UPLOAD_FILES'],
+            # Pasta do material
+            'material',
+            # Arquivo
+            nome_seguro
+        )
+
+        arquivo_recebido.save(caminho)
+        return nome_seguro
 
     def verificarMaterial(self):
         lista_conteudos = [self.aula.data, self.mapa_mental.data, self.lista_exercicios.data]
@@ -87,16 +106,17 @@ class MateriaisForm(FlaskForm):
             
 
         if (len(tem_material) > 0):
+            hash = " KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF "
             for conteudo in range(len(tem_material)):
                 if tem_material[conteudo] == 0:
-                    materiais = materiais + "<div class='container-aula'>" + self.aula.data + " KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF "
+                    materiais = materiais + "<div class='container-aula'>" + self.aula.data + hash
                 elif tem_material[conteudo] == 1:
-                    materiais = materiais + "<div class='container-mapa-mental'>" + self.mapa_mental.data + " KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF "
+                    materiais = materiais + "<div class='container-mapa-mental'>" + self.caminhoArquivo(self.mapa_mental.data) + hash
                 else:
-                    materiais = materiais + "<div class='container-lista-exercicios'>" + self.lista_exercicios.data
+                    materiais = materiais + "<div class='container-lista-exercicios'>" + self.caminhoArquivo(self.lista_exercicios.data)
             return materiais
         else:
-            return Exception('Nenhum material enviado...')
+            raise Exception('Nenhum material enviado...')
 
 
     def save(self):

@@ -23,7 +23,15 @@ function verificarLista(material_lista_exercicios, conteudo_container){
 // Carregamento dos materiais
 async function carregarMateriais(destino) {
     const response = await fetch(`/api/get/lista-materiais/${destino}`);
-    const materiais = await response.json();
+    const data = await response.json(); // retorna materiais e total
+    
+    if (!Array.isArray(data.materiais)){
+        console.error("Erro: materiais não é uma lista.", data.materiais);
+        return;
+    }
+    
+    const materiais = data.materiais;
+    console.log(materiais);
 
 
     // Cria container dos posts
