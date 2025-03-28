@@ -115,7 +115,7 @@ def converter_lista_materiais_para_dict(material):
         "titulo": material.titulo,
         "aula": aula,
         "mapa_mental": url_for('static', filename='data/material/{}'.format(mapa_mental)),
-        "lista_exercicios": lista_exercicios,
+        "lista_exercicios": url_for('static', filename='data/material/{}'.format(lista_exercicios)),
         "data_criacao": material.data_criacao,
     }
 

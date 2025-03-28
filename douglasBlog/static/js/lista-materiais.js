@@ -1,6 +1,5 @@
 function construirAula(material_aula, conteudo_container){
     const conteudo_aula = material_aula.trim();
-    console.log(conteudo_aula);
 
     const container_aula = document.createElement('div');
     container_aula.className = 'container-aula';
@@ -20,24 +19,44 @@ function construirAula(material_aula, conteudo_container){
 }
 function construirMapa(material_mapa_mental, conteudo_container, material_titulo){
     const conteudo_mapa_mental = material_mapa_mental.trim();
+
     const container_mapa_mental = document.createElement('div');
     container_mapa_mental.className = 'container-mapa-mental';
     conteudo_container.appendChild(container_mapa_mental);
 
     const download_mapa_mental = document.createElement('a');
     download_mapa_mental.href = conteudo_mapa_mental;
-
     download_mapa_mental.download = conteudo_mapa_mental;
     download_mapa_mental.textContent = 'Mapa Mental';
+
     container_mapa_mental.appendChild(download_mapa_mental);
 }
 function construirLista(material_lista_exercicios, conteudo_container){
-    const conteudo_lista_exercicios = material_lista_exercicios.trim()
+    const conteudo_lista_exercicios = material_lista_exercicios.trim();
+    
     const container_lista_exercicios = document.createElement('div');
     container_lista_exercicios.className = 'container-lista-exercicios';
     conteudo_container.appendChild(container_lista_exercicios);
-    container_lista_exercicios.textContent = conteudo_lista_exercicios;
+    
+    
+    const download_lista_exercicios = document.createElement('a');
+    download_lista_exercicios.href = conteudo_lista_exercicios;
+    download_lista_exercicios.download = conteudo_lista_exercicios;
+    download_lista_exercicios.textContent = 'Lista de Exercícios';
+
+    container_lista_exercicios.appendChild(download_lista_exercicios);
 }
+
+
+function temCaminho(caminho){
+    const existe_caminho = caminho.replace('/static/data/material/').replace('undefined', "").length;
+    console.log(existe_caminho);
+    if (existe_caminho > 2){
+        return true;
+    }
+}
+
+
 
 // Carregamento dos materiais
 async function carregarMateriais(destino) {
@@ -54,9 +73,9 @@ async function carregarMateriais(destino) {
 
     // Cria container dos posts
     const material_container = document.getElementById(`material-container`);
+
     materiais.forEach(material => {
-        
-        
+
         const material_div = document.createElement('div');
         material_div.className = 'material-div col-4';
         material_div.style = 'border-bottom: 1px solid; overflow:hidden;';
@@ -69,11 +88,11 @@ async function carregarMateriais(destino) {
         if (material.aula){
             construirAula(material.aula, conteudo_container);
         }
-        if (material.mapa_mental){
-            construirMapa(material.mapa_mental, conteudo_container, material.titulo.trim());
+        if (temCaminho(material.mapa_mental)){
+            construirMapa(material.mapa_mental, conteudo_container, material.titulo.replaceAll(" ", "-"));
         }
-        if (material.lista_exercicios){
-            construirLista(material.lista_exercicios, conteudo_container, material.titulo.trim());
+        if (temCaminho(material.lista_exercicios)){
+            construirLista(material.lista_exercicios, conteudo_container, material.titulo.replaceAll(" ", "-"));
         }
 
         material_container.appendChild(material_div);
