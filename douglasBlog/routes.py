@@ -92,30 +92,29 @@ def converter_lista_materiais_para_dict(material):
             "id": material.id,
             "destino": material.destino,
             "titulo": material.titulo,
-            "aula": None,
-            "mapa_mental": None,
-            "lista_exercicios": None,
+            "aula": '',
+            "mapa_mental": '',
+            "lista_exercicios": '',
             "data_criacao": material.data_criacao
         }
 
-    aula, mapa_mental, lista_exercicios = None, None, None
+    aula, mapa_mental, lista_exercicios = '', '', ''
     lista_materiais = material.materiais.split("KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF")
-    print('material.materiais:')
-    print(material.materiais)
+
     for item in lista_materiais:
-        if "div class='container-aula'>" in item:
-            aula = item
-        elif "div class='container-mapa-mental'>" in item:
-            mapa_mental = item
-        elif "div class='container-lista-exercicios'>" in item:
-            lista_exercicios = item
+        if "<div class='container-aula'>" in item:
+            aula = item.replace("<div class='container-aula'>", "").replace(" ", "")
+        elif "<div class='container-mapa-mental'>" in item:
+            mapa_mental = item.replace("<div class='container-mapa-mental'>", "").replace(" ", "")
+        elif "<div class='container-lista-exercicios'>" in item:
+            lista_exercicios = item.replace("<div class='container-lista-exercicios'>", "").replace(" ", "")
 
     return {
         "id": material.id,
         "destino": material.destino,
         "titulo": material.titulo,
         "aula": aula,
-        "mapa_mental": mapa_mental,
+        "mapa_mental": url_for('static', filename='data/material/{}'.format(mapa_mental)),
         "lista_exercicios": lista_exercicios,
         "data_criacao": material.data_criacao,
     }
@@ -126,10 +125,8 @@ def api_get_listaMateriais(destino):
     try:
         # extraindo os materiais
         materiais_query = Material.query.filter_by(destino=destino)
-        print(materiais_query)
         materiais = list(materiais_query)  # Garante que seja uma lista
-        print('materiais')
-        print(materiais)
+        
         materiais_dict = [converter_lista_materiais_para_dict(material) for material in materiais]
         materiais_total = len(materiais_dict)
 
