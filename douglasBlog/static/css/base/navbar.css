@@ -70,6 +70,7 @@ body {
 
 .menu {
     /* flex: 80%; */
+    display: flex;
     font-size: 18px;
     /* color:#F0EDE8; */
     /* padding: 20px; */
@@ -81,10 +82,15 @@ body {
 .menu a{
     text-decoration: none;
     color: #F0EDE8;
-    margin-left: 20px;
+    margin: 0 10px;
 }
-.menu a:nth-child(1){
-    margin-left: 0;
+
+.menu a:hover{
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.border {
+    border-left: 2px solid #F0EDE8;
 }
 
 /* Botões de toggle */
@@ -118,10 +124,10 @@ body {
         flex-direction: column;
 
         height: 100%;
-        width: 200px;
+        width: 45vw;
         background-color: #102e4a;
         padding: 20px;
-        gap: 15px;
+        gap: 4px;
         box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
     }
 
@@ -136,13 +142,21 @@ body {
     .menu.active + .menu-toggle.open {
         display: none;
     }
-
+    
     .menu.active .menu-toggle.close {
         display: block;
     }
 
     .menu a{
+        text-align: center;
         font-size: 18px;
-        margin: 10px 0;
+        margin: 0;
+        height: 40px;
+        align-content: center;
+    }
+
+    .border {
+        display: block;
+        border-bottom: 2px solid #F0EDE8;
     }
 }

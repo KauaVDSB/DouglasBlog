@@ -8,9 +8,11 @@
 
     <div id="menu-navbar" class="menu">
         <button id="openButton" class="menu-toggle close" aria-label="Close menu">✖</button>
-        <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a>
-        <a href="{{ url_for('listaPosts') }}">Blog</a>
+        <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a> <span class="border"></span>
+        <a href="{{ url_for('listaPosts') }}">Blog</a> <span class="border"></span>
+        <a href="{{ url_for('materiaisTurmas', turma=4) }}">Olímpiadas</a>
         {% if current_user.is_authenticated %}
+            <span class="border"> </span>
             <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
         {% else %}
             <a href="{{ url_for('login') }}">Login</a>
