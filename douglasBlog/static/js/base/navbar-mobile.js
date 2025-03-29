@@ -21,9 +21,5 @@ document.addEventListener('click', (event) => {
     if (event.target !== menu && event.target !== openButton)
     {
         menu.classList.remove('active');
-        console.log('não é menu');
-    }
-    else{
-        console.log('é menu');
     }
 });
