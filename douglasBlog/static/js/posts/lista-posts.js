@@ -1,4 +1,4 @@
-const posts_por_pagina = 6;
+const posts_por_pagina = 8;
 let pagina_atual = 1;
 let pagina_total = 1;
 
@@ -20,22 +20,34 @@ async function carregarPosts(page) {
     post_container.innerHTML = ''; // Limpa posts antigos
     posts.forEach(post => {
         const post_div = document.createElement('div');
-        post_div.style = 'overflow-wrap: break-word;'
-        post_div.className = 'post-div col-4';
+        post_div.style = ''
+        post_div.className = 'post-div';
 
         const link = document.createElement('a');
         link.href = post.link;
+        link.className = 'link-post';
+
+        const imagem = document.createElement('img');
+        imagem.src = post.imagem;
+        imagem.className = 'imagem-post';
+
+        const conteudo_container = document.createElement('div');
+        conteudo_container.className = 'conteudo-container';
 
         const titulo = document.createElement('h2');
         titulo.textContent = post.titulo;
+        titulo.className = 'titulo-post';
 
         const prev_conteudo = document.createElement('p');
         prev_conteudo.textContent = post.conteudo;
+        prev_conteudo.className = 'conteudo-post';
 
         post_container.appendChild(post_div);
-        post_div.appendChild(link);
-        link.appendChild(titulo);
-        link.appendChild(prev_conteudo);
+            post_div.appendChild(link);
+                link.appendChild(imagem);
+                link.appendChild(conteudo_container);
+                    conteudo_container.appendChild(titulo);
+                    conteudo_container.appendChild(prev_conteudo);
     });
 
     // Atualiza botões de paginação

@@ -159,9 +159,15 @@ def listaPosts():
 
 # Função para serializar o objeto Postagem para formato JSON
 def converter_lista_post_para_dict(post):
+    if post.imagem == None:
+        url_imagem = url_for('static', filename='media/templates/oba-banner.jpg')
+    else:
+        url_imagem = url_for('static', filename='data/post/{}'.format(post.imagem))
+
     return {
         "id": post.id,
         "titulo": post.titulo,
+        "imagem": url_imagem,
         "conteudo": post.conteudoResumo(),
         "link": url_for('verPost', post_titulo=post.titulo, post_id=post.id)
     }
@@ -172,7 +178,7 @@ def api_get_listaPosts():
     try:
         # Parametros para carregamento de posts na pagina:
         pagina = int(request.args.get('page', 1)) # Recebe o número da página pelo cabeçalho
-        posts_por_pagina = 6 # Número de posts carregados na página
+        posts_por_pagina = 8 # Número de posts carregados na página
         inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
 
         # Extraindo os posts

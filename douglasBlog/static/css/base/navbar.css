@@ -65,6 +65,7 @@ body {
     margin: 25px 0 0 25px;
     font-size: 22px;
     font-weight: bold;
+    width: 5ch;
     font-family: 'Seven Segment', sans-serif;
 }
 

@@ -1,0 +1,186 @@
+body {
+    padding-bottom: 2%;
+}
+
+h1, p, input {
+    font-family: 'PT Serif', serif;
+}
+
+header{
+    padding: 5vh 0;
+    justify-items: center;
+}
+header h1{
+    font-weight: bold;
+    color: #102e4a;
+}
+
+.view-lista-posts{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+/* CATEGORIAS */
+/* aside {
+    flex: 30%;
+} */
+
+aside {
+    flex: 100%;
+}
+
+main {
+    flex: 70%;
+}
+
+
+/* Aside Elements */
+aside form {
+    width: 100%;
+}
+.barra-pesquisa {
+    width: inherit;
+    display: inline-flex;
+    flex-flow: row;
+    justify-content: right;
+    padding: 0 10vw;
+}
+.barra-pesquisa .pesquisa {
+
+    width: 80vw;
+    position: relative;
+    align-self: center;
+    padding-left: 5px;
+    margin: 0;
+    
+    border: none;
+    border-radius: 18px;
+    font-size: 0.8em;
+    color: #333;
+
+
+    background-color: #d3d0cc;
+}
+.pesquisa::placeholder {
+    color: #333;
+}
+
+.barra-pesquisa .btn-pesquisa {
+    position: absolute;
+    padding-right: 5px;
+    align-self: center;
+    font-size: 0.8em;
+}
+.btn-pesquisa button {
+    padding-top: 6px;
+    border: none;
+    background-color: transparent;
+    color: #333;
+}
+
+
+/* Main Contents */
+
+
+.post-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: left;
+    margin-top: 3%;
+    padding: 0 2%;
+}
+
+.post-div {
+    /* width: 30%; CATEGORIAS */
+    width: 21.2%;
+    min-height: 50vh;
+    max-height: 50vh;
+    margin: 8px 2.5%;
+
+    border: 2px solid #102e4a;
+    border-radius: 18px;
+
+    
+    overflow-wrap: break-word;
+    overflow: hidden;
+}
+
+/* .post-div:nth-child(1), .post-div:nth-child(4) { CATEGORIAS */
+.post-div:nth-child(1), .post-div:nth-child(5){
+    margin-left: 0;
+}
+.post-div:nth-child(4), .post-div:nth-child(8){
+    margin-right: 0;
+}
+
+.link-post {
+    color: black;
+    text-decoration: none;
+}
+
+.imagem-post {
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    max-height: 70%;
+}
+
+.conteudo-container {
+    margin-top: 5%;
+    padding: 0 10px;
+    overflow: hidden;
+}
+
+.titulo-post {
+    font-size: 0.9em;
+    margin-bottom: 0px;
+}
+
+.conteudo-post {
+    font-size: 0.8em;
+    font-weight: 400;
+}
+
+.paginacao {
+    width: 100%;
+    display: flex;
+    margin-top: 1%;
+    justify-content: center;
+}
+.paginacao button {
+    border: none;
+    margin: 0 1%;
+}
+
+
+@media (max-width: 768px){
+
+    .barra-pesquisa{
+        padding: 0 5vw;
+    }
+
+    .barra-pesquisa .pesquisa {
+        width: 90vw;
+    }
+
+    main {
+        flex: 100%;
+    }
+    .post-container{
+        width: 100vw;
+        padding: 0 2.5%;
+        gap: 6%;
+    }
+
+
+    .post-div {
+        width: 47%;
+        min-height: 58vw;
+        max-height: 58vw;
+        margin: 8px 0;
+    }
+
+    .imagem-post {
+        max-height: 70%;
+    }
+}
