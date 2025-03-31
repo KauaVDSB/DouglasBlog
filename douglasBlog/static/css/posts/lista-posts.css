@@ -1,5 +1,7 @@
 body {
     padding-bottom: 2%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 h1, p, input {
@@ -43,7 +45,7 @@ aside form {
     display: inline-flex;
     flex-flow: row;
     justify-content: right;
-    padding: 0 10vw;
+    padding: 0 9.3vw;
 }
 .barra-pesquisa .pesquisa {
 
