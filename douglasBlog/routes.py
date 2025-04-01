@@ -159,7 +159,7 @@ def converter_lista_post_para_dict(post):
     if post.imagem == None:
         url_imagem = url_for('static', filename='media/templates/oba-banner.jpg')
     else:
-        url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/{post.imagem}"
+        url_imagem = post.imagem
 
     return {
         "id": post.id,

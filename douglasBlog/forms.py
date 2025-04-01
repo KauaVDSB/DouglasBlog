@@ -54,7 +54,7 @@ class PostagemForm(FlaskForm):
             supabase.storage.from_("post-files").upload(caminho_arquivo, imagem_bytes)
 
             # Gera url pública para a imagem
-            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/{nome_seguro_arquivo}"
+            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/post-files/{nome_seguro_arquivo}"
 
 
         postagem = Postagem(
