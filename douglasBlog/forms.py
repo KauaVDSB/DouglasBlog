@@ -41,27 +41,30 @@ class PostagemForm(FlaskForm):
 
     def save(self, user_id):
         imagem = self.imagem.data
-        print(imagem)
-        nome_seguro = secure_filename(imagem.filename)
+        nome_seguro = None
+
+        if imagem and imagem.filename:
+            nome_seguro_arquivo = secure_filename(imagem.filename)
+
+            # Garante que a pasta exista antes do upload
+            pasta_upload = os.path.join(
+                os.path.abspath(os.path.dirname(__file__)), # Pasta do projeto
+                app.config['UPLOAD_FILES'], # Pasta de UPLOAD
+                'post' # Pasta do post
+            )
+            os.makedirs(pasta_upload, exist_ok=True)
+
+            caminho = os.path.join(pasta_upload, nome_seguro_arquivo)
+            imagem.save(caminho)
+
+
         postagem = Postagem(
             titulo = self.titulo.data,
-            imagem = nome_seguro,
+            imagem = nome_seguro, # Se for None, js usará imagem template para o frontend
             conteudo = self.conteudo.data,
             user_id = user_id
         )
 
-        caminho = os.path.join(
-            # Pasta do projeto
-            os.path.abspath(os.path.dirname(__file__)),
-            # Pasta de UPLOAD
-            app.config['UPLOAD_FILES'],
-            # Pasta do post
-            'post',
-            # Arquivo
-            nome_seguro
-        )
-
-        imagem.save(caminho)
         db.session.add(postagem)
         db.session.commit()
 
