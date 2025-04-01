@@ -8,6 +8,7 @@ from wtforms.validators import DataRequired, Email#, EqualTo, ValidationError
 from douglasBlog import app, db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
 
+import time
 import os
 from werkzeug.utils import secure_filename
 
@@ -39,24 +40,32 @@ class PostagemForm(FlaskForm):
     conteudo = TextAreaField('Conteúdo')
     btnSubmit = SubmitField('Publicar')
 
-    def save(self, user_id):
+    @staticmethod
+    def generate_unique_filename(filename):
+        """Gera um nome único para o arquivo."""
+        return f"{int(time.time())}_{secure_filename(filename)}"
+
+    def get_url_imagem(self):
         imagem = self.imagem.data
         url_imagem = None
 
         if imagem and imagem.filename:
-            nome_seguro_arquivo = secure_filename(imagem.filename)
+            unique_filename = self.generate_unique_filename(imagem.filename)
 
             # Envia para o Supabase Storage
-            caminho_arquivo = f"post-files/{nome_seguro_arquivo}"
+            caminho_arquivo = f"post-files/{unique_filename}"
             imagem_bytes = imagem.read()
 
             # Upload
             supabase.storage.from_("post-files").upload(caminho_arquivo, imagem_bytes)
 
             # Gera url pública para a imagem
-            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/post-files/{nome_seguro_arquivo}"
+            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/post-files/{unique_filename}"
+        return url_imagem
 
 
+    def save(self, user_id):
+        url_imagem = self.get_url_imagem()
         postagem = Postagem(
             titulo = self.titulo.data,
             imagem = url_imagem, # Se for None, js usará imagem template para o frontend
@@ -79,59 +88,55 @@ class MateriaisForm(FlaskForm):
     btnSubmit = SubmitField('Enviar')
 
 
-    def caminhoArquivo(self, arquivo):
-        arquivo_recebido = arquivo
-        print(arquivo_recebido)
-        nome_seguro = secure_filename(arquivo_recebido.filename)
+    @staticmethod
+    def generate_unique_filename(filename):
+        return f"{int(time.time())}_{secure_filename(filename)}"
 
-        caminho = os.path.join(
-            # Pasta do projeto
-            os.path.abspath(os.path.dirname(__file__)),
-            # Pasta de UPLOAD
-            app.config['UPLOAD_FILES'],
-            # Pasta do material
-            'material',
-            # Arquivo
-            nome_seguro
-        )
+    def upload_para_supabase(self, arquivo):
+        """Faz upload de um arquivo para o Supabase Storage e retorna a URL."""
 
-        arquivo_recebido.save(caminho)
-        return nome_seguro
+        if arquivo and arquivo.filename:
+            unique_filename = self.generate_unique_filename(arquivo.filename)
+            file_path = f"/{unique_filename}"
+            file_bytes = arquivo.read()
+
+            supabase.storage.from_('material-files').upload(
+                file_path,
+                file_bytes,
+                file_options={"content-type":arquivo.mimetype}
+            )
+
+            return f"{SUPABASE_URL}/storage/v1/object/public/material-files/{unique_filename}"
+
+        return None
+
 
     def verificarMaterial(self):
-        lista_conteudos = [self.aula.data, self.mapa_mental.data, self.lista_exercicios.data]
-        tem_material = []
-        materiais = ""
-        for conteudo in range(len(lista_conteudos)):
-            if lista_conteudos[conteudo] != "":
-                tem_material = tem_material + [conteudo]
-            
-
-        if (len(tem_material) > 0):
-            hash = " KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF "
-            for conteudo in range(len(tem_material)):
-                if tem_material[conteudo] == 0:
-                    materiais = materiais + "<div class='container-aula'>" + self.aula.data + hash
-                elif tem_material[conteudo] == 1:
-                    materiais = materiais + "<div class='container-mapa-mental'>" + self.caminhoArquivo(self.mapa_mental.data) + hash
-                else:
-                    materiais = materiais + "<div class='container-lista-exercicios'>" + self.caminhoArquivo(self.lista_exercicios.data)
-            return materiais
-        else:
-            raise Exception('Nenhum material enviado...')
+        """Verifica se pelo menos um material foi enviado"""
+        return any([
+            self.aula.data.strip(),
+            self.mapa_mental.data and self.mapa_mental.data.filename,
+            self.lista_exercicios.data and self.lista_exercicios.data.filename
+        ])
 
 
     def save(self):
-        materiais = self.verificarMaterial()
-        if materiais != '':
+        if self.verificarMaterial():
+            mapa_mental_url = self.upload_para_supabase(self.mapa_mental.data)
+            lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
+            
             material = Material(
-                destino = self.destino.data,
-                titulo = self.titulo.data,
-                materiais = materiais
+                destino=self.destino.data,
+                titulo=self.titulo.data,
+                aula=self.aula.data.strip() or None,
+                mapa_mental=mapa_mental_url,
+                lista_exercicios=lista_exercicios_url
             )
 
             db.session.add(material)
             db.session.commit()
+        else:
+            raise Exception('Nenhum material enviado...')
 
 
 

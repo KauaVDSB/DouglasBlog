@@ -49,10 +49,12 @@ function construirLista(material_lista_exercicios, conteudo_container){
 
 
 function temCaminho(caminho){
-    const existe_caminho = caminho.replace('/static/data/material/').replace('undefined', "").length;
-    console.log(existe_caminho);
-    if (existe_caminho > 2){
+    if (caminho !== '' && caminho !== null){
+        console.log('valido');
         return true;
+    }
+    else {
+        console.log('invalido');
     }
 }
 
@@ -85,6 +87,10 @@ async function carregarMateriais(destino) {
         
         const conteudo_container = document.createElement('div');
         conteudo_container.className = 'conteudo-container';
+        console.log(material.aula);
+        console.log(material.mapa_mental);
+        console.log(material.lista_exercicios);
+        console.log('------------');
         if (material.aula){
             construirAula(material.aula, conteudo_container);
         }

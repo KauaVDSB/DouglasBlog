@@ -87,35 +87,14 @@ def materiaisTurmas(turma):
 
 
 def converter_lista_materiais_para_dict(material):
-    if not material.materiais:
-        return {
-            "id": material.id,
-            "destino": material.destino,
-            "titulo": material.titulo,
-            "aula": '',
-            "mapa_mental": '',
-            "lista_exercicios": '',
-            "data_criacao": material.data_criacao
-        }
-
-    aula, mapa_mental, lista_exercicios = '', '', ''
-    lista_materiais = material.materiais.split("KEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERFKEWFNIUHWKN3IN3JHR32KJRB3298HF33MRN32KB32KUB32IB3IBFERF")
-
-    for item in lista_materiais:
-        if "<div class='container-aula'>" in item:
-            aula = item.replace("<div class='container-aula'>", "").replace(" ", "")
-        elif "<div class='container-mapa-mental'>" in item:
-            mapa_mental = item.replace("<div class='container-mapa-mental'>", "").replace(" ", "")
-        elif "<div class='container-lista-exercicios'>" in item:
-            lista_exercicios = item.replace("<div class='container-lista-exercicios'>", "").replace(" ", "")
 
     return {
         "id": material.id,
         "destino": material.destino,
         "titulo": material.titulo,
-        "aula": aula,
-        "mapa_mental": url_for('static', filename='data/material/{}'.format(mapa_mental)),
-        "lista_exercicios": url_for('static', filename='data/material/{}'.format(lista_exercicios)),
+        "aula": material.aula,
+        "mapa_mental": material.mapa_mental,
+        "lista_exercicios": material.lista_exercicios,
         "data_criacao": material.data_criacao,
     }
 
