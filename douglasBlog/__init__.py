@@ -16,11 +16,11 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 app.config['UPLOAD_FILES'] = r'static/data'
 
-# # Configurar as credenciais do Supabase
-# SUPABASE_URL = os.getenv('SUPABASE_URL')  # Substitua pelo seu
-# SUPABASE_KEY = os.getenv('SUPABASE_KEY')  # Substitua pela sua chave de serviço
+# Configurar as credenciais do Supabase
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
 
-# supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 db = SQLAlchemy(app)

@@ -1,4 +1,4 @@
-from douglasBlog import app, db
+from douglasBlog import app, db, supabase, SUPABASE_URL
 from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
@@ -145,10 +145,7 @@ def api_get_listaMateriais(destino):
 
 
 
-
-
-
-            # /POSTS/
+# /POSTS/
 
                 # /LISTA-POSTS.HTML
 @app.route('/posts/lista/')
@@ -162,7 +159,7 @@ def converter_lista_post_para_dict(post):
     if post.imagem == None:
         url_imagem = url_for('static', filename='media/templates/oba-banner.jpg')
     else:
-        url_imagem = url_for('static', filename='data/post/{}'.format(post.imagem))
+        url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/{post.imagem}"
 
     return {
         "id": post.id,

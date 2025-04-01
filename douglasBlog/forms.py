@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField, FileField
 # Para validar email, baixar biblioteca email_validator
-from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Email#, EqualTo, ValidationError
 
-from flask_login import current_user
+# from flask_login import current_user
 
-from douglasBlog import app, db, bcrypt
+from douglasBlog import app, db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
 
 import os
@@ -41,26 +41,25 @@ class PostagemForm(FlaskForm):
 
     def save(self, user_id):
         imagem = self.imagem.data
-        nome_seguro_arquivo = None
+        url_imagem = None
 
         if imagem and imagem.filename:
             nome_seguro_arquivo = secure_filename(imagem.filename)
 
-            # Garante que a pasta exista antes do upload
-            pasta_upload = os.path.join(
-                os.path.abspath(os.path.dirname(__file__)), # Pasta do projeto
-                app.config['UPLOAD_FILES'], # Pasta de UPLOAD
-                'post' # Pasta do post
-            )
-            os.makedirs(pasta_upload, exist_ok=True)
+            # Envia para o Supabase Storage
+            caminho_arquivo = f"post-files/{nome_seguro_arquivo}"
+            imagem_bytes = imagem.read()
 
-            caminho = os.path.join(pasta_upload, nome_seguro_arquivo)
-            imagem.save(caminho)
+            # Upload
+            supabase.storage.from_("post-files").upload(caminho_arquivo, imagem_bytes)
+
+            # Gera url pública para a imagem
+            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/{nome_seguro_arquivo}"
 
 
         postagem = Postagem(
             titulo = self.titulo.data,
-            imagem = nome_seguro_arquivo, # Se for None, js usará imagem template para o frontend
+            imagem = url_imagem, # Se for None, js usará imagem template para o frontend
             conteudo = self.conteudo.data,
             user_id = user_id
         )
