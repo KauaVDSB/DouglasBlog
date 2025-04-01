@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from dotenv import load_dotenv
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-
+from supabase import create_client
 
 import os
 load_dotenv('.env')
@@ -15,6 +15,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 app.config['UPLOAD_FILES'] = r'static/data'
+
+# # Configurar as credenciais do Supabase
+# SUPABASE_URL = os.getenv('SUPABASE_URL')  # Substitua pelo seu
+# SUPABASE_KEY = os.getenv('SUPABASE_KEY')  # Substitua pela sua chave de serviço
+
+# supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 
 db = SQLAlchemy(app)

@@ -41,7 +41,7 @@ class PostagemForm(FlaskForm):
 
     def save(self, user_id):
         imagem = self.imagem.data
-        nome_seguro = None
+        nome_seguro_arquivo = None
 
         if imagem and imagem.filename:
             nome_seguro_arquivo = secure_filename(imagem.filename)
@@ -60,7 +60,7 @@ class PostagemForm(FlaskForm):
 
         postagem = Postagem(
             titulo = self.titulo.data,
-            imagem = nome_seguro, # Se for None, js usará imagem template para o frontend
+            imagem = nome_seguro_arquivo, # Se for None, js usará imagem template para o frontend
             conteudo = self.conteudo.data,
             user_id = user_id
         )
