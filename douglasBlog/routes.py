@@ -11,7 +11,7 @@ def homepage():
 
     return render_template('view/index.html')
 
-@app.route('/#<string:section>')
+@app.route('/-<string:section>')
 def homepageSection(section):
 
     return render_template('view/index.html', section=section)
