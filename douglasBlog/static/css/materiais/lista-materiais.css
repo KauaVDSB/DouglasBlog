@@ -19,6 +19,8 @@ header {
     justify-items: center;
     text-align: center;
     color: #F0EDE8;
+    display: flex;
+    flex-flow: column-reverse;
 }
 header h1 {
     font-size: 1.5em;
@@ -46,6 +48,7 @@ main {
     display: flex;
     flex-flow: column;
     justify-content: flex-start;
+    margin-bottom: 20px;
 }
 
 .material-div > h2 {
@@ -56,6 +59,7 @@ main {
     
     align-content: center;
     text-align: center;
+    font-size: 1em;
 }
 
 .conteudo-container {
@@ -89,6 +93,7 @@ main {
     align-content: center;
     text-align: center;
     font-size: 1.8em;
+    margin-right: 5px;
 }
 .aula a div .mapa-mental a div, .lista-exercicios a div{
     flex: 80%;

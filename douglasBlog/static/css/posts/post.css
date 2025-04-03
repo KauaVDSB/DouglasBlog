@@ -1,0 +1,14 @@
+body {
+    padding-bottom: 2%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+h1, p, input {
+    font-family: 'PT Serif', serif;
+}
+
+header, main {
+    width: 60%;
+    justify-self: center;
+}

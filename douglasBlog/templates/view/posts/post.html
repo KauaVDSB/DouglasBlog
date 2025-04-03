@@ -1,11 +1,12 @@
 {% extends 'base/html.html' %}
 {% block link %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/posts/post.css') }}">
 {% endblock %}
 
 {% block title %} {{ post.titulo }} {% endblock %}
 
 {% block content %}
-    {% include 'base/navbar.html' %}
+{% include 'base/navbar.html' %}
 
 <header>
     <h1>
@@ -13,22 +14,22 @@
     </h1>
 
     <span>
-        {{ post.user.nome }} {{ post.user.sobrenome }}
+        Por {{ post.user.nome }} {{ post.user.sobrenome }}
     </span>
     <br>
     <span>{{ post.data_resumo() }}</span>
     <hr>
     <img src="{{ post.imagem }}" alt="">
-
-    <main style="overflow-wrap: break-word;">
-        <div id="container-conteudo" class="container-conteudo">
-            
-        </div>
-    </main>
-    
 </header>
+    
+<main style="overflow-wrap: break-word;">
+    <div id="container-conteudo" class="container-conteudo">
+        
+    </div>
+</main>
+    
 
-
+ 
 <script src="{{ url_for('static', filename='js/posts/detalhe-post.js') }}"></script>
 
 {% endblock %}

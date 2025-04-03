@@ -31,6 +31,7 @@ function construirMapa(material_mapa_mental, conteudo_container, material_titulo
     const download_mapa_mental = document.createElement('a');
     download_mapa_mental.href = conteudo_mapa_mental;
     download_mapa_mental.download = conteudo_mapa_mental;
+    download_mapa_mental.target = 'blank';
     download_mapa_mental.innerHTML =
     `<i class="bi bi-download"></i>
     <div>
@@ -51,6 +52,7 @@ function construirLista(material_lista_exercicios, conteudo_container){
     const download_lista_exercicios = document.createElement('a');
     download_lista_exercicios.href = conteudo_lista_exercicios;
     download_lista_exercicios.download = conteudo_lista_exercicios;
+    download_lista_exercicios.target = 'blank';
     download_lista_exercicios.innerHTML =
     `<i class="bi bi-download"></i>
     <div>
