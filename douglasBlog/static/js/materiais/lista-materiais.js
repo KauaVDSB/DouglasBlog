@@ -2,7 +2,7 @@ function construirAula(material_aula, conteudo_container){
     const conteudo_aula = material_aula.trim();
 
     const container_aula = document.createElement('div');
-    container_aula.className = 'container-aula';
+    container_aula.className = 'aula';
     conteudo_container.appendChild(container_aula);
     
     const link_aula = document.createElement('a');
@@ -13,7 +13,11 @@ function construirAula(material_aula, conteudo_container){
         link_aula.href = conteudo_aula;
     }
     link_aula.target = 'blank';
-    link_aula.textContent = 'Aula';
+    link_aula.innerHTML =
+    `<i class="bi bi-youtube"></i>
+    <div>
+        <h3>Aula</h3> <span>Assista a aula sobre o assunto.</span>
+    </div>`;
     container_aula.appendChild(link_aula);
 
 }
@@ -21,13 +25,18 @@ function construirMapa(material_mapa_mental, conteudo_container, material_titulo
     const conteudo_mapa_mental = material_mapa_mental.trim();
 
     const container_mapa_mental = document.createElement('div');
-    container_mapa_mental.className = 'container-mapa-mental';
+    container_mapa_mental.className = 'mapa-mental';
     conteudo_container.appendChild(container_mapa_mental);
 
     const download_mapa_mental = document.createElement('a');
     download_mapa_mental.href = conteudo_mapa_mental;
     download_mapa_mental.download = conteudo_mapa_mental;
-    download_mapa_mental.textContent = 'Mapa Mental';
+    download_mapa_mental.innerHTML =
+    `<i class="bi bi-download"></i>
+    <div>
+        <h3>Mapa Mental</h3>
+        <span> Baixe o PDF com anotações sobre a aula. </span>
+    </div>`;
 
     container_mapa_mental.appendChild(download_mapa_mental);
 }
@@ -35,14 +44,19 @@ function construirLista(material_lista_exercicios, conteudo_container){
     const conteudo_lista_exercicios = material_lista_exercicios.trim();
     
     const container_lista_exercicios = document.createElement('div');
-    container_lista_exercicios.className = 'container-lista-exercicios';
+    container_lista_exercicios.className = 'lista-exercicios';
     conteudo_container.appendChild(container_lista_exercicios);
     
     
     const download_lista_exercicios = document.createElement('a');
     download_lista_exercicios.href = conteudo_lista_exercicios;
     download_lista_exercicios.download = conteudo_lista_exercicios;
-    download_lista_exercicios.textContent = 'Lista de Exercícios';
+    download_lista_exercicios.innerHTML =
+    `<i class="bi bi-download"></i>
+    <div>
+        <h3>Lista de Exercícios</h3>
+        <span> Baixe o PDF com exercícios sobre o assunto. </span>
+    </div>`;
 
     container_lista_exercicios.appendChild(download_lista_exercicios);
 }
@@ -79,8 +93,7 @@ async function carregarMateriais(destino) {
     materiais.forEach(material => {
 
         const material_div = document.createElement('div');
-        material_div.className = 'material-div col-4';
-        material_div.style = 'border-bottom: 1px solid; overflow:hidden;';
+        material_div.className = 'material-div';
         
         const titulo = document.createElement('h2');
         titulo.textContent = material.titulo;

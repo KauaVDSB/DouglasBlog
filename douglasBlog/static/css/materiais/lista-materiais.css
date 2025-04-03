@@ -1,0 +1,103 @@
+body {
+    padding-bottom: 2%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+h1, p, input {
+    font-family: 'PT Serif', serif;
+}
+
+header {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    margin-top: -4vh;
+    padding-top: 4vh;
+
+    background-color: #102e4a;
+    
+    justify-items: center;
+    text-align: center;
+    color: #F0EDE8;
+}
+header h1 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+
+main {
+    /* background-color: aqua; */
+    margin-top: 5vh;
+}
+
+.material-container {
+    /* background-color: blue; */
+    display: grid;
+    grid-template-columns: repeat(3, 25%);
+    justify-content: space-around;
+}
+
+.material-div{
+    /* background-color: aquamarine; */
+    border: 2px solid #102e4a;
+    border-radius: 18px;
+    padding: 5px;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+}
+
+.material-div > h2 {
+    background-color: rgba(173, 193, 207, 0.863);
+    margin: 0;
+    border-radius: 10px;
+    height: 60px;
+    
+    align-content: center;
+    text-align: center;
+}
+
+.conteudo-container {
+    /* background-color: bisque; */
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 5px;
+
+    margin-top: 10px;
+    padding-bottom: 5px;
+} 
+.conteudo-container > .aula, .conteudo-container > .mapa-mental, .conteudo-container > .lista-exercicios {
+    background-color: #d1cdc756;
+    border-radius: 8px;
+}
+
+.aula a, .mapa-mental a, .lista-exercicios a {
+    color: #000;
+    text-decoration: none;
+    display: flex;
+    height: 90px;
+    align-items: center;
+}
+.aula a i, .mapa-mental a i, .lista-exercicios a i {
+    /* background-color: yellow; */
+    flex: 20%;
+    min-width: 20%;
+    max-width: 20%;
+    height: 100%;
+
+    align-content: center;
+    text-align: center;
+    font-size: 1.8em;
+}
+.aula a div .mapa-mental a div, .lista-exercicios a div{
+    flex: 80%;
+}
+.aula a h3, .mapa-mental a h3, .lista-exercicios a h3 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.aula a span, .mapa-mental a span, .lista-exercicios a span {
+    font-size: 0.7em;
+}

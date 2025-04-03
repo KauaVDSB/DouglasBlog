@@ -79,11 +79,11 @@ def criarMateriais():
         # VIEW/
             # / MATERIAIS
 
-                    # TURMAS.HTML
+                    # MATERIAIS.HTML
 @app.route('/materiais/turmas/<int:turma>/')
 def materiaisTurmas(turma):
     
-    return render_template('view/materiais/turmas.html')
+    return render_template('view/materiais/materiais.html')
 
 
 def converter_lista_materiais_para_dict(material):

@@ -5,7 +5,7 @@ const lista_destino = ['PRIMEIRO', 'SEGUNDO', 'TERCEIRO', 'OLÍMPIADAS'];
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.getElementById('header');
     const titulo_pagina = document.createElement('h1');
-    destino_titulo = lista_destino[destino-1];
+    const destino_titulo = lista_destino[destino-1];
     if (destino == 4){
         titulo_pagina.innerHTML = destino_titulo;
     }
