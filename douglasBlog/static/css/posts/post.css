@@ -48,3 +48,15 @@ header .img-header {
 .container-conteudo p blockquote{
     margin: 0;
 }
+
+.container-conteudo figure {
+    padding: 5px;
+    margin: 0;
+}
+.container-conteudo img {
+    width: 100%;
+    height: auto;
+    margin: 0;
+
+    border-radius: 18px;
+}

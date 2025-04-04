@@ -5,6 +5,9 @@ from flask_login import login_user, logout_user, current_user, login_required
 from douglasBlog.models import User, Postagem, Material
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
 
+import time
+from werkzeug.utils import secure_filename
+
 # Rota para homepage
 @app.route('/')
 def homepage():
@@ -62,6 +65,24 @@ def criarPosts():
         return redirect(url_for('listaPosts'))
 
     return render_template('admin/criar/criar-posts.html', form=form)
+
+
+@app.route('/api/upload-image-ckeditor', methods=['POST'])
+@login_required
+def upload_image_ckeditor():
+    file = request.files.get('upload')
+    if not file:
+        return jsonify({'error': 'Nenhum arquivo enviado.'}), 400
+    
+    unique_filename = f"{int(time.time())}_{secure_filename(file.filename)}"
+    caminho_arquivo = f"post-files/{unique_filename}"
+    file_bytes = file.read()
+
+    supabase.storage.from_('post-files').upload(caminho_arquivo, file_bytes)
+
+    url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/post-files/{unique_filename}"
+
+    return jsonify({'url': url_imagem})
 
 
 @app.route('/admin/douglas-blog/materiais/criar/', methods=['GET', 'POST'])

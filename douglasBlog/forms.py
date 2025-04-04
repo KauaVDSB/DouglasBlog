@@ -9,7 +9,6 @@ from douglasBlog import app, db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
 
 import time
-import os
 from werkzeug.utils import secure_filename
 
 

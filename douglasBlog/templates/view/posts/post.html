@@ -1,6 +1,18 @@
 {% extends 'base/html.html' %}
 {% block link %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/posts/post.css') }}">
+<script>
+    MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']]
+        },
+        svg: {
+            fontCache: 'global'
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 {% endblock %}
 
 {% block title %} {{ post.titulo }} {% endblock %}
@@ -28,7 +40,7 @@
 </main>
     
 
- 
+
 <script src="{{ url_for('static', filename='js/posts/detalhe-post.js') }}"></script>
 
 {% endblock %}
