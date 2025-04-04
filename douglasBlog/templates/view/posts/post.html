@@ -9,17 +9,16 @@
 {% include 'base/navbar.html' %}
 
 <header>
-    <h1>
+    <h1 class="titulo">
         {{ post.titulo }}
     </h1>
 
-    <span>
-        Por {{ post.user.nome }} {{ post.user.sobrenome }}
-    </span>
-    <br>
-    <span>{{ post.data_resumo() }}</span>
+    <p class="autor">
+        Por <span class="nome-autor">{{ post.user.nome }} {{ post.user.sobrenome }}</span>
+    </p>
+    <span class="datetime">{{ post.data_resumo() }}</span>
     <hr>
-    <img src="{{ post.imagem }}" alt="">
+    <img src="{{ post.imagem }}" alt="" class="img-header">
 </header>
     
 <main style="overflow-wrap: break-word;">
