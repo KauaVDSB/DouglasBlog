@@ -60,3 +60,11 @@ header .img-header {
 
     border-radius: 18px;
 }
+
+
+/* Telas menores que 768px */
+@media (max-width: 768px) {
+    header, main {
+        width: 90%;
+    }
+}
