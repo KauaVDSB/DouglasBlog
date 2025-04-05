@@ -30,6 +30,7 @@ async function carregarPosts(page) {
         const imagem = document.createElement('img');
         imagem.src = post.imagem;
         imagem.className = 'imagem-post';
+        // imagem.loading = 'lazy';
 
         const conteudo_container = document.createElement('div');
         conteudo_container.className = 'conteudo-container';

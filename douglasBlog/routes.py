@@ -2,6 +2,7 @@ from douglasBlog import app, db, supabase, SUPABASE_URL
 from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
+from sqlalchemy import desc
 from douglasBlog.models import User, Postagem, Material
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
 
@@ -124,7 +125,7 @@ def converter_lista_materiais_para_dict(material):
 def api_get_listaMateriais(destino):
     try:
         # extraindo os materiais
-        materiais_query = Material.query.filter_by(destino=destino)
+        materiais_query = Material.query.filter_by(destino=destino).order_by(desc(Material.data_criacao))
         materiais = list(materiais_query)  # Garante que seja uma lista
         
         materiais_dict = [converter_lista_materiais_para_dict(material) for material in materiais]
@@ -179,7 +180,7 @@ def api_get_listaPosts():
         inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
 
         # Extraindo os posts
-        posts_carregados = Postagem.query.offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
+        posts_carregados = Postagem.query.order_by(desc(Postagem.data_postagem)).offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
         posts_carregados_dict = [converter_lista_post_para_dict(post) for post in posts_carregados] # Converte para dict
 
 
