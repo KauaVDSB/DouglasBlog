@@ -113,6 +113,7 @@ main {
 @media (max-width: 768px) {
     .material-container {
         display: grid;
+        padding: 0 1.2rem;
         grid-template-columns:none;
         grid-auto-flow: column;
         gap: 1.2rem;
