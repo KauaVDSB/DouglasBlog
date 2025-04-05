@@ -29,19 +29,16 @@ header h1 {
 
 
 main {
-    /* background-color: aqua; */
     margin-top: 5vh;
 }
 
 .material-container {
-    /* background-color: blue; */
     display: grid;
     grid-template-columns: repeat(3, 25%);
     justify-content: space-around;
 }
 
 .material-div{
-    /* background-color: aquamarine; */
     border: 2px solid #102e4a;
     border-radius: 18px;
     padding: 5px;
@@ -63,7 +60,6 @@ main {
 }
 
 .conteudo-container {
-    /* background-color: bisque; */
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: repeat(3, 1fr);
@@ -116,16 +112,20 @@ main {
 /* Telas menores que 768px */
 @media (max-width: 768px) {
     .material-container {
-        overflow-x: scroll;
-        white-space: nowrap;
-        display: block;
-        justify-content: space-evenly;
+        display: grid;
+        grid-template-columns:none;
+        grid-auto-flow: column;
+        gap: 1.2rem;
+        overflow-x: auto;
+        overscroll-behavior-x: contain;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
     }
 
     .material-div {
-        display: inline-block;
-        width: 80%;
-        margin: 0 5%;
+        min-width: 80vw;
+        width: 80vw;
+        scroll-snap-align: center;
     }
     
 }
