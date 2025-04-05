@@ -65,11 +65,13 @@ main {
 .conteudo-container {
     /* background-color: bisque; */
     display: grid;
+    grid-template-columns: 100%;
     grid-template-rows: repeat(3, 1fr);
     gap: 5px;
 
     margin-top: 10px;
     padding-bottom: 5px;
+    
 } 
 .conteudo-container > .aula, .conteudo-container > .mapa-mental, .conteudo-container > .lista-exercicios {
     background-color: #d1cdc756;
@@ -80,22 +82,22 @@ main {
     color: #000;
     text-decoration: none;
     display: flex;
-    height: 90px;
+    height: 100px;
     align-items: center;
+    margin: 0 5px;
 }
 .aula a i, .mapa-mental a i, .lista-exercicios a i {
-    /* background-color: yellow; */
     flex: 20%;
     min-width: 20%;
     max-width: 20%;
     height: 100%;
-
+    
     align-content: center;
     text-align: center;
     font-size: 1.8em;
-    margin-right: 5px;
+    margin-right: 10px;
 }
-.aula a div .mapa-mental a div, .lista-exercicios a div{
+.aula a div, .mapa-mental a div, .lista-exercicios a div{
     flex: 80%;
 }
 .aula a h3, .mapa-mental a h3, .lista-exercicios a h3 {
@@ -103,6 +105,27 @@ main {
     font-size: 18px;
 }
 
-.aula a span, .mapa-mental a span, .lista-exercicios a span {
+.aula a div p, .mapa-mental a div p, .lista-exercicios a div p {
     font-size: 0.7em;
+    overflow-wrap: normal;
+    white-space: normal;
+    margin: 5px 0 0 0;
+}
+
+
+/* Telas menores que 768px */
+@media (max-width: 768px) {
+    .material-container {
+        overflow-x: scroll;
+        white-space: nowrap;
+        display: block;
+        justify-content: space-evenly;
+    }
+
+    .material-div {
+        display: inline-block;
+        width: 80%;
+        margin: 0 5%;
+    }
+    
 }

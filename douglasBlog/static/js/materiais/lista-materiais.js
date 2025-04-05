@@ -16,7 +16,7 @@ function construirAula(material_aula, conteudo_container){
     link_aula.innerHTML =
     `<i class="bi bi-youtube"></i>
     <div>
-        <h3>Aula</h3> <span>Assista a aula sobre o assunto.</span>
+        <h3>Aula</h3> <p>Assista a aula sobre o assunto.</p>
     </div>`;
     container_aula.appendChild(link_aula);
 
@@ -36,7 +36,7 @@ function construirMapa(material_mapa_mental, conteudo_container, material_titulo
     `<i class="bi bi-download"></i>
     <div>
         <h3>Mapa Mental</h3>
-        <span> Baixe o PDF com anotações sobre a aula. </span>
+        <p> Baixe o PDF com anotações sobre a aula. </p>
     </div>`;
 
     container_mapa_mental.appendChild(download_mapa_mental);
@@ -57,7 +57,7 @@ function construirLista(material_lista_exercicios, conteudo_container){
     `<i class="bi bi-download"></i>
     <div>
         <h3>Lista de Exercícios</h3>
-        <span> Baixe o PDF com exercícios sobre o assunto. </span>
+        <p> Baixe o PDF de exercícios da aula. </p>
     </div>`;
 
     container_lista_exercicios.appendChild(download_lista_exercicios);
