@@ -175,7 +175,15 @@ def converter_lista_post_para_dict(post):
 def api_get_listaPosts():
     try:
         # Parametros para carregamento de posts na pagina:
-        pagina = int(request.args.get('page', 1)) # Recebe o número da página pelo cabeçalho
+        pagina = request.args.get('page', 1) # Recebe o número da página pelo cabeçalho
+
+        try:
+            pagina = int(pagina)
+            if pagina < 1:
+                pagina =1
+        except ValueError:
+            pagina = 1
+
         posts_por_pagina = 8 # Número de posts carregados na página
         inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
 
