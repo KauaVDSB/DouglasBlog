@@ -36,6 +36,11 @@
     </aside>
 
     <main>
+        <div id="loader-foguete" class="loader-foguete" > <!--style="display: none;"-->
+            <img src="{{ url_for('static', filename='media/icones/loader-foguete.png') }}" alt="Carregando...">
+            <div class="fogo-foguete"></div>
+        </div>
+
         <div id="post-container" class="post-container"></div>
         <div class="paginacao">
             <button id="botao-voltar" disabled>

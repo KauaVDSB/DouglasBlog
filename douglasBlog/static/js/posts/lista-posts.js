@@ -12,10 +12,12 @@ const cache = {
     totalPosts: null
 };
 
+const loader_foguete = document.getElementById('loader-foguete'); 
 // Carregamento dos posts
 async function carregarPosts(page) {
     if (carregando) return;
     carregando = true;
+    loader_foguete.style.display = 'block';
 
     try{
         let posts;
@@ -51,7 +53,6 @@ async function carregarPosts(page) {
         post_container.innerHTML = ''; // Limpa posts antigos
         posts.forEach(post => {
             const post_div = document.createElement('div');
-            post_div.style = ''
             post_div.className = 'post-div';
 
             const link = document.createElement('a');
@@ -80,6 +81,8 @@ async function carregarPosts(page) {
             link.appendChild(conteudo_container);
             conteudo_container.appendChild(titulo);
             conteudo_container.appendChild(prev_conteudo);
+
+            setTimeout(() => post_div.classList.add('fade-in'), 50);
         });
                     
         // Atualiza botões de paginação
@@ -90,6 +93,7 @@ async function carregarPosts(page) {
     }
     finally {
         carregando = false;
+        loader_foguete.style.display = 'none';
     }
 }
 
