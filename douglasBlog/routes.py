@@ -3,10 +3,11 @@ from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc
-from douglasBlog.models import User, Postagem, Material
+from douglasBlog.models import Postagem, Material # ,User
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
 
-import time
+from time import time
+import re
 from werkzeug.utils import secure_filename
 
 # Rota para homepage
@@ -155,19 +156,24 @@ def listaPosts():
     return render_template('view/posts/lista-posts.html')
 
 
-# Função para serializar o objeto Postagem para formato JSON
-def converter_lista_post_para_dict(post):
-    if post.imagem == None:
+def converter_entities_lista_post_para_dict(id, titulo, imagem, conteudo):
+    if imagem is None:
         url_imagem = url_for('static', filename='media/templates/oba-banner.jpg')
     else:
-        url_imagem = post.imagem
+        url_imagem = imagem
+
+    post_conteudo = re.sub(r'<[^>]*?>', '', conteudo or '')
+    if len(post_conteudo) > 60:
+        resumo = f"{post_conteudo[:37]}..."
+    else:
+        resumo = post_conteudo
 
     return {
-        "id": post.id,
-        "titulo": post.titulo,
+        "id": id,
+        "titulo": titulo,
         "imagem": url_imagem,
-        "conteudo": post.conteudoResumo(),
-        "link": url_for('verPost', post_titulo=post.titulo, post_id=post.id)
+        "conteudo": resumo,
+        "link": url_for('verPost', post_titulo=titulo, post_id=id)
     }
 
 
@@ -187,13 +193,36 @@ def api_get_listaPosts():
         posts_por_pagina = 8 # Número de posts carregados na página
         inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
 
-        # Extraindo os posts
-        posts_carregados = Postagem.query.order_by(desc(Postagem.data_postagem)).offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
-        posts_carregados_dict = [converter_lista_post_para_dict(post) for post in posts_carregados] # Converte para dict
+        #PERFORMANCE
+        t0 = time()
 
+        # Extraindo os posts
+        posts_carregados = db.session.query(
+            Postagem.id,
+            Postagem.titulo,
+            Postagem.imagem,
+            Postagem.conteudo
+        ).order_by(
+            desc(Postagem.data_postagem)
+        ).offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
+
+        #PERFORMANCE
+        t1 = time()
+
+
+        posts_carregados_dict = [
+            converter_entities_lista_post_para_dict(id, titulo, imagem, conteudo)
+            for id, titulo, imagem, conteudo in posts_carregados
+        ] # Converte para dict
 
         # Contando total de posts
-        posts_total = Postagem.query.count()
+        posts_total = db.session.query(Postagem.id).count()
+
+        t2 = time()
+
+        # Logs de desempenho de PERFORMANCE
+        print(f"Tempo consulta com with_entities: {(t1 - t0)*1000:.2f} ms")
+        print(f"Tempo total (com contagem): {(t2 - t0)*1000:.2f} ms")
 
 
         # Criando a resposta JSON
@@ -203,6 +232,7 @@ def api_get_listaPosts():
         return response
 
     except Exception as e:
+        print(f"❌ Erro ao buscar posts: {e}")
         return jsonify({"error": str(e)}), 500 # Retorna erro como json em caso de falha.
     
 
