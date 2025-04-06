@@ -6,6 +6,11 @@ let pagina_atual = pagina_url;
 let pagina_total = 1;
 let carregando = false;
 
+// Objeto de Cache
+const cache = {
+    posts: {}, // armazena posts por pagina
+    totalPosts: null
+};
 
 // Carregamento dos posts
 async function carregarPosts(page) {
@@ -13,13 +18,33 @@ async function carregarPosts(page) {
     carregando = true;
 
     try{
-        const response = await fetch(`/api/get/lista-posts?page=${page}`);
-        const posts = await response.json();
+        let posts;
+        let totalPosts;
+
+        if (cache.posts[page]) {
+            posts = cache.posts[page];
+            totalPosts = cache.totalPosts;
+            console.log('Pagina encontrada no cache!');
+        }
+        else {
+            const response = await fetch(`/api/get/lista-posts?page=${page}`);
+            posts = await response.json();
+
+            cache.posts[page] = posts;
+            console.log('Pagina salva no cache!');
+            if (!cache.totalPosts){
+                totalPosts = parseInt(response.headers.get('X-Total-Count'));
+                cache.totalPosts = totalPosts;
+                console.log('Total de paginas salvo no cache!');
+            }
+            else{
+                totalPosts = cache.totalPosts;
+                console.log('Total de paginas encontrado no cache!');
+            }
+        }
         
     
-        // Atualiza total de páginas
-        const posts_total = parseInt(response.headers.get('X-Total-Count')); // Pega total de posts do cabeçalho
-        pagina_total = Math.ceil(posts_total / posts_por_pagina); // Menor número inteiro maior ou igual ao resultado
+        pagina_total = Math.ceil(totalPosts / posts_por_pagina); // Menor número inteiro maior ou igual ao resultado
 
         // Atualiza container de posts
         const post_container = document.getElementById(`post-container`);
