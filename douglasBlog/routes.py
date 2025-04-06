@@ -2,7 +2,7 @@ from douglasBlog import app, db, supabase, SUPABASE_URL
 from flask import render_template, url_for, request, redirect, jsonify
 from flask_login import login_user, logout_user, current_user, login_required
 
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 from douglasBlog.models import Postagem, Material # ,User
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
 
@@ -216,7 +216,7 @@ def api_get_listaPosts():
         ] # Converte para dict
 
         # Contando total de posts
-        posts_total = db.session.query(Postagem.id).count()
+        posts_total = db.session.query(func.count(Postagem.id)).scalar()
 
         t2 = time()
 
