@@ -111,7 +111,7 @@ aside form {
 /* Para transição */
 .post-div {
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.4s ease-in-out;
 }
 .post-div.fade-in {
     opacity: 1;
@@ -208,7 +208,7 @@ aside form {
 }
 .loader-foguete img{
     width: 150px;
-    animation: vooFoguete 0.6s infinite ease-in-out;
+    animation: vooFoguete 0.6s 1 ease-in-out;
 }
 
 @keyframes vooFoguete {

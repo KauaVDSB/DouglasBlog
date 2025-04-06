@@ -18,6 +18,7 @@ async function carregarPosts(page) {
     if (carregando) return;
     carregando = true;
     loader_foguete.style.display = 'block';
+    const inicio_carregamento = performance.now(); // PERFORMANCE
 
     try{
         let posts;
@@ -26,22 +27,18 @@ async function carregarPosts(page) {
         if (cache.posts[page]) {
             posts = cache.posts[page];
             totalPosts = cache.totalPosts;
-            console.log('Pagina encontrada no cache!');
         }
         else {
             const response = await fetch(`/api/get/lista-posts?page=${page}`);
             posts = await response.json();
 
             cache.posts[page] = posts;
-            console.log('Pagina salva no cache!');
             if (!cache.totalPosts){
                 totalPosts = parseInt(response.headers.get('X-Total-Count'));
                 cache.totalPosts = totalPosts;
-                console.log('Total de paginas salvo no cache!');
             }
             else{
                 totalPosts = cache.totalPosts;
-                console.log('Total de paginas encontrado no cache!');
             }
         }
         
@@ -92,8 +89,18 @@ async function carregarPosts(page) {
         console.error("Falha ao carregar posts: ", error);
     }
     finally {
-        carregando = false;
-        loader_foguete.style.display = 'none';
+        const fim_carregamento = performance.now();
+        const tempo_carregamento = fim_carregamento - inicio_carregamento;
+        const tempo_minimo = 500; //500ms
+
+        const delay = tempo_minimo - tempo_carregamento;
+
+        setTimeout(() => {
+            loader_foguete.style.display = 'none';
+            carregando = false;
+        }, delay > 0 ? delay : 0);
+        console.log('Tempo de carregamento: ' + tempo_carregamento);
+        console.log('Loader durou por mais: ' + delay);
     }
 }
 
