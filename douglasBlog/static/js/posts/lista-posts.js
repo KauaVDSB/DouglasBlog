@@ -1,5 +1,8 @@
+const urlParams = new URLSearchParams(window.location.search);
+const pagina_url = parseInt(urlParams.get("page")) || 1;
 const posts_por_pagina = 8;
-let pagina_atual = 1;
+
+let pagina_atual = pagina_url;
 let pagina_total = 1;
 let carregando = false;
 
@@ -14,11 +17,9 @@ async function carregarPosts(page) {
         const posts = await response.json();
         
     
-        // Atualiza total de páginas na primeira chamada
-        if (page === 1){
-            const posts_total = parseInt(response.headers.get('X-Total-Count')); // Pega total de posts do cabeçalho
-            pagina_total = Math.ceil(posts_total / posts_por_pagina); // Menor número inteiro maior ou igual ao resultado
-        }
+        // Atualiza total de páginas
+        const posts_total = parseInt(response.headers.get('X-Total-Count')); // Pega total de posts do cabeçalho
+        pagina_total = Math.ceil(posts_total / posts_por_pagina); // Menor número inteiro maior ou igual ao resultado
 
         // Atualiza container de posts
         const post_container = document.getElementById(`post-container`);
@@ -69,30 +70,46 @@ async function carregarPosts(page) {
 
 
 // Botões de paginação
-function atualizarBotoesDePaginacao(){
-    const botao_voltar = document.getElementById('botao-voltar');
-    const botao_avancar = document.getElementById('botao-avancar');
-    
-    // Desabilita botão voltar na primeira página
-    botao_voltar.disabled = pagina_atual === 1;
-    
-    // Desabilita botão avançar na última página
-    botao_avancar.disabled = pagina_atual === pagina_total;
-}
-
-document.getElementById('botao-voltar').addEventListener('click', () => {
-    if (pagina_atual > 1){
-        pagina_atual--; // Volta uma página
-        carregarPosts(pagina_atual); // Carrega os posts da página atual
+    function atualizarBotoesDePaginacao(){
+        const botao_voltar = document.getElementById('botao-voltar');
+        const botao_avancar = document.getElementById('botao-avancar');
+        
+        // Desabilita botão voltar na primeira página
+        botao_voltar.disabled = pagina_atual === 1;
+        
+        // Desabilita botão avançar na última página
+        botao_avancar.disabled = pagina_atual === pagina_total;
     }
-})
 
-document.getElementById('botao-avancar').addEventListener('click', () => {
-    if (pagina_atual < pagina_total){
-        pagina_atual++; // Avança uma página
-        carregarPosts(pagina_atual); // Carrega posts da página atual
+    function atualizarUrlPagina(pagina) {
+        const novaUrl = new URL(window.location);
+        novaUrl.searchParams.set("page", pagina);
+        window.history.pushState({}, '', novaUrl);
     }
-})
+
+    document.getElementById('botao-voltar').addEventListener('click', () => {
+        if (pagina_atual > 1){
+            pagina_atual--; // Volta uma página
+            atualizarUrlPagina(pagina_atual);
+            carregarPosts(pagina_atual); // Carrega os posts da página atual
+        }
+    })
+
+    document.getElementById('botao-avancar').addEventListener('click', () => {
+        if (pagina_atual < pagina_total){
+            pagina_atual++; // Avança uma página
+            atualizarUrlPagina(pagina_atual);
+            carregarPosts(pagina_atual); // Carrega posts da página atual
+        }
+    })
+
+    window.addEventListener('popstate', () => {
+        const params = new URLSearchParams(window.location.search);
+        const nova_pagina = parseInt(params.get('page')) || 1;
+        pagina_atual = nova_pagina;
+        carregarPosts(pagina_atual);
+    })
+//
 
 
 carregarPosts(pagina_atual);
