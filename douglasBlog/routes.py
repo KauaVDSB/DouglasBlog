@@ -1,5 +1,5 @@
 from douglasBlog import app, db, supabase, SUPABASE_URL
-from flask import render_template, url_for, request, redirect, jsonify
+from flask import render_template, url_for, request, redirect, jsonify, abort, session
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc, func
@@ -25,6 +25,13 @@ def homepageSection(section):
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if request.args.get('acesso') == 'douglas':
+        session['acesso_douglas'] = True
+        return redirect(url_for('login'))
+
+    if not session.get('acesso_douglas'):
+        return redirect(url_for('homepage'))
+
     form = LoginForm()
 
     #Só permite que a função rode caso passe em todas as validações

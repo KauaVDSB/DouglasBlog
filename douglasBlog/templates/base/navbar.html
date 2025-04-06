@@ -16,12 +16,13 @@
         {% if current_user.is_authenticated %}
             <span class="border"> </span>
             <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
+        {% elif request.args.get('acesso') == 'douglas' %}
+        <span class="border"></span>
+            <a href="{{ url_for('login') }}?acesso=douglas">Login</a>
         {% endif %}
     </div>
 
     <button id="closeButton" class="menu-toggle open" aria-label="Open menu">☰</button>
 </nav>
 
-<script src="{{ url_for('static', filename='js/base/navbar-mobile.js') }}"></script>
+<script src="{{ url_for('static', filename='js/base/navbar.js') }}"></script>

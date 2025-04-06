@@ -1,3 +1,14 @@
+// SEGURANÇA
+const params = new URLSearchParams(window.location.search);
+if (params.get('acesso') === 'douglas') {
+    params.delete('acesso');
+    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+    window.history.replaceState({}, '', newUrl);
+}
+
+
+
+// MOBILE
 // Script para ativar e desativar menu lateral em dispositivos pequenos.
 
 const openButton = document.querySelector('.menu-toggle.open');
