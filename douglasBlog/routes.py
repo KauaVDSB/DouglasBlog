@@ -1,5 +1,5 @@
 from douglasBlog import app, db, supabase, SUPABASE_URL
-from flask import render_template, url_for, request, redirect, jsonify, abort, session
+from flask import render_template, url_for, request, redirect, jsonify, abort, session, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc, func
@@ -96,6 +96,8 @@ def upload_image_ckeditor():
 
 @app.route('/admin/douglas-blog/materiais/criar/', methods=['GET', 'POST'])
 def criarMateriais():
+    if current_user.admin == False:
+        return redirect(url_for('homepage'))
     form = MateriaisForm()
 
     if form.validate_on_submit():
@@ -104,6 +106,43 @@ def criarMateriais():
 
     return render_template('admin/criar/criar-materiais.html', form=form)
 
+
+@app.route('/admin/douglas-blog/materiais/deletar/<int:material_id>', methods=['DELETE'])
+@login_required
+def deletar_material(material_id):
+    print('falha')
+    if not current_user.admin:
+        return jsonify({'sucess': False, 'error': 'Sem permissão'}), 403
+    
+    material = Material.query.get_or_404(material_id)
+
+    try:
+        db.session.delete(material)
+        db.session.commit()
+        return jsonify({'sucess': True})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'sucess': False, 'error': str(e)}), 500
+
+
+@app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET'])
+@login_required
+def editar_material(material_id):
+    if not current_user.admin:
+        flash("Acesso negado.")
+        return redirect(url_for('materiaisTurmas', turma=0))  # redireciona para algum lugar seguro
+
+    material = Material.query.get_or_404(material_id)
+
+    form = MateriaisForm(
+        titulo=material.titulo,
+        aula=material.aula,
+        mapa_mental=material.mapa_mental,
+        lista_exercicios=material.lista_exercicios,
+        destino=material.destino
+    )
+
+    return render_template('view/materiais/editar-material.html', form=form, material=material)
 
 # ------------------------------------------------------------- #
         # VIEW/
