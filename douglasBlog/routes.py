@@ -125,12 +125,12 @@ def deletar_material(material_id):
         return jsonify({'sucess': False, 'error': str(e)}), 500
 
 
-@app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET'])
+@app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET', 'POST'])
 @login_required
 def editar_material(material_id):
     if not current_user.admin:
         flash("Acesso negado.")
-        return redirect(url_for('materiaisTurmas', turma=0))  # redireciona para algum lugar seguro
+        return redirect(url_for('homepageSection', section='conteudos'))  # redireciona para algum lugar seguro
 
     material = Material.query.get_or_404(material_id)
 
@@ -142,7 +142,13 @@ def editar_material(material_id):
         destino=material.destino
     )
 
-    return render_template('view/materiais/editar-material.html', form=form, material=material)
+    if form.validate_on_submit():
+        form.update(material)
+        db.session.commit()
+        destino = Material.query.with_entities(Material.destino).filter_by(id=material_id).scalar()
+        return redirect(url_for('materiaisTurmas', turma=int(destino)))
+
+    return render_template('admin/editar/editar-material.html', form=form, material=material)
 
 # ------------------------------------------------------------- #
         # VIEW/

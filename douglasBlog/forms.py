@@ -84,7 +84,7 @@ class MateriaisForm(FlaskForm):
     aula = StringField('Link da aula')
     mapa_mental = FileField('Mapa Mental')
     lista_exercicios = FileField('Lista de Exercícios')
-    btnSubmit = SubmitField('Enviar')
+    btnSubmit = SubmitField('Salvar alterações')
 
 
     @staticmethod
@@ -136,6 +136,24 @@ class MateriaisForm(FlaskForm):
             db.session.commit()
         else:
             raise Exception('Nenhum material enviado...')
+
+    def update(self, material):
+
+        material.destino = self.destino.data
+        material.titulo = self.titulo.data
+        material.aula = self.aula.data.strip() or None
+        if self.verificarMaterial():
+            if self.mapa_mental.data and self.mapa_mental.data.filename:
+                mapa_mental_url = self.upload_para_supabase(self.mapa_mental.data)
+                material.mapa_mental = mapa_mental_url
+            if self.lista_exercicios.data and self.lista_exercicios.data.filename:
+                lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
+                material.lista_exercicios = lista_exercicios_url
+
+
+        
+
+            
 
 
 
