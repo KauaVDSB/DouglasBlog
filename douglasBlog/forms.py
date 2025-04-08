@@ -1,3 +1,4 @@
+from flask import request
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField, FileField
 # Para validar email, baixar biblioteca email_validator
@@ -137,23 +138,44 @@ class MateriaisForm(FlaskForm):
         else:
             raise Exception('Nenhum material enviado...')
 
+
+
     def update(self, material):
 
         material.destino = self.destino.data
         material.titulo = self.titulo.data
         material.aula = self.aula.data.strip() or None
-        if self.verificarMaterial():
-            if self.mapa_mental.data and self.mapa_mental.data.filename:
-                mapa_mental_url = self.upload_para_supabase(self.mapa_mental.data)
-                material.mapa_mental = mapa_mental_url
-            if self.lista_exercicios.data and self.lista_exercicios.data.filename:
-                lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
-                material.lista_exercicios = lista_exercicios_url
-
-
         
+        if request.form.get('removerMapaMental'):
+            if material.mapa_mental:
+                supabase.storage.from_('material-files').remove([material.mapa_mental.split('/')[-1]])
+            material.mapa_mental = None
 
-            
+        if request.form.get('removerListaExercicios'):
+            if material.lista_exercicios:
+                supabase.storage.from_('material-files').remove([material.lista_exercicios.split('/')[-1]])
+            material.lista_exercicios = None
+
+
+        if self.mapa_mental.data and self.mapa_mental.data.filename:
+            if material.mapa_mental:
+                try:
+                    supabase.storage.from_('material-files').remove([material.mapa_mental.split('/')[-1]])
+                except Exception as e:
+                    print(f"Erro ao excluir o arquivo do mapa mental: {e}")
+
+            mapa_mental_url = self.upload_para_supabase(self.mapa_mental.data)
+            material.mapa_mental = mapa_mental_url
+        if self.lista_exercicios.data and self.lista_exercicios.data.filename:
+            if material.lista_exercicios:
+                try:
+                    supabase.storage.from_('material-files').remove([material.lista_exercicios.split('/')[-1]])
+                except Exception as e:
+                    print(f"Erro ao excluir o arquivo da lista de exercícios: {e}")
+
+            lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
+            material.lista_exercicios = lista_exercicios_url
+
 
 
 

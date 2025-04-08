@@ -9,6 +9,21 @@
 {% block content %}
 {% include 'base/navbar.html' %}
 
+<p>Destino atual:</p>
+<span>{{ material.destino }}</span>
+
+<p>Titulo atual:</p>
+<span>{{ material.titulo }}</span>
+
+<p>Aula atual:</p>
+<a href="{{material.aula}}">{{material.aula}}</a>
+
+<p>Resumo atual:</p>
+<a href="{{material.mapa_mental}}">{{material.mapa_mental}}</a>
+
+<p>Exercicio atual</p>
+<a href="{{material.lista_exercicios}}">{{material.lista_exercicios}}</a>
+
 <form action="" method="post" enctype="multipart/form-data" class="row">
 
     {{ form.csrf_token }}
@@ -19,20 +34,22 @@
     {{ form.titulo.label() }}
     {{ form.titulo() }}
 
-    <p>Aula atual:</p>
-    <a href="{{material.aula}}">{{material.aula}}</a>
     {{ form.aula.label() }}
     {{ form.aula(class='form-control') }}
 
-    <p>Resumo atual:</p>
-    <a href="{{material.mapa_mental}}">{{material.mapa_mental}}</a>
     {{ form.mapa_mental.label() }}
     {{ form.mapa_mental(class='form-control') }}
+    <div class="form-check">
+        <input type="checkbox" name="removerMapaMental" id="removerMapaMental" class="form-check-input">
+        <label for="removerMapaMental" class="form-check-label">Remover Mapa Mental</label>
+    </div>
 
-    <p>Exercicio atual</p>
-    <a href="{{material.lista_exercicios}}">{{material.lista_exercicios}}</a>
     {{ form.lista_exercicios.label() }}
     {{ form.lista_exercicios(class='form-control') }}
+    <div class="form-check">
+        <input type="checkbox" name="removerListaExercicios" id="removerListaExercicios" class="form-check-input">
+        <label for="removerListaExercicios" class="form-check-label">Remover Lista de Exercicios</label>
+    </div>
 
     {{ form.btnSubmit(class='btn btn-dark') }}
 
