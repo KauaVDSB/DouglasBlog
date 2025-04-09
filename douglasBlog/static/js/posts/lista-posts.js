@@ -56,6 +56,9 @@ async function carregarPosts(page) {
             link.href = post.link;
             link.className = 'link-post';
 
+            const img_container = document.createElement('div');
+            img_container.className = 'img-container';
+
             const imagem = document.createElement('img');
             imagem.src = post.imagem;
             imagem.className = 'imagem-post';
@@ -74,7 +77,8 @@ async function carregarPosts(page) {
 
             post_container.appendChild(post_div);
             post_div.appendChild(link);
-            link.appendChild(imagem);
+            link.appendChild(img_container);
+            img_container.appendChild(imagem);
             link.appendChild(conteudo_container);
             conteudo_container.appendChild(titulo);
             conteudo_container.appendChild(prev_conteudo);
