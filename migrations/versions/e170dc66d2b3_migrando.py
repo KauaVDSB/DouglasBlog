@@ -1,8 +1,8 @@
-"""empty message
+"""Migrando
 
-Revision ID: dae292ebcb82
-Revises: add9d711ddab
-Create Date: 2025-03-27 21:11:02.448338
+Revision ID: e170dc66d2b3
+Revises: 
+Create Date: 2025-04-15 16:15:03.857969
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dae292ebcb82'
-down_revision = 'add9d711ddab'
+revision = 'e170dc66d2b3'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -22,9 +22,9 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('destino', sa.Integer(), nullable=True),
     sa.Column('titulo', sa.String(), nullable=True),
-    sa.Column('material_aula', sa.Text(), nullable=True),
-    sa.Column('material_mapa', sa.Text(), nullable=True),
-    sa.Column('material_exercicios', sa.Text(), nullable=True),
+    sa.Column('aula', sa.Text(), nullable=True),
+    sa.Column('mapa_mental', sa.Text(), nullable=True),
+    sa.Column('lista_exercicios', sa.Text(), nullable=True),
     sa.Column('data_criacao', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )

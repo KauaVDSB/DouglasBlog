@@ -123,7 +123,7 @@ def converter_lista_materiais_para_dict(material):
         "destino": material.destino,
         "titulo": material.titulo,
         "aula": material.aula,
-        "mapa_mental": material.mapa_mental,
+        "resumo": material.resumo,
         "lista_exercicios": material.lista_exercicios,
         "data_criacao": material.data_criacao,
     }

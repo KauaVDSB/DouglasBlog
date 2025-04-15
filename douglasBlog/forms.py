@@ -82,7 +82,7 @@ class MateriaisForm(FlaskForm):
         ], validators=[DataRequired()])
     titulo = StringField('Título', validators=[DataRequired()])
     aula = StringField('Link da aula')
-    mapa_mental = FileField('Mapa Mental')
+    resumo = FileField('Resumo')
     lista_exercicios = FileField('Lista de Exercícios')
     btnSubmit = SubmitField('Enviar')
 
@@ -114,21 +114,21 @@ class MateriaisForm(FlaskForm):
         """Verifica se pelo menos um material foi enviado"""
         return any([
             self.aula.data.strip(),
-            self.mapa_mental.data and self.mapa_mental.data.filename,
+            self.resumo.data and self.resumo.data.filename,
             self.lista_exercicios.data and self.lista_exercicios.data.filename
         ])
 
 
     def save(self):
         if self.verificarMaterial():
-            mapa_mental_url = self.upload_para_supabase(self.mapa_mental.data)
+            resumo_url = self.upload_para_supabase(self.resumo.data)
             lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
             
             material = Material(
                 destino=self.destino.data,
                 titulo=self.titulo.data,
                 aula=self.aula.data.strip() or None,
-                mapa_mental=mapa_mental_url,
+                resumo=resumo_url,
                 lista_exercicios=lista_exercicios_url
             )
 

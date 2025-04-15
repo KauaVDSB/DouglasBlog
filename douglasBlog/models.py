@@ -54,7 +54,7 @@ class Material(db.Model):
     destino = db.Column(db.Integer, nullable=True)
     titulo = db.Column(db.String, nullable=True)
     aula = db.Column(db.Text, nullable=True)
-    mapa_mental = db.Column(db.Text, nullable=True)
+    resumo = db.Column(db.Text, nullable=True)
     lista_exercicios = db.Column(db.Text, nullable=True)
     data_criacao = db.Column(db.DateTime, default=datetime.now())
 

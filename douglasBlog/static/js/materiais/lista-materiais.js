@@ -21,25 +21,25 @@ function construirAula(material_aula, conteudo_container){
     container_aula.appendChild(link_aula);
 
 }
-function construirMapa(material_mapa_mental, conteudo_container, material_titulo){
-    const conteudo_mapa_mental = material_mapa_mental.trim();
+function construirResumo(material_resumo, conteudo_container, material_titulo){
+    const conteudo_resumo = material_resumo.trim();
 
-    const container_mapa_mental = document.createElement('div');
-    container_mapa_mental.className = 'mapa-mental';
-    conteudo_container.appendChild(container_mapa_mental);
+    const container_resumo = document.createElement('div');
+    container_resumo.className = 'resumo';
+    conteudo_container.appendChild(container_resumo);
 
-    const download_mapa_mental = document.createElement('a');
-    download_mapa_mental.href = conteudo_mapa_mental;
-    download_mapa_mental.download = conteudo_mapa_mental;
-    download_mapa_mental.target = 'blank';
-    download_mapa_mental.innerHTML =
+    const download_resumo = document.createElement('a');
+    download_resumo.href = conteudo_resumo;
+    download_resumo.download = conteudo_resumo;
+    download_resumo.target = 'blank';
+    download_resumo.innerHTML =
     `<i class="bi bi-download"></i>
     <div>
-        <h3>Mapa Mental</h3>
-        <p> Baixe o PDF com anotações sobre a aula. </p>
+        <h3>Resumo</h3>
+        <p> Baixe o PDF com resumo sobre a aula. </p>
     </div>`;
 
-    container_mapa_mental.appendChild(download_mapa_mental);
+    container_resumo.appendChild(download_resumo);
 }
 function construirLista(material_lista_exercicios, conteudo_container){
     const conteudo_lista_exercicios = material_lista_exercicios.trim();
@@ -103,14 +103,14 @@ async function carregarMateriais(destino) {
         const conteudo_container = document.createElement('div');
         conteudo_container.className = 'conteudo-container';
         console.log(material.aula);
-        console.log(material.mapa_mental);
+        console.log(material.resumo);
         console.log(material.lista_exercicios);
         console.log('------------');
         if (material.aula){
             construirAula(material.aula, conteudo_container);
         }
-        if (temCaminho(material.mapa_mental)){
-            construirMapa(material.mapa_mental, conteudo_container, material.titulo.replaceAll(" ", "-"));
+        if (temCaminho(material.resumo)){
+            construirResumo(material.resumo, conteudo_container, material.titulo.replaceAll(" ", "-"));
         }
         if (temCaminho(material.lista_exercicios)){
             construirLista(material.lista_exercicios, conteudo_container, material.titulo.replaceAll(" ", "-"));

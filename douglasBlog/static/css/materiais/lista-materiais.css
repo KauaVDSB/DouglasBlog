@@ -69,12 +69,12 @@ main {
     padding-bottom: 5px;
     
 } 
-.conteudo-container > .aula, .conteudo-container > .mapa-mental, .conteudo-container > .lista-exercicios {
+.conteudo-container > .aula, .conteudo-container > .resumo, .conteudo-container > .lista-exercicios {
     background-color: #d1cdc756;
     border-radius: 8px;
 }
 
-.aula a, .mapa-mental a, .lista-exercicios a {
+.aula a, .resumo a, .lista-exercicios a {
     color: #000;
     text-decoration: none;
     display: flex;
@@ -82,7 +82,7 @@ main {
     align-items: center;
     margin: 0 5px;
 }
-.aula a i, .mapa-mental a i, .lista-exercicios a i {
+.aula a i, .resumo a i, .lista-exercicios a i {
     flex: 20%;
     min-width: 20%;
     max-width: 20%;
@@ -93,15 +93,15 @@ main {
     font-size: 1.8em;
     margin-right: 10px;
 }
-.aula a div, .mapa-mental a div, .lista-exercicios a div{
+.aula a div, .resumo a div, .lista-exercicios a div{
     flex: 80%;
 }
-.aula a h3, .mapa-mental a h3, .lista-exercicios a h3 {
+.aula a h3, .resumo a h3, .lista-exercicios a h3 {
     margin: 0;
     font-size: 18px;
 }
 
-.aula a div p, .mapa-mental a div p, .lista-exercicios a div p {
+.aula a div p, .resumo a div p, .lista-exercicios a div p {
     font-size: 0.7em;
     overflow-wrap: normal;
     white-space: normal;
