@@ -3,8 +3,8 @@ from flask import render_template, url_for, request, redirect, jsonify, abort, s
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc, func
-from douglasBlog.models import Postagem, Material # ,User
-from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm
+from douglasBlog.models import Postagem, Material, User
+from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
 
 from time import time
 import re
@@ -23,6 +23,21 @@ def homepageSection(section):
 
 
 
+
+@app.route('/cadastroooooooo/<string:validacao>', methods=['GET', 'POST'])
+def cadastro(validacao):
+    if validacao != 'acesso_confirmado':
+        return redirect(url_for('homepage'))
+    
+    form = UserForm()
+
+    if form.validate_on_submit():
+        form.save()
+        return redirect(url_for('dashboard'))
+    print(form.errors)
+
+    return render_template('login/cadastro.html', form=form)
+
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if request.args.get('acesso') == 'douglas':
@@ -38,7 +53,7 @@ def login():
     if form.validate_on_submit():
         user = form.login()
         login_user(user, remember=True)
-        return redirect(url_for('homepage'))
+        return redirect(url_for('dashboard'))
     print(form.errors)
 
     return render_template('login/login.html', form=form)

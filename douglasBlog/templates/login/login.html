@@ -22,7 +22,7 @@
             {{ form.email(placeholder='Email', class='email') }}
 
             {{ form.senha(placeholder='Senha', class='senha') }}
-            <a href="#" class="esqueci">Esqueceu a senha?</a>
+            <a href="{{ url_for('cadastro', validacao='acesso_confirmado') }}" class="esqueci">Cadastrar</a>
             <div class="div-btn-cadastrar">
                 {{ form.btnSubmit(class='btn-cadastrar') }}
             </div>

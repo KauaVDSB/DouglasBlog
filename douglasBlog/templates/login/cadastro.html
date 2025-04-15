@@ -1,0 +1,30 @@
+{% extends 'base/html.html' %}
+
+{% block title %} Cadastro {% endblock %}
+
+{% block content %}
+{% include 'base/navbar.html' %}
+
+<form action="" method="post">
+
+    {{ form.csrf_token }}
+
+    {{ form.nome.label() }}
+    {{ form.nome() }}
+<br>
+    {{ form.sobrenome.label() }}
+    {{ form.sobrenome() }}
+<br>
+    {{ form.email.label() }}
+    {{ form.email() }}
+<br>
+    {{ form.senha.label() }}
+    {{ form.senha() }}
+<br>
+    {{ form.confirmacao_senha.label() }}
+    {{ form.confirmacao_senha() }}
+<br>
+    {{ form.btnSubmit() }}
+</form>
+
+{% endblock %}
