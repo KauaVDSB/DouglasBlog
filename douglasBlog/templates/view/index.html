@@ -15,23 +15,37 @@
     <section class="header">
         
         <div class="esquerdo">
-            <h1 class="titulo">Título</h1>
-            <p class="descricao">Aqui você encontra os melhores serviços com qualidade e excelência. Nossa missão é oferecer a melhor experiência e atendimento, trazendo soluções inovadoras para suas necessidades. Confie em nossos serviços para levar seu projeto ao próximo nível!</p>
+            <h1 class="titulo">Sobre o site:</h1>
+            <p class="descricao">Este site foi desenvolvido com o intuito de proporcionar uma plataforma de aprendizado 
+                interativa e acessível para os alunos do ensino médio da ETE Ariano Vilar Suassuna. Com postagens 
+                semanais que incluem dicas de estudo, resolução de questões e vídeos educativos, buscamos facilitar a 
+                compreensão de conceitos essenciais de Física.
+            </p>
+            <h1 class="titulo">Sobre o professor responsável:</h1>
+            <p class="descricao">
+                O conteúdo é orientado pelo Professor Douglas Lima, que possui dupla titulação em Física Licenciatura pela Universidade Federal de Alagoas e pela Universidade de Coimbra, com Mestrado em Ensino de Física pela Universidade Federal de Alagoas. Atualmente, ele é professor efetivo do estado de Pernambuco, trazendo sua experiência e dedicação para o desenvolvimento de materiais de alta qualidade para os estudantes.
+            </p>
         </div>
         
         <div class="direito">
             <div class="div-1">
-                <div class="retcentral">
-                    <img src="{{ url_for('static', filename='data/post/oba-banner.jpg') }}" alt="">
-                </div>
+                <a href="" target="_blank">
+                    <div class="retcentral">
+                        <img src="{{ url_for('static', filename='data/post/oba-banner.jpg') }}" alt="">
+                    </div>
+                </a>
             </div>
             <div class="div-2">
-                <div class="ret2">
-                    <img src="{{ url_for('static', filename='data/post/oba-banner.jpg') }}" alt="">
-                </div>
-                <div class="ret3">
-                    <img src="{{ url_for('static', filename='data/post/oba-banner.jpg') }}" alt="">
-                </div>
+                <a href="https://noic.com.br/olimpiadas/mobfog/" target="_blank">
+                    <div class="ret2">
+                        <img src="{{ url_for('static', filename='media/img/mobfog-banner.jpg') }}" alt="">
+                    </div>
+                </a>
+                <a href="https://www1.fisica.org.br/~obfep/" target="_blank">
+                    <div class="ret3">
+                        <img src="{{ url_for('static', filename='media/img/obfep-banner.png') }}" alt="">
+                    </div>
+                </a>
             </div>
         </div>
     </section>
