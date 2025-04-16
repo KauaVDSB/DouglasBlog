@@ -23,8 +23,8 @@ main{
 main::before{
     content: "";
     position: absolute;
-    top: -53vh;
-    left: 61vw;
+    top: -45vh;
+    left: 121%;
     height: 500vw;
     width: 500vw;
     
@@ -39,18 +39,7 @@ main::before{
 
 
 /* Header Section */
-.header {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 0 50px 5% 50px;
-
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-}
-.header::before, .header::after{
+/* .header::before, .header::after{
     content: "";
     position: absolute;
     top: 19vh;
@@ -68,36 +57,74 @@ main::before{
 .header::after{
     top: 90vh;
     left: 112.5vw;
+} */
+.header {
+    justify-content: center;
+    align-items: center;
+    padding: 3% 60px 5% 60px;
+
+    height: fit-content;
+    overflow: hidden;
 }
 
-/* Lado esquerdo com título e descrição */
-.esquerdo {
-    flex: 50%;
-    margin-top: 50px;
-    padding-right: 1.5%;
-}
+/* Disposição do título e descrição */
+
 .titulo {
-    font-size: 2.5em;
+    margin: 0;
+    margin-bottom: 20px;
+    font-size: 2.8rem;
     font-weight: bold;
     color: #003B5C;
     text-align: center;
 }
 
 .descricao {
+    margin: 0;
     font-size: 1.1rem;
+    line-height: 1.6;
     color: #333;
-    margin-top: 20px;
     line-height: 1.6;
     text-align: center;
 }
 
 
-/* Lado direito com os retângulos */
-.direito {
-    flex: 50%;
-    display: flex;
-    flex-flow: row wrap;
-    padding-left: 1.5%;
+/* Disposição dos banners na section Header */
+.header-banners {
+    margin-top: 30px;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+}
+
+.header-banners .banner {
+    margin: 0;
+    padding: 0;
+    height: fit-content;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgb(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+
+    overflow: hidden;
+}
+.header-banners .banner:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 12px rgb(0, 0, 0, 0.15);
+}
+
+.header-banners a {
+    margin: 0;
+    padding: 0;
+}
+
+.header-banners article img {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    object-fit: cover;
 }
 
 .div-1 {
@@ -176,7 +203,7 @@ main::before{
     overflow: hidden;
 }
 
-.conteudos::before, .conteudos::after{
+.conteudos::before{
     
     content: "";
     position: absolute;
@@ -191,14 +218,6 @@ main::before{
     
     transform: translate(-50%, -50%) rotate(35deg) scale(0.75);
     opacity: 15%;
-    z-index: -1;
-}
-.conteudos::after{
-    top: -10vh;
-    left: 112.5vw;
-
-    opacity: 30%;
-    transform: translate(-50%, -50%) rotate(-35deg) scale(0.75);
     z-index: -1;
 }
 
@@ -266,11 +285,18 @@ main::before{
 /* Parei aqui */
 @media (max-width: 768px) {
     .header {
+        margin-top: 20px;
         flex-flow: row wrap;
         /* flex-direction: column; */
         padding: 0 20px 5vh;
         height: fit-content;
         /* margin-top: -5vh; */
+    }
+    
+    .descricao {
+        margin-bottom: 10px;
+        text-align: left;
+        text-indent: 2ch;
     }
 
     .esquerdo {
@@ -280,7 +306,7 @@ main::before{
         /* background-color: aqua; */
     }
 
-    .direito {
+    .header-cards {
         flex: 100%;
         margin-top: 5vh;
         padding-left: 0;
