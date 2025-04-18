@@ -119,6 +119,63 @@ async function carregarMateriais(destino) {
         material_container.appendChild(material_div);
         material_div.appendChild(titulo);
         material_div.appendChild(conteudo_container);
+
+
+        // Admin functions
+        if (isAdmin && adminView) {
+            const adminContainer = document.createElement('div');
+            adminContainer.className = 'container-btn-admin';
+
+            const btn_editar = document.createElement('a');
+            btn_editar.href = `/admin/douglas-blog/materiais/editar/${material.id}`;
+            btn_editar.className  = 'btn-editar';
+            btn_editar.textContent = 'Editar';
+
+            const btn_deletar = document.createElement('button');
+            btn_deletar.className = 'btn-deletar';
+            btn_deletar.textContent = 'Deletar';
+            
+            btn_deletar.onclick = async () => {
+                Swal.fire({
+                    title: `Deseja deletar o material "${material.titulo}"?`,
+                    text: 'Essa ação não poderá ser desfeita.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sim, deletar!',
+                    cancelButtonText: 'Cancelar.'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        const response = await fetch(`/admin/douglas-blog/materiais/deletar/${material.id}`, {
+                            method: 'DELETE'
+                        });
+
+                        if (response.ok) {
+                            Swal.fire({
+                                title: 'Deletado!',
+                                text: 'Material removido com sucesso!',
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+
+                            material_div.remove();
+                        } else{
+                            Swal.fire({
+                                title: 'Erro!',
+                                text: 'Falha ao remover material.',
+                                icon: 'error'
+                            });
+                        }
+                    }
+                });
+            };
+
+            adminContainer.appendChild(btn_editar);
+            adminContainer.appendChild(btn_deletar);
+            material_div.appendChild(adminContainer);
+        }
     });
 }
 
