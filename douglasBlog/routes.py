@@ -5,12 +5,12 @@ from flask_login import login_user, logout_user, current_user, login_required
 from sqlalchemy import desc, func
 from douglasBlog.models import Postagem, Material, User
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
+from douglasBlog.utils import VerificarAdmin
 
 from time import time
 import re
 from werkzeug.utils import secure_filename
 
-from utils import VerificarAdmin
 
 # Rota para homepage
 @app.route('/')
@@ -93,6 +93,37 @@ def criarPosts():
     return render_template('admin/criar/criar-posts.html', form=form)
 
 
+@app.route('/admin/douglas-blog/posts/deletar/<int:post_id>', methods=['DELETE'])
+@login_required
+def deletarPost(post_id):
+    VerificarAdmin()
+
+    post = Postagem.query.get_or_404(post_id)
+
+    try:
+        db.session.delete(post)
+        db.session.commit()
+        flash("Post deletado com sucesso!")
+        return redirect(url_for('dashboard'))
+    except Exception as e:
+        db.session.rollback()
+        flash("Post não deletado devido à um erro interno. Erro: " + e)
+        return redirect(url_for('homepage'))
+
+
+@app.route('/admin/douglas-blog/posts/editar/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def editarPost(post_id):
+    VerificarAdmin()
+
+    post = Postagem.query.get_or_404(post_id)
+
+    return 0
+
+
+
+
+
 @app.route('/api/upload-image-ckeditor', methods=['POST'])
 @login_required
 def upload_image_ckeditor():
@@ -141,7 +172,7 @@ def deletar_material(material_id):
         return redirect(url_for(dashboard))
     except Exception as e:
         db.session.rollback()
-        flash("Material não deletado devido à um erro interno.")
+        flash("Material não deletado devido à um erro interno. Erro: " + e)
         return redirect(url_for('homepage'))
 
 
