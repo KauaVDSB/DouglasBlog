@@ -144,9 +144,9 @@ class MateriaisForm(FlaskForm):
         material.aula = self.aula.data.strip() or None
         
         if request.form.get('removerMapaMental'):
-            if material.mapa_mental:
-                supabase.storage.from_('material-files').remove([material.mapa_mental.split('/')[-1]])
-            material.mapa_mental = None
+            if material.resumo:
+                supabase.storage.from_('material-files').remove([material.resumo.split('/')[-1]])
+            material.resumo = None
 
         if request.form.get('removerListaExercicios'):
             if material.lista_exercicios:
@@ -154,15 +154,15 @@ class MateriaisForm(FlaskForm):
             material.lista_exercicios = None
 
 
-        if self.mapa_mental.data and self.mapa_mental.data.filename:
-            if material.mapa_mental:
+        if self.resumo.data and self.resumo.data.filename:
+            if material.resumo:
                 try:
-                    supabase.storage.from_('material-files').remove([material.mapa_mental.split('/')[-1]])
+                    supabase.storage.from_('material-files').remove([material.resumo.split('/')[-1]])
                 except Exception as e:
                     print(f"Erro ao excluir o arquivo do mapa mental: {e}")
 
-            mapa_mental_url = self.upload_para_supabase(self.mapa_mental.data)
-            material.mapa_mental = mapa_mental_url
+            resumo_url = self.upload_para_supabase(self.resumo.data)
+            material.resumo = resumo_url
         if self.lista_exercicios.data and self.lista_exercicios.data.filename:
             if material.lista_exercicios:
                 try:
