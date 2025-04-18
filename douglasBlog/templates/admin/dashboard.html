@@ -13,12 +13,34 @@
 <main>
 
     <ul style="list-style: none;">
-
-        <a href="{{ url_for('criarPosts') }}">Criar Postagens</a>
-        <a href="{{ url_for('criarMateriais') }}">Criar Materiais</a>
-        <a href="{{ url_for('listaPosts') }}">Ver Posts</a>
+        <li>
+            <a href="{{ url_for('criarPosts') }}">Criar Postagens</a>
+        </li>
+        <li>
+            <a href="{{ url_for('criarMateriais') }}">Materiais</a>
+        </li>
+        <li>
+            <a href="{{ url_for('listaPosts') }}">Ver Posts</a>
+        </li>
+        <li>
+            Materiais:
+            <li>
+                <a href="{{ url_for('materiaisTurmas', turma=1) }}?admin_view=true">Editar 1º ano</a>
+            </li>
+            <li>
+                <a href="{{ url_for('materiaisTurmas', turma=2) }}?admin_view=true">Editar 2º ano</a>
+            </li>
+            <li>
+                <a href="{{ url_for('materiaisTurmas', turma=3) }}?admin_view=true">Editar 3º ano</a>
+            </li>
+            <li>
+                <a href="{{ url_for('materiaisTurmas', turma=4) }}?admin_view=true">Editar Olímpiadas</a>
+            </li>
+        </li>
+        <li>
+            <a href="{{ url_for('logout') }}">Sair</a>
+        </li>
         
-        <a href="{{ url_for('logout') }}">Sair</a>
     </ul>
 </main>
 
