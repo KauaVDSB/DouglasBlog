@@ -1,5 +1,5 @@
 from douglasBlog import app, db, supabase, SUPABASE_URL
-from flask import render_template, url_for, request, redirect, jsonify, abort, session
+from flask import render_template, url_for, request, redirect, jsonify, abort, session, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc, func
@@ -9,6 +9,8 @@ from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
 from time import time
 import re
 from werkzeug.utils import secure_filename
+
+from utils import VerificarAdmin
 
 # Rota para homepage
 @app.route('/')
@@ -72,7 +74,7 @@ def logout():
 @app.route('/admin/douglas-blog/dashboard/')
 @login_required
 def dashboard():
-
+    VerificarAdmin()
 
     return render_template('admin/dashboard.html')
 
@@ -80,8 +82,8 @@ def dashboard():
 @app.route('/admin/douglas-blog/posts/criar/', methods=['GET', 'POST'])
 @login_required
 def criarPosts():
-    if current_user.admin == False:
-        return redirect(url_for('homepage'))
+    VerificarAdmin()
+
     form = PostagemForm()
     
     if form.validate_on_submit():
@@ -94,6 +96,8 @@ def criarPosts():
 @app.route('/api/upload-image-ckeditor', methods=['POST'])
 @login_required
 def upload_image_ckeditor():
+    VerificarAdmin()
+
     file = request.files.get('upload')
     if not file:
         return jsonify({'error': 'Nenhum arquivo enviado.'}), 400
@@ -110,7 +114,10 @@ def upload_image_ckeditor():
 
 
 @app.route('/admin/douglas-blog/materiais/criar/', methods=['GET', 'POST'])
+@login_required
 def criarMateriais():
+    VerificarAdmin()
+
     form = MateriaisForm()
 
     if form.validate_on_submit():
@@ -119,6 +126,49 @@ def criarMateriais():
 
     return render_template('admin/criar/criar-materiais.html', form=form)
 
+
+@app.route('/admin/douglas-blog/materiais/deletar/<int:material_id>', methods=['DELETE'])
+@login_required
+def deletar_material(material_id):
+    VerificarAdmin()
+
+    material = Material.query.get_or_404(material_id)
+
+    try:
+        db.session.delete(material)
+        db.session.commit()
+        flash("Material deletado com sucesso!")
+        return redirect(url_for(dashboard))
+    except Exception as e:
+        db.session.rollback()
+        flash("Material não deletado devido à um erro interno.")
+        return redirect(url_for('homepage'))
+
+
+@app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET', 'POST'])
+@login_required
+def editar_material(material_id):
+    VerificarAdmin()
+
+    material = Material.query.get_or_404(material_id)
+
+    form = MateriaisForm(
+        titulo = material.titulo,
+        aula = material.aula,
+        resumo = material.resumo,
+        lista_exercicios = material.lista_exercicios,
+        destino = material.destino
+    )
+
+    if form.validate_on_submit():
+        form.update(material)
+        db.session.commit()
+        destino = Material.query.with_entities(
+            Material.destino).filter_by(id=material_id).scalar()
+        flash("Material editado com sucesso!")
+        return redirect(url_for('materiaisTurmas', turma=int(destino)))
+    
+    return render_template('admin/editar/editar-material.html', form=form, material=material)
 
 # ------------------------------------------------------------- #
         # VIEW/
