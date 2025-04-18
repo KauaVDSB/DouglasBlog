@@ -23,6 +23,9 @@
             <a href="{{ url_for('listaPosts') }}">Ver Posts</a>
         </li>
         <li>
+            <a href="{{ url_for('listaPosts') }}?admin_view=true">Editar Posts</a>
+        </li>
+        <li>
             Materiais:
             <li>
                 <a href="{{ url_for('materiaisTurmas', turma=1) }}?admin_view=true">Editar 1º ano</a>

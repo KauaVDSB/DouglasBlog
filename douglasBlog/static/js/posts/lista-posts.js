@@ -79,6 +79,63 @@ async function carregarPosts(page) {
             conteudo_container.appendChild(titulo);
             conteudo_container.appendChild(prev_conteudo);
 
+            // Admin Functions
+
+            if (isAdmin && adminView){
+                const adminContainer = document.createElement('div');
+                adminContainer.className = 'container-btn-admin';
+
+                const btn_editar = document.createElement('a');
+                btn_editar.href = `/admin/douglas-blog/posts/editar/${post.id}`;
+                btn_editar.className = 'btn-editar';
+                btn_editar.textContent = 'Editar';
+
+
+                const btn_deletar = document.createElement('button');
+                btn_deletar.className = 'btn-deletar'
+                btn_deletar.textContent = 'Deletar';
+
+                btn_deletar.onclick = async () => {
+                    Swal.fire({
+                        title: `Deseja deletar o post "${post.titulo}"?`,
+                        text: 'Essa ação não poderá ser desfeita.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Sim, deletar!',
+                        cancelButtonText: 'Cancelar.'
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            const response = await fetch(`/admin/douglas-blog/posts/deletar/${post.id}`, {
+                                method: 'DELETE'
+                            });
+
+                            if (response.ok) {
+                                Swal.fire({
+                                    title: 'Sucesso!',
+                                    text: 'Post deletado com sucesso.',
+                                    icon: 'success',
+                                    timer: 1500,
+                                    showConfirmButton: false
+                                });
+                            } else {
+                                Swal.fire({
+                                    tile: 'Falha ao deletar material.',
+                                    text: 'Erro: ' + response.error,
+                                    icon: 'error'
+                                });
+                            }
+                        }
+                    });
+                };
+
+                adminContainer.appendChild(btn_editar);
+                adminContainer.appendChild(btn_deletar);
+                post_div.appendChild(adminContainer);
+
+            }
+
             setTimeout(() => post_div.classList.add('fade-in'), 50);
         });
                     
@@ -87,6 +144,7 @@ async function carregarPosts(page) {
     }
     catch (error) {
         console.error("Falha ao carregar posts: ", error);
+        // Adicionar Swal.fire
     }
     finally {
         const fim_carregamento = performance.now();

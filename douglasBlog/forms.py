@@ -76,6 +76,26 @@ class PostagemForm(FlaskForm):
         db.session.commit()
 
 
+    def update(self, post):
+        post.titulo = self.titulo.data
+        post.conteudo = self.conteudo.data
+
+        if self.imagem.data and self.imagem.data.filename:
+            if post.imagem:
+                try:
+                    supabase.storage.from_("post-files").remove([post.imagem.split('/')[-1]])
+                except Exception as e:
+                    print(f'Erro ao excluir a imagem do post. Erro: {e}')
+
+            url_imagem = self.get_url_imagem()
+            post.imagem = url_imagem
+
+        if request.form.get('removerImagemPost'):
+            if post.imagem:
+                supabase.storage.from_("post-files").remove([post.imagem.split('/')[-1]])
+            post.imagem = None
+
+
 class MateriaisForm(FlaskForm):
     destino = SelectField(u'Destino', choices=[
         (1, '1º Ano'), (2, '2º ano'), (3, '3º ano'), (4, 'Olímpiadas')

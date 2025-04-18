@@ -103,12 +103,10 @@ def deletarPost(post_id):
     try:
         db.session.delete(post)
         db.session.commit()
-        flash("Post deletado com sucesso!")
-        return redirect(url_for('dashboard'))
+        return jsonify({'success': True})
     except Exception as e:
         db.session.rollback()
-        flash("Post não deletado devido à um erro interno. Erro: " + e)
-        return redirect(url_for('homepage'))
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/admin/douglas-blog/posts/editar/<int:post_id>', methods=['GET', 'POST'])
@@ -118,7 +116,24 @@ def editarPost(post_id):
 
     post = Postagem.query.get_or_404(post_id)
 
-    return 0
+    form = PostagemForm(
+        titulo = post.titulo,
+        imagem = post.imagem,
+        conteudo = post.conteudo
+    )
+
+    if form.validate_on_submit():
+        try:
+            form.update(post)
+            db.session.commit()
+            print('Postagem editada com sucesso!') #Trocar por jsonify para utilizar Swal.fire
+            return redirect(url_for('listaPosts'))
+        except Exception as e:
+            db.session.rollback()
+            print(f'Falha ao editar postagem. Erro: {e}') #Trocar por jsonify para utilizar Swal.fire
+            return redirect(url_for('dashboard'))
+
+    return render_template('admin/editar/editar-post.html', form=form, post=post)
 
 
 
@@ -167,10 +182,10 @@ def deletar_material(material_id):
     try:
         db.session.delete(material)
         db.session.commit()
-        return jsonify({'sucess': True})
+        return jsonify({'success': True})
     except Exception as e:
         db.session.rollback()
-        return jsonify({'sucess': False, 'error': str(e)}), 500
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 
 @app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET', 'POST'])
