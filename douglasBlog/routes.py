@@ -164,16 +164,13 @@ def deletar_material(material_id):
     VerificarAdmin()
 
     material = Material.query.get_or_404(material_id)
-
     try:
         db.session.delete(material)
         db.session.commit()
-        flash("Material deletado com sucesso!")
-        return redirect(url_for(dashboard))
+        return jsonify({'sucess': True})
     except Exception as e:
         db.session.rollback()
-        flash("Material não deletado devido à um erro interno. Erro: " + e)
-        return redirect(url_for('homepage'))
+        return jsonify({'sucess': False, 'error': str(e)}), 500
 
 
 @app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET', 'POST'])
