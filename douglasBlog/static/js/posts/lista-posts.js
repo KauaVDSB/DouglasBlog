@@ -56,6 +56,10 @@ async function carregarPosts(page) {
             link.href = post.link;
             link.className = 'link-post';
 
+            const container_imagem = document.createElement('div');
+            container_imagem.className = 'container-imagem-post';
+
+
             const imagem = document.createElement('img');
             imagem.src = post.imagem;
             imagem.className = 'imagem-post';
@@ -74,11 +78,47 @@ async function carregarPosts(page) {
 
             post_container.appendChild(post_div);
             post_div.appendChild(link);
-            link.appendChild(imagem);
+            link.appendChild(container_imagem);
+            container_imagem.appendChild(imagem);
             link.appendChild(conteudo_container);
             conteudo_container.appendChild(titulo);
             conteudo_container.appendChild(prev_conteudo);
 
+
+            // // Controle de exibição de prévia do conteúdo
+
+            
+            // // Alturas dos outros elementos:
+
+            // const alturaCard = post_div.clientHeight;
+            // const alturaImagem = container_imagem.clientHeight;
+            // const alturaTitulo = titulo.clientHeight;
+            
+            // const estiloConteudo = getComputedStyle(conteudo_container);
+            // const paddingTop = estiloConteudo.paddingTop;
+            // const paddingBottom = estiloConteudo.paddingBottom;
+            // const marginTop = estiloConteudo.marginTop;
+
+            // espaço disponível:
+            // - alturaImagem
+            // - alturaTitulo
+            // - paddingTop
+            // - paddingBottom
+            // - marginTop;
+            
+            function atualizaClamp() {
+
+                const alturaDisponivel = conteudo_container.clientHeight - titulo.offsetHeight;
+                
+                const estiloPrev_conteudo = getComputedStyle(prev_conteudo);
+                const lineHeight = parseFloat(estiloPrev_conteudo.lineHeight);
+                const maxLinhas = Math.floor(alturaDisponivel / lineHeight) || 1;
+                
+                prev_conteudo.style.webkitLineClamp = maxLinhas;
+            }
+
+            window.addEventListener('load', atualizaClamp);
+            window.addEventListener('resize', atualizaClamp);
             // Admin Functions
 
             if (isAdmin && adminView){
