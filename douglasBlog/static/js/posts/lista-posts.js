@@ -85,27 +85,6 @@ async function carregarPosts(page) {
             conteudo_container.appendChild(prev_conteudo);
 
 
-            // // Controle de exibição de prévia do conteúdo
-
-            
-            // // Alturas dos outros elementos:
-
-            // const alturaCard = post_div.clientHeight;
-            // const alturaImagem = container_imagem.clientHeight;
-            // const alturaTitulo = titulo.clientHeight;
-            
-            // const estiloConteudo = getComputedStyle(conteudo_container);
-            // const paddingTop = estiloConteudo.paddingTop;
-            // const paddingBottom = estiloConteudo.paddingBottom;
-            // const marginTop = estiloConteudo.marginTop;
-
-            // espaço disponível:
-            // - alturaImagem
-            // - alturaTitulo
-            // - paddingTop
-            // - paddingBottom
-            // - marginTop;
-            
             function atualizaClamp() {
 
                 const alturaDisponivel = conteudo_container.clientHeight - titulo.offsetHeight;
@@ -197,8 +176,10 @@ async function carregarPosts(page) {
             loader_foguete.style.display = 'none';
             carregando = false;
         }, delay > 0 ? delay : 0);
-        console.log('Tempo de carregamento: ' + tempo_carregamento);
-        console.log('Loader durou por mais: ' + delay);
+
+        // BLOCO DEBUG PERFORMANCE
+        // console.log('Tempo de carregamento: ' + tempo_carregamento);
+        // console.log('Loader durou por mais: ' + delay);
     }
 }
 

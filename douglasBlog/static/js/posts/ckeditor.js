@@ -43,12 +43,8 @@ class UploadAdapterCustom {
 ClassicEditor.create(document.querySelector('#conteudo'), {
     extraPlugins: [ CustomUploadAdapterPlugin ],
     mediaEmbed: {
-        // Faz com que videos e outras midias aparecam como previa dentro do editor
         previewsInData: true
     }
 }).catch(error => {
-    // .catch e usado pra capturar qualquer erro que aconteca no codigo
-    // "error =>" e a funcao que sera chamada se esse erro acontecer...
-    // => significa "RECEBE", ou seja, a funcao vai receber o erro
-    console.error(error); // Exibe o erro no console do navegador, se ocorrer algum problema
+    console.error("Erro ao carregar pré-visualização da mídia", error); // Exibe o erro no console do navegador, se ocorrer algum problema
 }); 

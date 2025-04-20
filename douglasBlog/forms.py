@@ -2,8 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField, FileField
 # Para validar email, baixar biblioteca email_validator
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
-from flask import request
-# from flask_login import current_user
+from flask import request, flash
 
 from douglasBlog import app, db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
@@ -25,7 +24,7 @@ class LoginForm(FlaskForm):
 
         if user:
             if bcrypt.check_password_hash(user.senha, self.senha.data.encode('utf-8')):
-                print("Usuário logado com sucesso!")
+                # print("Usuário logado com sucesso!") #DEBUG
                 return user
             else:
                 raise Exception('Senha incorreta.')
@@ -85,7 +84,7 @@ class PostagemForm(FlaskForm):
                 try:
                     supabase.storage.from_("post-files").remove([post.imagem.split('/')[-1]])
                 except Exception as e:
-                    print(f'Erro ao excluir a imagem do post. Erro: {e}')
+                    flash(f'Erro ao excluir a imagem do post. Erro: {e}')
 
             url_imagem = self.get_url_imagem()
             post.imagem = url_imagem
@@ -179,7 +178,7 @@ class MateriaisForm(FlaskForm):
                 try:
                     supabase.storage.from_('material-files').remove([material.resumo.split('/')[-1]])
                 except Exception as e:
-                    print(f"Erro ao excluir o arquivo do mapa mental: {e}")
+                    flash(f"Erro ao excluir o arquivo do mapa mental: {e}")
 
             resumo_url = self.upload_para_supabase(self.resumo.data)
             material.resumo = resumo_url
@@ -188,7 +187,7 @@ class MateriaisForm(FlaskForm):
                 try:
                     supabase.storage.from_('material-files').remove([material.lista_exercicios.split('/')[-1]])
                 except Exception as e:
-                    print(f"Erro ao excluir o arquivo da lista de exercícios: {e}")
+                    flash(f"Erro ao excluir o arquivo da lista de exercícios: {e}")
 
             lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
             material.lista_exercicios = lista_exercicios_url
@@ -219,7 +218,7 @@ class UserForm(FlaskForm):
     # Cadastro no banco de dados
     def save(self):
         # gera hash para senha criptografada que permite caracteres especiais.
-        #senha =  bcrypt.generate_password_hash(self.senha.data.encode('utf-8'))
+        
         senha = bcrypt.generate_password_hash(self.senha.data).decode('utf-8')
         if not str(senha).startswith('$2b$'):  # Verifica se o hash não está no formato bcrypt
             raise Exception('Houve um erro ao salvar sua senha. Tente novamente ou entre em contato.')

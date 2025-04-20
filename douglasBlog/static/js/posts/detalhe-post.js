@@ -11,13 +11,12 @@ async function carregarPost(){
     container_conteudo.innerHTML = post.conteudo;
 
     if (window.MathJax) {
-        MathJax.typesetPromise()
-            .then(() => {
-                console.log("Equações renderizadas por MathJax!");
-            })
-            .catch((err) => console.error("Erro ao renderizar equações", err));
-    }
-    else {
+        try {
+            await MathJax.typesetPromise()
+        } catch(err) {
+            console.error("Erro ao renderizar equações", err);
+        }
+    } else {
         console.warn("MathJax ainda não foi carregado");
     }
 }

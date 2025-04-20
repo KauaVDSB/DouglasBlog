@@ -66,11 +66,12 @@ function construirLista(material_lista_exercicios, conteudo_container){
 
 function temCaminho(caminho){
     if (caminho !== '' && caminho !== null){
-        console.log('valido');
+        // console.log('valido'); // DEBUG
         return true;
     }
     else {
-        console.log('invalido');
+        // console.log('invalido'); // DEBUG
+        return false;
     }
 }
 
@@ -102,10 +103,13 @@ async function carregarMateriais(destino) {
         
         const conteudo_container = document.createElement('div');
         conteudo_container.className = 'conteudo-container';
-        console.log(material.aula);
-        console.log(material.resumo);
-        console.log(material.lista_exercicios);
-        console.log('------------');
+
+        // BLOCO DEBUG
+        // console.log(material.aula);
+        // console.log(material.resumo);
+        // console.log(material.lista_exercicios);
+        // console.log('------------');
+        
         if (material.aula){
             construirAula(material.aula, conteudo_container);
         }

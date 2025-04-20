@@ -36,7 +36,7 @@ def cadastro(validacao):
     if form.validate_on_submit():
         form.save()
         return redirect(url_for('dashboard'))
-    print(form.errors)
+    # print(form.errors) DEBUG
 
     return render_template('login/cadastro.html', form=form)
 
@@ -56,7 +56,7 @@ def login():
         user = form.login()
         login_user(user, remember=True)
         return redirect(url_for('dashboard'))
-    print(form.errors)
+    # print(form.errors) # DEBUG
 
     return render_template('login/login.html', form=form)
 
@@ -126,11 +126,11 @@ def editarPost(post_id):
         try:
             form.update(post)
             db.session.commit()
-            print('Postagem editada com sucesso!') #Trocar por jsonify para utilizar Swal.fire
+            # print('Postagem editada com sucesso!') #Trocar por jsonify para utilizar Swal.fire
             return redirect(url_for('listaPosts'))
         except Exception as e:
             db.session.rollback()
-            print(f'Falha ao editar postagem. Erro: {e}') #Trocar por jsonify para utilizar Swal.fire
+            # print(f'Falha ao editar postagem. Erro: {e}') #Trocar por jsonify para utilizar Swal.fire
             return redirect(url_for('dashboard'))
 
     return render_template('admin/editar/editar-post.html', form=form, post=post)
@@ -328,16 +328,16 @@ def api_get_listaPosts():
         posts_carregados_dict = [
             converter_entities_lista_post_para_dict(id, titulo, imagem, conteudo)
             for id, titulo, imagem, conteudo in posts_carregados
-        ] # Converte para dict
+        ]
 
         # Contando total de posts
         posts_total = db.session.query(func.count(Postagem.id)).scalar()
 
         t2 = time()
 
-        # Logs de desempenho de PERFORMANCE
-        print(f"Tempo consulta com with_entities: {(t1 - t0)*1000:.2f} ms")
-        print(f"Tempo total (com contagem): {(t2 - t0)*1000:.2f} ms")
+        # Logs de desempenho de DEBUG PERFORMANCE
+        # print(f"Tempo consulta com with_entities: {(t1 - t0)*1000:.2f} ms")
+        # print(f"Tempo total (com contagem): {(t2 - t0)*1000:.2f} ms")
 
 
         # Criando a resposta JSON
@@ -347,7 +347,7 @@ def api_get_listaPosts():
         return response
 
     except Exception as e:
-        print(f"❌ Erro ao buscar posts: {e}")
+        flash(f"❌ Erro ao buscar posts: {e}")
         return jsonify({"error": str(e)}), 500 # Retorna erro como json em caso de falha.
     
 
