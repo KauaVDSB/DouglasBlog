@@ -4,7 +4,7 @@ from wtforms import StringField, SubmitField, PasswordField, TextAreaField, Sele
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from flask import request, flash
 
-from douglasBlog import app, db, bcrypt, supabase, SUPABASE_URL
+from douglasBlog import db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
 
 import time
@@ -23,11 +23,14 @@ class LoginForm(FlaskForm):
         user = User.query.filter_by(email=self.email.data).first()
 
         if user:
-            if bcrypt.check_password_hash(user.senha, self.senha.data.encode('utf-8')):
-                # print("Usuário logado com sucesso!") #DEBUG
-                return user
+            if user.admin:
+                if bcrypt.check_password_hash(user.senha, self.senha.data.encode('utf-8')):
+                    # print("Usuário logado com sucesso!") #DEBUG
+                    return user
+                else:
+                    raise Exception('Senha incorreta.')
             else:
-                raise Exception('Senha incorreta.')
+                raise Exception('Usuário não é um admnistrador. Acesso negado.')
         else:
             raise Exception('Usuário não encontrado.')
 

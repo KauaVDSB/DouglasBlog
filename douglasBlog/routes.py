@@ -28,21 +28,20 @@ def homepageSection(section):
 
 @app.route('/cadastroooooooo/<string:validacao>', methods=['GET', 'POST'])
 def cadastro(validacao):
-    if validacao != 'acesso_confirmado':
+    if validacao != 'acesso_confirmado': # <!-- VARIAVEL DE AMBIENTE -->
         return redirect(url_for('homepage'))
     
     form = UserForm()
 
     if form.validate_on_submit():
         form.save()
-        return redirect(url_for('dashboard'))
-    # print(form.errors) DEBUG
+        return redirect(url_for('homepage'))
 
     return render_template('login/cadastro.html', form=form)
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    if request.args.get('acesso') == 'douglas':
+    if request.args.get('acesso') == 'douglas': # <!-- VARIAVEL DE AMBIENTE -->
         session['acesso_douglas'] = True
         return redirect(url_for('login'))
 
@@ -51,12 +50,12 @@ def login():
 
     form = LoginForm()
 
-    #Só permite que a função rode caso passe em todas as validações
+    #Só permite que a função rode caso passe em todas as validações e seja admin
     if form.validate_on_submit():
         user = form.login()
-        login_user(user, remember=True)
-        return redirect(url_for('dashboard'))
-    # print(form.errors) # DEBUG
+        if user:
+            login_user(user, remember=True)
+            return redirect(url_for('dashboard'))
 
     return render_template('login/login.html', form=form)
 
@@ -309,7 +308,7 @@ def api_get_listaPosts():
         inicio = (pagina - 1) * posts_por_pagina # Calcula o primeiro post carregado (ex: 1 = 0, 2 = 51)
 
         #PERFORMANCE
-        t0 = time()
+        # t0 = time()
 
         # Extraindo os posts
         posts_carregados = db.session.query(
@@ -322,7 +321,7 @@ def api_get_listaPosts():
         ).offset(inicio).limit(posts_por_pagina).all() # Fatia query, enviando apenas o necessário
 
         #PERFORMANCE
-        t1 = time()
+        # t1 = time()
 
 
         posts_carregados_dict = [
@@ -333,7 +332,7 @@ def api_get_listaPosts():
         # Contando total de posts
         posts_total = db.session.query(func.count(Postagem.id)).scalar()
 
-        t2 = time()
+        # t2 = time()
 
         # Logs de desempenho de DEBUG PERFORMANCE
         # print(f"Tempo consulta com with_entities: {(t1 - t0)*1000:.2f} ms")
