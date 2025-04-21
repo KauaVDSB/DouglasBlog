@@ -208,6 +208,7 @@ aside form {
 }
 .btn-editar {
     text-decoration: none;
+    color: #102e4a;
 }
 .btn-deletar {
     color: red;

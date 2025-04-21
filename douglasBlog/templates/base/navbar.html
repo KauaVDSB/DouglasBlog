@@ -12,7 +12,7 @@
         <button id="openButton" class="menu-toggle close" aria-label="Close menu">✖</button>
         <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a> <span class="border"></span>
         <a href="{{ url_for('listaPosts') }}">Blog</a> <span class="border"></span>
-        <a href="{{ url_for('materiaisTurmas', turma=4) }}">Olímpiadas</a>
+        <a href="{{ url_for('verMateriais', destino=4) }}">Olímpiadas</a>
         {% if current_user.is_authenticated and current_user.admin %}
             <span class="border"> </span>
             <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>

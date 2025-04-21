@@ -17,10 +17,7 @@
             <a href="{{ url_for('criarPosts') }}">Criar Postagens</a>
         </li>
         <li>
-            <a href="{{ url_for('criarMateriais') }}">Materiais</a>
-        </li>
-        <li>
-            <a href="{{ url_for('listaPosts') }}">Ver Posts</a>
+            <a href="{{ url_for('criarMateriais') }}">Criar Materiais</a>
         </li>
         <li>
             <a href="{{ url_for('listaPosts') }}?admin_view=true">Editar Posts</a> <!-- VARIAVEL DE AMBIENTE -->
@@ -28,16 +25,16 @@
         <li>
             Materiais:
             <li>
-                <a href="{{ url_for('materiaisTurmas', turma=1) }}?admin_view=true">Editar 1º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+                <a href="{{ url_for('verMateriais', destino=1) }}?admin_view=true">Editar 1º ano</a> <!-- VARIAVEL DE AMBIENTE -->
             </li>
             <li>
-                <a href="{{ url_for('materiaisTurmas', turma=2) }}?admin_view=true">Editar 2º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+                <a href="{{ url_for('verMateriais', destino=2) }}?admin_view=true">Editar 2º ano</a> <!-- VARIAVEL DE AMBIENTE -->
             </li>
             <li>
-                <a href="{{ url_for('materiaisTurmas', turma=3) }}?admin_view=true">Editar 3º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+                <a href="{{ url_for('verMateriais', destino=3) }}?admin_view=true">Editar 3º ano</a> <!-- VARIAVEL DE AMBIENTE -->
             </li>
             <li>
-                <a href="{{ url_for('materiaisTurmas', turma=4) }}?admin_view=true">Editar Olímpiadas</a> <!-- VARIAVEL DE AMBIENTE -->
+                <a href="{{ url_for('verMateriais', destino=4) }}?admin_view=true">Editar Olímpiadas</a> <!-- VARIAVEL DE AMBIENTE -->
             </li>
         </li>
         <li>

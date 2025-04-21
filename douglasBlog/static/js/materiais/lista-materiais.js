@@ -133,11 +133,11 @@ async function carregarMateriais(destino) {
             const btn_editar = document.createElement('a');
             btn_editar.href = `/admin/douglas-blog/materiais/editar/${material.id}`;
             btn_editar.className  = 'btn-editar';
-            btn_editar.textContent = 'Editar';
+            btn_editar.innerHTML = '<i class="bi bi-pencil-square"></i> Editar';
 
             const btn_deletar = document.createElement('button');
             btn_deletar.className = 'btn-deletar';
-            btn_deletar.textContent = 'Deletar';
+            btn_deletar.innerHTML = '<i class="bi bi-trash-fill"></i> Deletar';
             
             btn_deletar.onclick = async () => {
                 Swal.fire({

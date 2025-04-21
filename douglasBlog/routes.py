@@ -166,20 +166,6 @@ def criarMateriais():
     return render_template('admin/criar/criar-materiais.html', form=form)
 
 
-@app.route('/admin/douglas-blog/materiais/deletar/<int:material_id>', methods=['DELETE'])
-@login_required
-def deletar_material(material_id):
-    VerificarAdmin()
-
-    material = Material.query.get_or_404(material_id)
-    try:
-        db.session.delete(material)
-        db.session.commit()
-        return jsonify({'success': True})
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
-
 
 @app.route('/admin/douglas-blog/materiais/editar/<int:material_id>', methods=['GET', 'POST'])
 @login_required
@@ -202,17 +188,28 @@ def editar_material(material_id):
         destino = Material.query.with_entities(
             Material.destino).filter_by(id=material_id).scalar()
         flash("Material editado com sucesso!")
-        return redirect(url_for('materiaisTurmas', turma=int(destino)))
+        return redirect(url_for('verMateriais', destino=int(destino)))
     
     return render_template('admin/editar/editar-material.html', form=form, material=material)
 
+
+@app.route('/admin/douglas-blog/materiais/deletar/<int:material_id>', methods=['DELETE'])
+@login_required
+def deletar_material(material_id):
+    VerificarAdmin()
+
+    material = Material.query.get_or_404(material_id)
+
+    delete = MateriaisForm()
+
+    return delete.delete(material)
 # ------------------------------------------------------------- #
         # VIEW/
             # / MATERIAIS
 
                     # MATERIAIS.HTML
-@app.route('/materiais/turmas/<int:turma>/')
-def materiaisTurmas(turma):
+@app.route('/materiais/<int:destino>/')
+def verMateriais(destino):
     
     return render_template('view/materiais/materiais.html')
 

@@ -183,7 +183,7 @@ class MateriaisForm(FlaskForm):
         
         if request.form.get('removerMapaMental'):
             if material.resumo:
-                supabase.storage.from_('material-files').remove([material.resumo.split('/')[-1]])
+                supabase.storage.from_('material-files').remove([material.resumo.split('/')[-1]]) # VARIAVEL DE AMBIENTE
             material.resumo = None
 
         if request.form.get('removerListaExercicios'):
@@ -210,6 +210,28 @@ class MateriaisForm(FlaskForm):
 
             lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
             material.lista_exercicios = lista_exercicios_url
+
+
+    def delete(self, material):
+        if material.resumo:
+            try:
+                supabase.storage.from_('material-files').remove([material.resumo.split('/')[-1]])
+            except Exception as e:
+                flash(f'Erro ao deletar resumo: {e}')
+
+        if material.lista_exercicios:
+            try:
+                supabase.storage.from_('material-files').remove([material.lista_exercicios.split('/')[-1]])
+            except Exception as e:
+                flash(f'Erro ao deletar lista de exercícios: {e}')
+        
+        try:
+            db.session.delete(material)
+            db.session.commit()
+            return jsonify({'success': True})
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'error': str(e)}), 500
 
 
 

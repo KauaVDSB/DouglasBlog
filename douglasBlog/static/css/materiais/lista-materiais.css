@@ -109,6 +109,33 @@ main {
 }
 
 
+.container-btn-admin {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1vh;
+    padding: 0 8px;
+    z-index: 9;
+}
+.btn-editar, .btn-deletar {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+.btn-editar {
+    text-decoration: none;
+    color: #102e4a;
+}
+.btn-deletar {
+    color: red;
+    border: none;
+}
+.btn-editar:hover, .btn-deletar:hover {
+    transform: translateY(-3px);
+}
+
 /* Telas menores que 768px */
 @media (max-width: 768px) {
     .material-container {
