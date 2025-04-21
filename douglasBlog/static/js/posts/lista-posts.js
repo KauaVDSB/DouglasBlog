@@ -199,6 +199,7 @@ async function atualizarPosts(pagina, isDelete) {
             if (cache.posts[pagina]) {
                 try {
                     cache.posts[pagina] = undefined;
+                    cache.totalPosts = undefined;
                 } catch (error) {
                     console.error('Erro ao deletar cache da pagina:', error);
                 }
