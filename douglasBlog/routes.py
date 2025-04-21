@@ -1,9 +1,9 @@
-from douglasBlog import app, db, supabase, SUPABASE_URL
-from flask import render_template, url_for, request, redirect, jsonify, session, flash
+from douglasBlog import app, db, supabase, SUPABASE_URL, ACESSO_CADASTRO, ACESSO_LOGIN
+from flask import render_template, url_for, request, redirect, jsonify, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc, func
-from douglasBlog.models import Postagem, Material, User
+from douglasBlog.models import Postagem, Material
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
 from douglasBlog.utils import VerificarAdmin
 
@@ -28,7 +28,7 @@ def homepageSection(section):
 
 @app.route('/cadastroooooooo/<string:validacao>', methods=['GET', 'POST'])
 def cadastro(validacao):
-    if validacao != 'acesso_confirmado': # <!-- VARIAVEL DE AMBIENTE -->
+    if validacao != ACESSO_CADASTRO:
         return redirect(url_for('homepage'))
     
     form = UserForm()
@@ -41,11 +41,7 @@ def cadastro(validacao):
 
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    if request.args.get('acesso') == 'douglas': # <!-- VARIAVEL DE AMBIENTE -->
-        session['acesso_douglas'] = True
-        return redirect(url_for('login'))
-
-    if not session.get('acesso_douglas'):
+    if request.args.get('acesso') != ACESSO_LOGIN:
         return redirect(url_for('homepage'))
 
     form = LoginForm()
@@ -57,7 +53,7 @@ def login():
             login_user(user, remember=True)
             return redirect(url_for('dashboard'))
 
-    return render_template('login/login.html', form=form)
+    return render_template('login/login.html', form=form, ACESSO_CADASTRO=ACESSO_CADASTRO)
 
 
 @app.route('/logout/')

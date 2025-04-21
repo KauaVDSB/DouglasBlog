@@ -1,6 +1,7 @@
 // SEGURANÇA
 const params = new URLSearchParams(window.location.search);
-if (params.get('acesso') === 'douglas') {
+const ACESSO_LOGIN = document.getElementById('menu-navbar').dataset.acesso;
+if (params.get('acesso') === ACESSO_LOGIN) {
     params.delete('acesso');
     const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
     window.history.replaceState({}, '', newUrl);

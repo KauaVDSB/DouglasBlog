@@ -8,7 +8,7 @@
         </a>
     </div>
 
-    <div id="menu-navbar" class="menu">
+    <div id="menu-navbar" class="menu" data-acesso="{{ ACESSO_LOGIN }}">
         <button id="openButton" class="menu-toggle close" aria-label="Close menu">✖</button>
         <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a> <span class="border"></span>
         <a href="{{ url_for('listaPosts') }}">Blog</a> <span class="border"></span>
@@ -16,9 +16,9 @@
         {% if current_user.is_authenticated and current_user.admin %}
             <span class="border"> </span>
             <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
-        {% elif request.args.get('acesso') == 'douglas' %} <!-- VARIAVEL DE AMBIENTE -->
+        {% elif request.args.get('acesso') == ACESSO_LOGIN %} <!-- VARIAVEL DE AMBIENTE -->
         <span class="border"></span>
-            <a href="{{ url_for('login') }}?acesso=douglas">Login</a> <!-- VARIAVEL DE AMBIENTE -->
+            <a href="{{ url_for('login') }}?acesso={{ACESSO_LOGIN}}">Login</a> <!-- VARIAVEL DE AMBIENTE -->
         {% endif %}
     </div>
 

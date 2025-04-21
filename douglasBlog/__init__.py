@@ -31,5 +31,15 @@ login_manager.login_view = 'homepage' #Se usuario nao estiver logado, sera redir
 bcrypt = Bcrypt(app)
 
 
+# Variáveis de ambiente
+
+ACESSO_CADASTRO = os.getenv('ACESSO_CADASTRO')
+ACESSO_LOGIN = os.getenv('ACESSO_LOGIN', 'login_default')
+
+@app.context_processor
+def inject_environment_variables():
+    return {
+        'ACESSO_LOGIN': ACESSO_LOGIN
+    }
 
 from douglasBlog.routes import homepage
