@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, TextAreaField, SelectField, FileField
 # Para validar email, baixar biblioteca email_validator
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
-from flask import request, flash
+from flask import request, flash, jsonify
 
 from douglasBlog import db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
@@ -58,10 +58,10 @@ class PostagemForm(FlaskForm):
             imagem_bytes = imagem.read()
 
             # Upload
-            supabase.storage.from_("post-files").upload(caminho_arquivo, imagem_bytes)
+            supabase.storage.from_("post-files").upload(caminho_arquivo, imagem_bytes) # VARIAVEL DE AMBIENTE
 
             # Gera url pública para a imagem
-            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/post-files/{unique_filename}"
+            url_imagem = f"{SUPABASE_URL}/storage/v1/object/public/post-files/post-files/{unique_filename}" # VARIAVEL DE AMBIENTE
         return url_imagem
 
 
@@ -85,7 +85,7 @@ class PostagemForm(FlaskForm):
         if self.imagem.data and self.imagem.data.filename:
             if post.imagem:
                 try:
-                    supabase.storage.from_("post-files").remove([post.imagem.split('/')[-1]])
+                    supabase.storage.from_("post-files").remove(['post-files/' + post.imagem.split('/')[-1]]) # VARIAVEL DE AMBIENTE
                 except Exception as e:
                     flash(f'Erro ao excluir a imagem do post. Erro: {e}')
 
@@ -94,8 +94,24 @@ class PostagemForm(FlaskForm):
 
         if request.form.get('removerImagemPost'):
             if post.imagem:
-                supabase.storage.from_("post-files").remove([post.imagem.split('/')[-1]])
+                supabase.storage.from_("post-files").remove(['post-files/' + post.imagem.split('/')[-1]]) # VARIAVEL DE AMBIENTE
             post.imagem = None
+
+
+    def delete(self, post):
+        if post.imagem:
+            try:
+                supabase.storage.from_("post-files").remove(['post-files/' + post.imagem.split('/')[-1]]) # VARIAVEL DE AMBIENTE
+            except Exception as e:
+                flash(f'Erro ao excluir a imagem do post. Erro: {e}')
+
+        try:
+            db.session.delete(post)
+            db.session.commit()
+            return jsonify({'success': True})
+        except:
+            db.session.rollback()
+            return jsonify({'success': False, 'error': str(e)}), 500
 
 
 class MateriaisForm(FlaskForm):

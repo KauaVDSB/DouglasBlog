@@ -1,5 +1,5 @@
 from douglasBlog import app, db, supabase, SUPABASE_URL
-from flask import render_template, url_for, request, redirect, jsonify, abort, session, flash
+from flask import render_template, url_for, request, redirect, jsonify, session, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from sqlalchemy import desc, func
@@ -92,22 +92,6 @@ def criarPosts():
     return render_template('admin/criar/criar-posts.html', form=form)
 
 
-@app.route('/admin/douglas-blog/posts/deletar/<int:post_id>', methods=['DELETE'])
-@login_required
-def deletarPost(post_id):
-    VerificarAdmin()
-
-    post = Postagem.query.get_or_404(post_id)
-
-    try:
-        db.session.delete(post)
-        db.session.commit()
-        return jsonify({'success': True})
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-
 @app.route('/admin/douglas-blog/posts/editar/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def editarPost(post_id):
@@ -134,6 +118,16 @@ def editarPost(post_id):
 
     return render_template('admin/editar/editar-post.html', form=form, post=post)
 
+@app.route('/admin/douglas-blog/posts/deletar/<int:post_id>', methods=['DELETE'])
+@login_required
+def deletarPost(post_id):
+    VerificarAdmin()
+
+    post = Postagem.query.get_or_404(post_id)
+
+    delete = PostagemForm()
+
+    return delete.delete(post)
 
 
 

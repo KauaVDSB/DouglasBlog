@@ -183,6 +183,39 @@ aside form {
     margin: 0 1%;
 }
 
+.post-div:has(.container-btn-admin){
+    min-height: calc(50vh + 50px);
+    max-height: calc(50vh + 50px);
+}
+.post-div:has(.container-btn-admin) .link-post {
+    height: calc(100% - 50px);
+}
+
+.container-btn-admin {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1vh;
+    padding: 0 8px;
+    z-index: 9;
+}
+.btn-editar, .btn-deletar {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+}
+.btn-editar {
+    text-decoration: none;
+}
+.btn-deletar {
+    color: red;
+    border: none;
+}
+.btn-editar:hover, .btn-deletar:hover {
+    transform: translateY(-3px);
+}
 
 @media (max-width: 768px){
 

@@ -38,8 +38,7 @@
         </form>
     </div>
 
-    <a href="{{url_for('listaPosts')}}">Ver Postagens</a> <!-- Trocar por editar postagens -->
-    <a href="">Deletar Postagens</a>
+    <a href="{{ url_for('listaPosts') }}?admin_view=true">Editar Posts</a> <!-- VARIAVEL DE AMBIENTE -->
 </div>
 
 

@@ -87,7 +87,7 @@ async function carregarPosts(page) {
 
             function atualizaClamp() {
 
-                const alturaDisponivel = conteudo_container.clientHeight - titulo.offsetHeight;
+                const alturaDisponivel = conteudo_container.clientHeight - titulo.offsetHeight - 50;
                 
                 const estiloPrev_conteudo = getComputedStyle(prev_conteudo);
                 const lineHeight = parseFloat(estiloPrev_conteudo.lineHeight);
@@ -107,12 +107,12 @@ async function carregarPosts(page) {
                 const btn_editar = document.createElement('a');
                 btn_editar.href = `/admin/douglas-blog/posts/editar/${post.id}`;
                 btn_editar.className = 'btn-editar';
-                btn_editar.textContent = 'Editar';
+                btn_editar.innerHTML = '<i class="bi bi-pencil-square"></i> Editar';
 
 
                 const btn_deletar = document.createElement('button');
                 btn_deletar.className = 'btn-deletar'
-                btn_deletar.textContent = 'Deletar';
+                btn_deletar.innerHTML = '<i class="bi bi-trash-fill"></i> Deletar';
 
                 btn_deletar.onclick = async () => {
                     Swal.fire({
@@ -138,6 +138,8 @@ async function carregarPosts(page) {
                                     timer: 1500,
                                     showConfirmButton: false
                                 });
+
+                                atualizarPosts(pagina_atual, 'delete');
                             } else {
                                 Swal.fire({
                                     tile: 'Falha ao deletar material.',
@@ -184,6 +186,34 @@ async function carregarPosts(page) {
 }
 
 
+async function atualizarPosts(pagina, isDelete) {
+    if (carregando) return;
+    carregando = true;
+
+    const loader_foguete = document.getElementById('loader-foguete');
+    loader_foguete.style.display = 'block';
+
+    try {
+        carregando = false;
+        if (isDelete === 'delete') {
+            if (cache.posts[pagina]) {
+                try {
+                    cache.posts[pagina] = undefined;
+                } catch (error) {
+                    console.error('Erro ao deletar cache da pagina:', error);
+                }
+            }
+        }
+        await carregarPosts(pagina);
+
+        document.getElementById('post-container').scrollIntoView({ behavior:"smooth" });
+    } catch (error) {
+        console.error('Erro ao atualizar posts:', error);
+    } finally{
+        loader_foguete.style.display = 'none';
+    }
+}
+
 // Botões de paginação
     function atualizarBotoesDePaginacao(){
         const botao_voltar = document.getElementById('botao-voltar');
@@ -206,7 +236,7 @@ async function carregarPosts(page) {
         if (pagina_atual > 1){
             pagina_atual--; // Volta uma página
             atualizarUrlPagina(pagina_atual);
-            carregarPosts(pagina_atual); // Carrega os posts da página atual
+            atualizarPosts(pagina_atual); // Carrega posts da página atual
         }
     })
 
@@ -214,7 +244,7 @@ async function carregarPosts(page) {
         if (pagina_atual < pagina_total){
             pagina_atual++; // Avança uma página
             atualizarUrlPagina(pagina_atual);
-            carregarPosts(pagina_atual); // Carrega posts da página atual
+            atualizarPosts(pagina_atual); // Carrega posts da página atual
         }
     })
 
