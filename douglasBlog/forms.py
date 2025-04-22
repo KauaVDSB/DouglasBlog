@@ -20,7 +20,6 @@ from douglasBlog import db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
 
 
-
 class LoginForm(FlaskForm):
     email = StringField("E-mail", validators=[DataRequired(), Email()])
     senha = PasswordField("Senha", validators=[DataRequired()])
@@ -37,11 +36,11 @@ class LoginForm(FlaskForm):
                 ):
                     # print("Usuário logado com sucesso!") #DEBUG
                     return user
-                
+
                 raise Exception("Senha incorreta.")
-            
+
             raise Exception("Usuário não é um admnistrador. Acesso negado.")
-        
+
         raise Exception("Usuário não encontrado.")
 
 
