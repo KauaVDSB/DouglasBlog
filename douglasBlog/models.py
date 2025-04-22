@@ -1,12 +1,11 @@
 from douglasBlog import db, login_manager
 from datetime import datetime
-from flask_login import UserMixin, login_user, logout_user, current_user
+from flask_login import UserMixin
 
 import re
 
 
-
-@login_manager.user_loader # Retorna sessao do usuario no controle de login
+@login_manager.user_loader  # Retorna sessao do usuario no controle de login
 def load_user(user_id):
     return User.query.get(user_id)
 
@@ -21,8 +20,7 @@ class User(db.Model, UserMixin):
     data_cadastro = db.Column(db.DateTime, default=datetime.now())
     admin = db.Column(db.Boolean, default=False)
     # É referenciado pela tabela Postagem para salvar autoria nas postagens
-    postagem = db.relationship('Postagem', backref='user', lazy=True)
-
+    postagem = db.relationship("Postagem", backref="user", lazy=True)
 
 
 class Postagem(db.Model):
@@ -32,20 +30,19 @@ class Postagem(db.Model):
     conteudo = db.Column(db.Text, nullable=True)
     data_postagem = db.Column(db.DateTime, default=datetime.now())
     # Referencia a tabela User para obter informacoes
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
 
     def conteudoResumo(self):
         len_conteudo = len(self.conteudo)
-        post_conteudo = re.sub(r'<[^>]*?>', '', self.conteudo)  # Remove tags HTML
+        post_conteudo = re.sub(r"<[^>]*?>", "", self.conteudo)  # Remove tags HTML
         if len_conteudo > 60:
             return f"{post_conteudo[:37]}..."
-        else:
-            return post_conteudo
-        
+        return post_conteudo
+
     def data_resumo(self):
-        data = str(self.data_postagem)[:16].replace(':', 'h')
-        data = data.replace('-', '/')
-        dataOrdem = data[8:10] + '/' + data[5:8] + data[:4] + data[10:]
+        data = str(self.data_postagem)[:16].replace(":", "h")
+        data = data.replace("-", "/")
+        dataOrdem = data[8:10] + "/" + data[5:8] + data[:4] + data[10:]
         return dataOrdem
 
 
@@ -58,9 +55,8 @@ class Material(db.Model):
     lista_exercicios = db.Column(db.Text, nullable=True)
     data_criacao = db.Column(db.DateTime, default=datetime.now())
 
-
     def data_resumo(self):
-        data = str(self.data_criacao)[:16].replace(':', 'h')
-        data = data.replace('-', '/')
-        dataOrdem = data[8:10] + '/' + data[5:8] + data[:4] + data[10:]
+        data = str(self.data_criacao)[:16].replace(":", "h")
+        data = data.replace("-", "/")
+        dataOrdem = data[8:10] + "/" + data[5:8] + data[:4] + data[10:]
         return dataOrdem
