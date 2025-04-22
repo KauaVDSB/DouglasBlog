@@ -1,1 +1,1 @@
-from douglasBlog import app
+from douglasBlog import app  # noqa: F401

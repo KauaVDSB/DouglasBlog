@@ -46,4 +46,6 @@ def inject_environment_variables():
     return {"ACESSO_LOGIN": ACESSO_LOGIN}
 
 
-from douglasBlog.routes import homepage
+from douglasBlog.routes import (  # noqa: F401,E402  # pylint: disable=unused-import,wrong-import-position
+    homepage,
+)

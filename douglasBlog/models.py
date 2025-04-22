@@ -1,8 +1,11 @@
-from douglasBlog import db, login_manager
+# pylint: disable=too-few-public-methods
+
+import re
+
 from datetime import datetime
 from flask_login import UserMixin
 
-import re
+from douglasBlog import db, login_manager
 
 
 @login_manager.user_loader  # Retorna sessao do usuario no controle de login

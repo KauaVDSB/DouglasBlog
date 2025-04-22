@@ -18,6 +18,14 @@ from werkzeug.utils import secure_filename
 
 from douglasBlog import db, bcrypt, supabase, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
+from douglasBlog.exceptions import (
+    AuthenticationError,
+    ResourceNotSentError,
+    ResourceNotFoundError,
+    SupabaseManagementFileError,
+    QueryObjectManagementError,
+    EncryptationFailureError,
+)
 
 
 class LoginForm(FlaskForm):
@@ -26,22 +34,17 @@ class LoginForm(FlaskForm):
     btnSubmit = SubmitField("Entrar")
 
     def login(self):
-        # Procura pelo usuário afim de resgatar os dados.
         user = User.query.filter_by(email=self.email.data).first()
 
-        if user:
-            if user.admin:
-                if bcrypt.check_password_hash(
-                    user.senha, self.senha.data.encode("utf-8")
-                ):
-                    # print("Usuário logado com sucesso!") #DEBUG
-                    return user
+        if not user:
+            raise ResourceNotFoundError("Usuário não encontrado.")
+        if not user.admin:
+            raise PermissionError("Usuário não é um admnistrador. Acesso negado.")
+        if not bcrypt.check_password_hash(user.senha, self.senha.data.encode("utf-8")):
+            raise AuthenticationError("Senha incorreta.")
 
-                raise Exception("Senha incorreta.")
-
-            raise Exception("Usuário não é um admnistrador. Acesso negado.")
-
-        raise Exception("Usuário não encontrado.")
+        # print("Usuário logado com sucesso!") #DEBUG
+        return user
 
 
 class PostagemForm(FlaskForm):
@@ -97,8 +100,8 @@ class PostagemForm(FlaskForm):
                     supabase.storage.from_("post-files").remove(
                         ["post-files/" + post.imagem.split("/")[-1]]
                     )  # VARIAVEL DE AMBIENTE
-                except Exception as e:
-                    flash(f"Erro ao excluir a imagem do post. Erro: {e}")
+                except SupabaseManagementFileError as e:
+                    flash(f"Erro ao excluir arquivo de imagem no Supabase: {e}")
 
             url_imagem = self.get_url_imagem()
             post.imagem = url_imagem
@@ -116,14 +119,14 @@ class PostagemForm(FlaskForm):
                 supabase.storage.from_("post-files").remove(
                     ["post-files/" + post.imagem.split("/")[-1]]
                 )  # VARIAVEL DE AMBIENTE
-            except Exception as e:
-                flash(f"Erro ao excluir a imagem do post. Erro: {e}")
+            except SupabaseManagementFileError as e:
+                flash(f"Erro ao excluir arquivo de imagem no Supabase: {e}")
 
         try:
             db.session.delete(post)
             db.session.commit()
             return jsonify({"success": True}), 200
-        except Exception as e:
+        except QueryObjectManagementError as e:
             db.session.rollback()
             return jsonify({"success": False, "error": str(e)}), 500
 
@@ -186,7 +189,7 @@ class MateriaisForm(FlaskForm):
             db.session.add(material)
             db.session.commit()
         else:
-            raise Exception("Nenhum material enviado...")
+            raise ResourceNotSentError("Nenhum material enviado...")
 
     def update(self, material):
 
@@ -214,8 +217,8 @@ class MateriaisForm(FlaskForm):
                     supabase.storage.from_("material-files").remove(
                         [material.resumo.split("/")[-1]]
                     )
-                except Exception as e:
-                    flash(f"Erro ao excluir o arquivo do mapa mental: {e}")
+                except SupabaseManagementFileError as e:
+                    flash(f"Erro ao excluir o arquivo mapa mental no Supabase: {e}")
 
             resumo_url = self.upload_para_supabase(self.resumo.data)
             material.resumo = resumo_url
@@ -225,8 +228,10 @@ class MateriaisForm(FlaskForm):
                     supabase.storage.from_("material-files").remove(
                         [material.lista_exercicios.split("/")[-1]]
                     )
-                except Exception as e:
-                    flash(f"Erro ao excluir o arquivo da lista de exercícios: {e}")
+                except SupabaseManagementFileError as e:
+                    flash(
+                        f"Erro ao excluir o arquivo lista de exercícios no Supabase: {e}"
+                    )
 
             lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
             material.lista_exercicios = lista_exercicios_url
@@ -237,7 +242,7 @@ class MateriaisForm(FlaskForm):
                 supabase.storage.from_("material-files").remove(
                     [material.resumo.split("/")[-1]]
                 )
-            except Exception as e:
+            except SupabaseManagementFileError as e:
                 flash(f"Erro ao deletar resumo: {e}")
 
         if material.lista_exercicios:
@@ -245,14 +250,14 @@ class MateriaisForm(FlaskForm):
                 supabase.storage.from_("material-files").remove(
                     [material.lista_exercicios.split("/")[-1]]
                 )
-            except Exception as e:
+            except SupabaseManagementFileError as e:
                 flash(f"Erro ao deletar lista de exercícios: {e}")
 
         try:
             db.session.delete(material)
             db.session.commit()
             return jsonify({"success": True})
-        except Exception as e:
+        except QueryObjectManagementError as e:
             db.session.rollback()
             return jsonify({"success": False, "error": str(e)}), 500
 
@@ -273,11 +278,13 @@ class UserForm(FlaskForm):
     btnSubmit = SubmitField("Cadastrar")
 
     # def com validate propria para verificar se email e unico.
-    def validade_email(
-        self, email
-    ):  # Ao dar submit, ele procura todas as def que comecam com 'validade_'.
+    def validate_email(self, email):
+        # Ao dar submit, ele procura todas as def que comecam com 'validade_'.
+        """Verifica se o email já existe e, em caso afirmativo, levanta ValidationError.
+        Funções validate_<nome_do_campo>(self, field) são invocados automaticamente pelo WTForms.
+        """
         if User.query.filter(email=email.data).first():
-            return ValidationError("Usuário já cadastrado com este E-mail.")
+            raise ValidationError("Usuário já cadastrado com este E-mail.")
 
     # Cadastro no banco de dados
     def save(self):
@@ -287,7 +294,7 @@ class UserForm(FlaskForm):
         if not str(senha).startswith(
             "$2b$"
         ):  # Verifica se o hash não está no formato bcrypt
-            raise Exception(
+            raise EncryptationFailureError(
                 "Houve um erro ao salvar sua senha. Tente novamente ou entre em contato."
             )
 

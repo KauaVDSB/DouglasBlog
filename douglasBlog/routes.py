@@ -1,16 +1,18 @@
-from douglasBlog import app, db, supabase, SUPABASE_URL, ACESSO_CADASTRO, ACESSO_LOGIN
-from douglasBlog.models import Postagem, Material
-from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
-from douglasBlog.utils import VerificarAdmin
-
-from flask import render_template, url_for, request, redirect, jsonify, flash
-from flask_login import login_user, logout_user, current_user, login_required
-
-from sqlalchemy import desc, func
+# pylint: disable=cyclic-import
 
 from time import time
 import re
+
+from flask import render_template, url_for, request, redirect, jsonify, flash
+from flask_login import login_user, logout_user, current_user, login_required
+from sqlalchemy import func, desc
 from werkzeug.utils import secure_filename
+
+from douglasBlog import app, db, supabase, SUPABASE_URL, ACESSO_CADASTRO, ACESSO_LOGIN
+from douglasBlog.models import Postagem, Material
+from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
+from douglasBlog.helpers.permission import VerificarAdmin
+from douglasBlog.exceptions import QueryObjectManagementError, GetAPIError
 
 
 # Rota para homepage
@@ -105,7 +107,7 @@ def editarPost(post_id):
                 "Postagem editada com sucesso!"
             )  # Trocar por jsonify para utilizar Swal.fire
             return redirect(url_for("listaPosts"))
-        except Exception as e:
+        except QueryObjectManagementError as e:
             db.session.rollback()
             flash(
                 f"Falha ao editar postagem. Erro: {e}"
@@ -215,7 +217,8 @@ def deletar_material(material_id):
 
 # MATERIAIS.HTML
 @app.route("/materiais/<int:destino>/")
-def verMateriais(destino):
+def verMateriais(destino):  # pylint: disable=unused-argument
+    """Renderiza a página de materiais (destino usado no front-end)."""
 
     return render_template("view/materiais/materiais.html")
 
@@ -252,7 +255,7 @@ def api_get_listaMateriais(destino):
         response.headers["X-Total-Count"] = materiais_total
         return response
 
-    except Exception as e:
+    except GetAPIError as e:
         return jsonify({"error": str(e)}), 500
 
 
@@ -266,7 +269,7 @@ def listaPosts():
     return render_template("view/posts/lista-posts.html")
 
 
-def converter_entities_lista_post_para_dict(id, titulo, imagem, conteudo):
+def converter_entities_lista_post_para_dict(post_id, titulo, imagem, conteudo):
     if imagem is None:
         url_imagem = url_for("static", filename="media/templates/oba-banner.jpg")
     else:
@@ -279,7 +282,7 @@ def converter_entities_lista_post_para_dict(id, titulo, imagem, conteudo):
         resumo = post_conteudo
 
     return {
-        "id": id,
+        "id": post_id,
         "titulo": titulo,
         "imagem": url_imagem,
         "conteudo": resumo,
@@ -295,8 +298,7 @@ def api_get_listaPosts():
 
         try:
             pagina = int(pagina)
-            if pagina < 1:
-                pagina = 1
+            pagina = max(pagina, 1)
         except ValueError:
             pagina = 1
 
@@ -328,7 +330,9 @@ def api_get_listaPosts():
         ]
 
         # Contando total de posts
-        posts_total = db.session.query(func.count(Postagem.id)).scalar()
+        posts_total = db.session.query(
+            func.count(Postagem.id)  # pylint: disable=not-callable
+        ).scalar()
 
         # t2 = time()
 
@@ -344,7 +348,7 @@ def api_get_listaPosts():
 
         return response
 
-    except Exception as e:
+    except GetAPIError as e:
         flash(f"❌ Erro ao buscar posts: {e}")
         return (
             jsonify({"error": str(e)}),
@@ -355,9 +359,10 @@ def api_get_listaPosts():
 
 
 @app.route("/posts/view/<string:post_titulo>/<int:post_id>/")
-def verPost(post_titulo, post_id):
-    post_detail = Postagem.query.get(post_id)
+def verPost(post_titulo, post_id):  # pylint: disable=unused-argument
+    """Renderiza o post de id=post_id (post_titulo usando no front-end)."""
 
+    post_detail = Postagem.query.get(post_id)
     return render_template("view/posts/post.html", post=post_detail)
 
 
@@ -372,9 +377,9 @@ def converter_post_para_dict(post):
     }
 
 
-@app.route("/api/get/ver-post/<int:id>")
-def api_get_verPost(id):
-    post = Postagem.query.get_or_404(id)
+@app.route("/api/get/ver-post/<int:post_id>")
+def api_get_verPost(post_id):
+    post = Postagem.query.get_or_404(post_id)
     post_dict = converter_post_para_dict(post)
 
     # Resposta JSON
