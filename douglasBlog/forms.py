@@ -279,11 +279,10 @@ class UserForm(FlaskForm):
 
     # def com validate propria para verificar se email e unico.
     def validate_email(self, email):
-        # Ao dar submit, ele procura todas as def que comecam com 'validade_'.
         """Verifica se o email já existe e, em caso afirmativo, levanta ValidationError.
         Funções validate_<nome_do_campo>(self, field) são invocados automaticamente pelo WTForms.
         """
-        if User.query.filter(email=email.data).first():
+        if User.query.filter_by(email=email.data).first():
             raise ValidationError("Usuário já cadastrado com este E-mail.")
 
     # Cadastro no banco de dados
