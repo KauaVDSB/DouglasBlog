@@ -1,3 +1,5 @@
+# Execute `powershell -ExecutionPolicy Bypass -File listar.ps1 > estrutura.txt`
+# para atualizar "estrutura.txt"
 function Show-Tree {
     param (
         [string]$Path = ".",
@@ -7,7 +9,7 @@ function Show-Tree {
     $prefix = "|   " * $Level + "|-- "
 
     Get-ChildItem -LiteralPath $Path -Force | Where-Object {
-        -not ($_.Name -in @('__pycache__', '.venv')) -and
+        -not ($_.Name -in @('__pycache__', '.venv', '.git')) -and
         -not ($_.Name -like '*.pyc')
     } | Sort-Object { -not $_.PSIsContainer }, Name | ForEach-Object {
         Write-Output "$prefix$($_.Name)"

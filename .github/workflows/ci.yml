@@ -1,33 +1,31 @@
 name: CI
 
-
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
 
-
 jobs:
   lint:
-    runs-on: ubuntu_latest
-
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
-
 
       - name: Setup Python
         uses: actions/setup-python@v4
-        with: 
+        with:
           python-version: '3.9'
 
-        
       - name: Install Dependencies
-        uses: |
+        run: pip install -r requirements.txt
+
+      - name: Run Linter
+        run: |
           pylint \
             --rcfile=.pylintrc \
-            douglasblog/**/*.py \
+            douglasBlog/**/*.py \
             main.py \
             wsgi.py
