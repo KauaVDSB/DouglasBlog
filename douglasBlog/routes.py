@@ -286,7 +286,7 @@ def converter_entities_lista_post_para_dict(post_id, titulo, imagem, conteudo):
         "titulo": titulo,
         "imagem": url_imagem,
         "conteudo": resumo,
-        "link": url_for("verPost", post_titulo=titulo, post_id=id),
+        "link": url_for("verPost", post_titulo=str(titulo), post_id=int(post_id)),
     }
 
 

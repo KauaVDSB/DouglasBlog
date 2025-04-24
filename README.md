@@ -9,19 +9,19 @@
 ---
 
 ## 📑 Table of Contents
-- [Features](#features)
-- [Project Structure](#project-structure)
-- [Installation & Configuration](#installation--configuration)
-- [Environment Variables](#environment-variables)
-- [Running the App](#running-the-app)
-- [API Example](#api-example)
-- [Screenshots & GIF](#screenshots--gif)
-- [Deployment](#deployment)
-- [Changelog](#changelog)
-- [License](#license)
-- [Contributing](#contributing)
-- [Author](#author)
-- [PT-BR](#pt-br)
+- [Features](README.md#-features)
+- [Project Structure](README.md#-project-structure)
+- [Installation & Configuration](README.md#-installation--configuration)
+- [Environment Variables](README.md#-environment-variables)
+- [Running the App](README.md#-running-the-app)
+- [API Example](README.md#-api-example)
+- [Screenshots & GIF](README.md#-screenshots--gif)
+- [Deployment](README.md#-deployment)
+- [Changelog](README.md#-changelog)
+- [License](README.md#-license)
+- [Contributing](README.md#-contributing)
+- [Author](README.md#-author)
+- [PT-BR](README.md#-pt-br)
 
 ---
 
