@@ -135,12 +135,20 @@ def api_get_listaPosts():
 
 ---
 
-## 📸 Screenshots & GIF
-| Desktop View          | Mobile View           |
-|-----------------------|-----------------------|
-| ![Desktop Example](path/to/desktop.png) | ![Mobile Example](path/to/mobile.png) |
+## 📸 Screenshots & GIFs
 
-*Replace with actual images/GIF of the same feature.*
+### Screenshots
+| Feature          | Desktop View                                                                                                                                                                        | Mobile View                                                                                                                                                                         |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Posts List       | ![Posts List Desktop](https://github.com/user-attachments/assets/ec37e53b-5382-424f-8c2c-4124c84a3aa7)                                                                               | ![Posts List Mobile](https://github.com/user-attachments/assets/4f6c06f1-cc4f-4d24-b7db-2eb45ecfec6b)                                                                               |
+| Post Detail View | ![Post Detail Desktop](https://github.com/user-attachments/assets/6d14277b-5e4b-4cc6-bd9a-b94529e550b9)                                                                              | ![Post Detail Mobile](https://github.com/user-attachments/assets/b07a0d21-2c53-4e64-9d9b-d723b1976f37)                                                                              |
+
+### GIF Demonstrations
+| Feature            | Demo                                                                                                                                                                                  |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Loader Animation   | ![Loader GIF](https://github.com/user-attachments/assets/9c055377-e723-456e-800b-a7528c276f9a)                                                                                       |
+| Delete Post Flow   | ![Delete GIF](https://github.com/user-attachments/assets/e3c585cc-fcf2-47cf-aa25-37fab487aa63)                                                                                       |
+
 
 ---
 
