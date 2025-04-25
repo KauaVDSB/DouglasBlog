@@ -1,7 +1,6 @@
 # pylint: disable=cyclic-import
 
 from time import time
-import re
 
 from flask import render_template, url_for, request, redirect, jsonify, flash
 from flask_login import login_user, logout_user, current_user, login_required
