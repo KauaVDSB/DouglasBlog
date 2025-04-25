@@ -73,7 +73,10 @@ async function carregarPosts(page) {
             titulo.className = 'titulo-post';
 
             const prev_conteudo = document.createElement('p');
-            prev_conteudo.textContent = post.conteudo;
+            prev_conteudo.innerHTML = DOMPurify.sanitize(post.conteudo, {
+                ALLOWED_TAGS: ['strong','i','span','script'],
+                ALLOWED_ATTR: []
+            });
             prev_conteudo.className = 'conteudo-post';
 
             post_container.appendChild(post_div);
@@ -85,19 +88,6 @@ async function carregarPosts(page) {
             conteudo_container.appendChild(prev_conteudo);
 
 
-            function atualizaClamp() {
-
-                const alturaDisponivel = conteudo_container.clientHeight - titulo.offsetHeight - 50;
-                
-                const estiloPrev_conteudo = getComputedStyle(prev_conteudo);
-                const lineHeight = parseFloat(estiloPrev_conteudo.lineHeight);
-                const maxLinhas = Math.floor(alturaDisponivel / lineHeight) || 1;
-                
-                prev_conteudo.style.webkitLineClamp = maxLinhas;
-            }
-
-            window.addEventListener('load', atualizaClamp);
-            window.addEventListener('resize', atualizaClamp);
             // Admin Functions
 
             if (isAdmin && adminView){
@@ -162,6 +152,15 @@ async function carregarPosts(page) {
                     
         // Atualiza botões de paginação
         atualizarBotoesDePaginacao();
+        if (window.MathJax) {
+            try {
+                await MathJax.typesetPromise()
+            } catch(err) {
+                console.error("Erro ao renderizar equações", err);
+            }
+        } else {
+            console.warn("MathJax ainda não foi carregado");
+        }
     }
     catch (error) {
         console.error("Falha ao carregar posts: ", error);

@@ -15,7 +15,7 @@ header, main {
 
 header .titulo {
     margin-bottom: 0;
-    font-size: 1.8em;
+    font-size: 1.3em;
     opacity: 90%;
 }
 header .autor, header .datetime {

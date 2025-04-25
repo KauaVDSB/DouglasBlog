@@ -275,11 +275,7 @@ def converter_entities_lista_post_para_dict(post_id, titulo, imagem, conteudo):
     else:
         url_imagem = imagem
 
-    post_conteudo = re.sub(r"<[^>]*?>", "", conteudo or "")
-    if len(post_conteudo) > 60:
-        resumo = f"{post_conteudo[:37]}..."
-    else:
-        resumo = post_conteudo
+    resumo = (conteudo or "")[:70]
 
     return {
         "id": post_id,
