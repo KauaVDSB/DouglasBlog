@@ -16,7 +16,7 @@ from flask import request, flash, jsonify
 
 from werkzeug.utils import secure_filename
 
-from douglasBlog import db, bcrypt, supabase, SUPABASE_URL
+from douglasBlog import db, bcrypt, supabase_client, SUPABASE_URL
 from douglasBlog.models import User, Postagem, Material
 from douglasBlog.exceptions import (
     AuthenticationError,
@@ -70,7 +70,7 @@ class PostagemForm(FlaskForm):
             imagem_bytes = imagem.read()
 
             # Upload
-            supabase.storage.from_("post-files").upload(
+            supabase_client.storage.from_("post-files").upload(
                 caminho_arquivo, imagem_bytes
             )  # VARIAVEL DE AMBIENTE
 
@@ -97,7 +97,7 @@ class PostagemForm(FlaskForm):
         if self.imagem.data and self.imagem.data.filename:
             if post.imagem:
                 try:
-                    supabase.storage.from_("post-files").remove(
+                    supabase_client.storage.from_("post-files").remove(
                         ["post-files/" + post.imagem.split("/")[-1]]
                     )  # VARIAVEL DE AMBIENTE
                 except SupabaseManagementFileError as e:
@@ -108,7 +108,7 @@ class PostagemForm(FlaskForm):
 
         if request.form.get("removerImagemPost"):
             if post.imagem:
-                supabase.storage.from_("post-files").remove(
+                supabase_client.storage.from_("post-files").remove(
                     ["post-files/" + post.imagem.split("/")[-1]]
                 )  # VARIAVEL DE AMBIENTE
             post.imagem = None
@@ -116,7 +116,7 @@ class PostagemForm(FlaskForm):
     def delete(self, post):
         if post.imagem:
             try:
-                supabase.storage.from_("post-files").remove(
+                supabase_client.storage.from_("post-files").remove(
                     ["post-files/" + post.imagem.split("/")[-1]]
                 )  # VARIAVEL DE AMBIENTE
             except SupabaseManagementFileError as e:
@@ -155,7 +155,7 @@ class MateriaisForm(FlaskForm):
             file_path = f"/{unique_filename}"
             file_bytes = arquivo.read()
 
-            supabase.storage.from_("material-files").upload(
+            supabase_client.storage.from_("material-files").upload(
                 file_path, file_bytes, file_options={"content-type": arquivo.mimetype}
             )
 
@@ -199,14 +199,14 @@ class MateriaisForm(FlaskForm):
 
         if request.form.get("removerMapaMental"):
             if material.resumo:
-                supabase.storage.from_("material-files").remove(
+                supabase_client.storage.from_("material-files").remove(
                     [material.resumo.split("/")[-1]]
                 )  # VARIAVEL DE AMBIENTE
             material.resumo = None
 
         if request.form.get("removerListaExercicios"):
             if material.lista_exercicios:
-                supabase.storage.from_("material-files").remove(
+                supabase_client.storage.from_("material-files").remove(
                     [material.lista_exercicios.split("/")[-1]]
                 )
             material.lista_exercicios = None
@@ -214,7 +214,7 @@ class MateriaisForm(FlaskForm):
         if self.resumo.data and self.resumo.data.filename:
             if material.resumo:
                 try:
-                    supabase.storage.from_("material-files").remove(
+                    supabase_client.storage.from_("material-files").remove(
                         [material.resumo.split("/")[-1]]
                     )
                 except SupabaseManagementFileError as e:
@@ -225,7 +225,7 @@ class MateriaisForm(FlaskForm):
         if self.lista_exercicios.data and self.lista_exercicios.data.filename:
             if material.lista_exercicios:
                 try:
-                    supabase.storage.from_("material-files").remove(
+                    supabase_client.storage.from_("material-files").remove(
                         [material.lista_exercicios.split("/")[-1]]
                     )
                 except SupabaseManagementFileError as e:
@@ -239,7 +239,7 @@ class MateriaisForm(FlaskForm):
     def delete(self, material):
         if material.resumo:
             try:
-                supabase.storage.from_("material-files").remove(
+                supabase_client.storage.from_("material-files").remove(
                     [material.resumo.split("/")[-1]]
                 )
             except SupabaseManagementFileError as e:
@@ -247,7 +247,7 @@ class MateriaisForm(FlaskForm):
 
         if material.lista_exercicios:
             try:
-                supabase.storage.from_("material-files").remove(
+                supabase_client.storage.from_("material-files").remove(
                     [material.lista_exercicios.split("/")[-1]]
                 )
             except SupabaseManagementFileError as e:

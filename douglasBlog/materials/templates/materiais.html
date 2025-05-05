@@ -3,7 +3,7 @@
 {% block link %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/materiais/lista-materiais.css') }}">
-<script src="{{ url_for('static', filename='js/materiais/pg-materiais.js') }}"></script>
+<script src="{{ url_for('materials.static', filename='pg-materiais.js') }}"></script>
 {% endblock %}
 
 {% block title %} Materiais {% endblock %}
@@ -35,7 +35,7 @@
     const isAdmin = {{ 'true' if current_user.is_authenticated and current_user.admin else 'false'}};
     const adminView = new URLSearchParams(window.location.search).get('admin_view') === 'true';
 </script>
-<script src="{{ url_for('static', filename='js/materiais/lista-materiais.js') }}"></script>
+<script src="{{ url_for('materials.static', filename='lista-materiais.js') }}"></script>
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {% endblock %}

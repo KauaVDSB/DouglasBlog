@@ -29,7 +29,7 @@ async function carregarPosts(page) {
             totalPosts = cache.totalPosts;
         }
         else {
-            const response = await fetch(`/api/get/lista-posts?page=${page}`);
+            const response = await fetch(`/blog/api/get/lista-posts?page=${page}`);
             posts = await response.json();
 
             cache.posts[page] = posts;

@@ -1,0 +1,51 @@
+{% extends 'base/html.html' %}
+
+
+{% block link %}
+{% endblock%}
+
+{% block title %} Dashboard Admin {% endblock %}
+
+{% block content %}
+
+{% include 'base/navbar.html' %}
+
+<main>
+
+    <ul style="list-style: none;">
+        <li>
+            <a href="{{ url_for('admin.criar_posts') }}">Criar Postagens</a>
+        </li>
+        <li>
+            <a href="{{ url_for('admin.criar_materiais') }}">Criar Materiais</a>
+        </li>
+        <li>
+            <a href="{{ url_for('blog.lista_posts') }}?admin_view=true">Editar Posts</a> <!-- VARIAVEL DE AMBIENTE -->
+        </li>
+        <li>
+            Materiais:
+            <li>
+                <a href="{{ url_for('materials.ver_materiais', destino=1) }}?admin_view=true">Editar 1º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+            </li>
+            <li>
+                <a href="{{ url_for('materials.ver_materiais', destino=2) }}?admin_view=true">Editar 2º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+            </li>
+            <li>
+                <a href="{{ url_for('materials.ver_materiais', destino=3) }}?admin_view=true">Editar 3º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+            </li>
+            <li>
+                <a href="{{ url_for('materials.ver_materiais', destino=4) }}?admin_view=true">Editar Olímpiadas</a> <!-- VARIAVEL DE AMBIENTE -->
+            </li>
+        </li>
+        <li>
+            <a href="{{ url_for('auth.logout') }}">Sair</a>
+        </li>
+        
+    </ul>
+</main>
+
+
+
+
+
+{% endblock %}

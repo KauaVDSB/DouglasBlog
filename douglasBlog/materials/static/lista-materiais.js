@@ -79,16 +79,15 @@ function temCaminho(caminho){
 
 // Carregamento dos materiais
 async function carregarMateriais(destino) {
-    const response = await fetch(`/api/get/lista-materiais/${destino}`);
+    const response = await fetch(`/materials/api/get/lista-materiais/${destino}`);
     const data = await response.json(); // retorna materiais e total
     
-    if (!Array.isArray(data.materiais)){
-        console.error("Erro: materiais não é uma lista.", data.materiais);
+    if (!Array.isArray(data)){
+        console.error("Erro: materiais não é uma lista.", data);
         return;
     }
     
-    const materiais = data.materiais;
-
+    const materiais = data;
 
     // Cria container dos posts
     const material_container = document.getElementById(`material-container`);
