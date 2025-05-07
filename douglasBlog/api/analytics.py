@@ -10,9 +10,10 @@ from douglasBlog.exceptions import GetAPIError
 
 
 @app.route("/api/analytics/total")
-@login_required
 def api_total_views():
-    VerificarAdmin()
+    """
+    Rota de livre acesso, para consumo na navbar.
+    """
     total = get_total_views()
     return jsonify(total=total)
 
