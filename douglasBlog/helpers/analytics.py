@@ -1,10 +1,64 @@
 import uuid
 import time
+from typing import Optional, List, Dict, Any
 
 from flask import request, make_response
-
+from sqlalchemy import func, text
 from douglasBlog import db
 from douglasBlog.models_analytics import PageView
+
+
+# Nota: este cache é apenas exemplo em memória.
+# Em produção, use Redis ou similar para compartilhar entre processos.
+_last_view_times = {}
+
+
+# ------------------------------------------
+# Funções de Query para Analytics
+# ------------------------------------------
+
+
+def get_total_views() -> int:
+    return db.session.query(func.count(PageView.id)).scalar()
+
+
+def get_views_by_period(
+    period: str, path: Optional[str] = None
+) -> List[Dict[str, Any]]:
+    # path: str | None = None funciona apenas a partir de Python3.10
+    """
+    period: 'daily', 'weekly', 'monthly'
+    path: rota específica ou None (opcional)
+
+    Retorna lista de { period: ISODate, views: int }.
+    """
+
+    mapping = {
+        "daily": ("30 days", "day"),
+        "weekly": ("12 weeks", "week"),
+        "monthly": ("12 months", "month"),
+    }
+
+    if period not in mapping:
+        raise ValueError(f"Período inválido: {period}")
+
+    interval, trunc = mapping[period]
+
+    q = (
+        db.session.query()
+        .with_entities(
+            func.date_trunc(trunc, PageView.occurred_at).label("period"),
+            func.count(PageView.id).label("views"),
+        )
+        .filter(PageView.occurred_at > func.now() - text(f"interval '{interval}'"))
+    )
+
+    if path:
+        q = q.filter(PageView.path == path)
+
+    q = q.group_by("period").order_by("period")
+
+    return [{"period": row.period.isoformat(), "views": row.views} for row in q.all()]
 
 
 # ------------------------------------------
@@ -35,10 +89,6 @@ def generate_visitor_id():
 # Controle de Frequência (Dedupe)
 # ------------------------------------------
 
-# Nota: este cache é apenas exemplo em memória.
-# TODO: Em produção, use Redis ou similar para compartilhar entre processos.
-_last_view_times = {}
-
 
 def is_allowed_to_track(visitor_id: str, path: str, cooldown: int = 300) -> bool:
     """
@@ -66,10 +116,11 @@ def is_allowed_to_track(visitor_id: str, path: str, cooldown: int = 300) -> bool
 
 def record_page_view(visitor_id: str, path: str) -> None:
     """
-    Insere registro em PageView.
-    Faz commit de um único objeto,
-    isolando a responsabilidade dessa função.
+    Insere registro em PageView. Faz o import de db e do modelo só aqui,
+    quando realmente vamos gravar no banco, para não criar ciclo.
     """
+    from douglasBlog import db  # pylint: import-outside-toplevel
+    from douglasBlog.models_analytics import PageView  # pylint: import-outside-toplevel
 
     pv = PageView(visitor_id=visitor_id, path=path)
     db.session.add(pv)
