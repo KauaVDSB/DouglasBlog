@@ -1,11 +1,13 @@
+# pylint: disable=too-few-public-methods
+
 import uuid
 
 from sqlalchemy.dialects.postgresql import UUID
 from douglasBlog import db
 
-class PageView(db.Model):
-    __tablename__ = 'page_views'
 
+class PageView(db.Model):
+    __tablename__ = "page_views"
 
     id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
     path = db.Column(db.Text, nullable=False)
@@ -14,10 +16,7 @@ class PageView(db.Model):
         db.DateTime(timezone=True), server_default=db.func.now(), nullable=False
     )
 
-
-    __tableargs__ = (
-        db.Index('ix_pageviews_path_occurred', 'path', 'occurred_at'),
-    )
+    __tableargs__ = (db.Index("ix_pageviews_path_occurred", "path", "occurred_at"),)
 
     def __repr__(self):
         return f"<PageView path={self.path!r} at={self.occurred_at}>"

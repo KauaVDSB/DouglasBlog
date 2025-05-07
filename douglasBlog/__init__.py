@@ -50,4 +50,6 @@ from douglasBlog.routes import (  # noqa: F401,E402  # pylint: disable=unused-im
     homepage,
 )
 
-from douglasBlog.models_analytics import PageView  # noqa: F401,E402  # pylint: disable=unused-import,wrong-import-position
+from douglasBlog.models_analytics import (  # noqa: F401,E402  # pylint: disable=unused-import,wrong-import-position
+    PageView,
+)

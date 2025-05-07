@@ -11,11 +11,13 @@ from douglasBlog import app, db, supabase, SUPABASE_URL, ACESSO_CADASTRO, ACESSO
 from douglasBlog.models import Postagem, Material
 from douglasBlog.forms import LoginForm, PostagemForm, MateriaisForm, UserForm
 from douglasBlog.helpers.permission import VerificarAdmin
+from douglasBlog.helpers.analytics import track_page_view
 from douglasBlog.exceptions import QueryObjectManagementError, GetAPIError
 
 
 # Rota para homepage
 @app.route("/")
+@track_page_view
 def homepage():
 
     return render_template("view/index.html")
@@ -42,6 +44,7 @@ def cadastro(validacao):
 
 
 @app.route("/login/", methods=["GET", "POST"])
+@track_page_view
 def login():
     if request.args.get("acesso") != ACESSO_LOGIN:
         return redirect(url_for("homepage"))
@@ -216,6 +219,7 @@ def deletar_material(material_id):
 
 # MATERIAIS.HTML
 @app.route("/materiais/<int:destino>/")
+@track_page_view
 def verMateriais(destino):  # pylint: disable=unused-argument
     """Renderiza a página de materiais (destino usado no front-end)."""
 
@@ -263,6 +267,7 @@ def api_get_listaMateriais(destino):
 
 # /LISTA-POSTS.HTML
 @app.route("/posts/lista/")
+@track_page_view
 def listaPosts():
 
     return render_template("view/posts/lista-posts.html")
@@ -354,6 +359,7 @@ def api_get_listaPosts():
 
 
 @app.route("/posts/view/<string:post_titulo>/<int:post_id>/")
+@track_page_view
 def verPost(post_titulo, post_id):  # pylint: disable=unused-argument
     """Renderiza o post de id=post_id (post_titulo usando no front-end)."""
 
