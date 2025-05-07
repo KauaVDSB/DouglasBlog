@@ -2,6 +2,7 @@
 
 
 {% block link %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock%}
 
 {% block title %} Dashboard Admin {% endblock %}
@@ -42,10 +43,30 @@
         </li>
         
     </ul>
+
+    <div class="admin-charts">
+        <select name="filter-path" id="filter-path">
+            <option value="">Todas as Rotas</option>
+            <option value="/">Landing Page</option>
+            <option value="/posts/lista/">Blog</option>
+            <option value="/materiais/1/">Materiais 1º Ano</option>
+            <option value="/materiais/2/">Materiais 2º Ano</option>
+            <option value="/materiais/3/">Materiais 3º Ano</option>
+            <option value="/materiais/4/">Olimpíadas</option>
+        </select>
+        <h2>Visitas Diárias (Últimos 30 dias)</h2>
+        <canvas id="chartDaily"></canvas>
+
+        <h2>Visitas Semanais (Últimas 12 semanas)</h2>
+        <canvas id="chartWeekly"></canvas>
+
+        <h2>Visitas Mensais (Últimos 12 meses)</h2>
+        <canvas id="chartMonthly"></canvas>
+    </div>
 </main>
 
 
 
-
+<script src="{{ url_for('static', filename='admin/analytics/admin-charts.js') }}"></script>
 
 {% endblock %}
