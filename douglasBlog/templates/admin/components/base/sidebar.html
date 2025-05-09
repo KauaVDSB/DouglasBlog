@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/components/base/sidebar.css' ) }}">
+
+<aside class="admin-sidebar">
+    <ul class="sidebar-list">
+        <a href="{{ url_for('admin_blog') }}"><li><i class="bi bi-grid"></i>Blog</li></a>
+        <a href="{{ url_for('admin_material') }}"><li><i class="bi bi-folder"></i>Materiais</li></a>
+        <a href=""><li><i class="bi bi-graph-up"></i>Analytics</li></a>
+        <a href="{{ url_for('admin_profile') }}"><li><i class="bi bi-person-gear"></i>Admins</li></a>
+        <a href="{{ url_for('logout') }}"><li><i class="bi bi-box-arrow-in-right"></i>Sair</li></a>
+    </ul>
+</aside>

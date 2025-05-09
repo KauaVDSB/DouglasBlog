@@ -70,6 +70,27 @@ def logout():
     return redirect(url_for("homepage"))
 
 
+@app.route("/admin/dashboard/blog/")
+@login_required
+def admin_blog():
+    VerificarAdmin()
+    return render_template("admin/blog/blog.html")
+
+
+@app.route("/admin/dashboard/material/")
+@login_required
+def admin_material():
+    VerificarAdmin()
+    return render_template("admin/material/material.html")
+
+
+@app.route("/admin/dashboard/profile/")
+@login_required
+def admin_profile():
+    VerificarAdmin()
+    return render_template("admin/profile/profile.html")
+
+
 @app.route("/admin/douglas-blog/dashboard/")
 @login_required
 def dashboard():

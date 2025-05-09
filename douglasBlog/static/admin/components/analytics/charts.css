@@ -1,0 +1,14 @@
+.admin-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+}
+
+.admin-charts .chart {
+    display: flex;
+    flex-direction: column;
+}
+
+.chart h2 {
+    font-size: var(--font-size-scale-lg);
+}

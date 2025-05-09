@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/components/base/navbar.css') }}">
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="{{ url_for('homepage') }}" class="logo">
+            <img class="foguete" src="{{ url_for('static', filename='media/icones/foguete-f0ede8.svg') }}" alt="logo">
+            <h1 id="contador-views-totais">888</h1>
+        </a>
+    </div>
+
+    <div id="menu-navbar" class="menu" data-acesso="{{ ACESSO_LOGIN }}">
+        <button id="openButton" class="menu-toggle close" aria-label="Close menu">✖</button>
+        <a href="{{ url_for('homepageSection', section='conteudos') }}">Conteudo ETE</a> <span class="border"></span>
+        <a href="{{ url_for('listaPosts') }}">Blog</a> <span class="border"></span>
+        <a href="{{ url_for('verMateriais', destino=4) }}">Olímpiadas</a>
+        {% if current_user.is_authenticated and current_user.admin %}
+            <span class="border"> </span>
+            <a href="{{ url_for('dashboard') }}">{{ current_user.nome }} {{ current_user.sobrenome }}</a>
+        {% elif request.args.get('acesso') == ACESSO_LOGIN %} <!-- VARIAVEL DE AMBIENTE -->
+        <span class="border"></span>
+            <a href="{{ url_for('login') }}?acesso={{ACESSO_LOGIN}}">Login</a> <!-- VARIAVEL DE AMBIENTE -->
+        {% endif %}
+    </div>
+
+    <button id="closeButton" class="menu-toggle open" aria-label="Open menu">☰</button>
+</nav>
+
+<script src="{{ url_for('static', filename='js/base/navbar.js') }}"></script>

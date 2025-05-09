@@ -30,7 +30,7 @@ async function buildChart(ctxId, label, data) {
             datasets: [{
                 label,
                 data: data.map(d => d.views),
-                fill: false,
+                fill: true,
                 tension: 0.1
             }]
         },

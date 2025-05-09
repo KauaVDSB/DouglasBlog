@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='admin/components/analytics/charts.css') }}">
+
+<select name="filter-path" id="filter-path">
+    <option value="">Todas as Rotas</option>
+    <option value="/">Landing Page</option>
+    <option value="/posts/lista/">Blog</option>
+    <option value="/materiais/1/">Materiais 1º Ano</option>
+    <option value="/materiais/2/">Materiais 2º Ano</option>
+    <option value="/materiais/3/">Materiais 3º Ano</option>
+    <option value="/materiais/4/">Olimpíadas</option>
+</select>
+<div class="admin-charts">
+
+
+    <div class="chart">
+        <h2>Visitas Diárias<br>(Últimos 30 dias)</h2>
+        <canvas id="chartDaily"></canvas>
+    </div>
+
+    <div class="chart">
+        <h2>Visitas Semanais<br>(Últimas 12 semanas)</h2>
+        <canvas id="chartWeekly"></canvas>
+    </div>
+
+    <div class="chart">
+        <h2>Visitas Mensais<br>(Últimos 12 meses)</h2>
+        <canvas id="chartMonthly"></canvas>
+    </div>
+</div>
+</main>
+
+
+
+<script src="{{ url_for('static', filename='admin/components/analytics/admin-charts.js') }}"></script>
