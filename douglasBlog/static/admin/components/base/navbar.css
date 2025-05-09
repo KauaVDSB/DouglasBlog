@@ -1,0 +1,159 @@
+@import url('https://fonts.cdnfonts.com/css/seven-segment');
+
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    margin: 0;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #F0EDE8;
+    font-size: 25px;
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999999;
+
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5%;
+
+    min-height: 75px;
+    max-height: 75px;
+
+    background-color: #102e4a;
+}
+
+.logo {
+    /* flex: 20%; */
+    display: flex;
+    position: relative;
+
+    justify-content: left;
+    align-items: center;
+
+    height: 75px;
+
+    color: #F0EDE8;
+}
+
+.foguete {
+    position: absolute;
+    height: 10vh;
+    min-height: 60px;
+    max-height: 64px;
+}
+
+.logo h1{
+    /* background-color: yellowgreen; */
+    position: absolute;
+    margin: 25px 0 0 25px;
+    font-size: 22px;
+    font-weight: bold;
+    width: 5ch;
+    font-family: 'Seven Segment', sans-serif;
+}
+
+.menu {
+    /* flex: 80%; */
+    display: flex;
+    font-size: 18px;
+    /* color:#F0EDE8; */
+    /* padding: 20px; */
+    /* gap: 20px; */
+    font-family: 'PT Serif', serif;
+    /* text-align: right; */
+}
+
+.menu a{
+    text-decoration: none;
+    color: #F0EDE8;
+    margin: 0 10px;
+}
+
+.menu a:hover{
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.border {
+    border-left: 2px solid #F0EDE8;
+}
+
+/* Botões de toggle */
+
+.menu-toggle {
+    font-size: 24px;
+    color: #F0EDE8;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-toggle.open, .menu-toggle.close {
+    display: none;
+}
+
+.menu-toggle.close {
+    align-self: flex-end;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+
+/* DISPOSITIVOS MENORES QUE 768px */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        flex-direction: column;
+
+        height: 100%;
+        width: 45vw;
+        background-color: #102e4a;
+        padding: 20px;
+        gap: 4px;
+        box-shadow: -4px 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .menu.active {
+        display: flex;
+    }
+
+    .menu-toggle.open {
+        display: block;
+    }
+
+    .menu.active + .menu-toggle.open {
+        display: none;
+    }
+    
+    .menu.active .menu-toggle.close {
+        display: block;
+    }
+
+    .menu a{
+        text-align: center;
+        font-size: 18px;
+        margin: 0;
+        height: 40px;
+        align-content: center;
+    }
+
+    .border {
+        display: block;
+        border-bottom: 2px solid #F0EDE8;
+    }
+}

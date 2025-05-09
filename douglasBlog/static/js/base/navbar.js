@@ -7,8 +7,21 @@ if (params.get('acesso') === ACESSO_LOGIN) {
     window.history.replaceState({}, '', newUrl);
 }
 
+async function carregar_views_totais() {
+    let views_totais;
+    const contador_views_totais = document.getElementById('contador-views-totais');
+    
+    try{
+        const response = await fetch(`/api/analytics/total`);
+        views_totais = await response.json();
+        contador_views_totais.innerText = views_totais.total;
+    }
+    catch(error){
+        console.error("Falha ao carregar número de visualizações.", error);
+    }
+}
 
-
+carregar_views_totais();
 // MOBILE
 // Script para ativar e desativar menu lateral em dispositivos pequenos.
 
