@@ -1,0 +1,24 @@
+
+<a href="{{ url_for('dashboard') }}">Voltar</a>
+
+<ul>
+
+    <li>
+        <a href="{{ url_for('criarMateriais') }}">Criar Materiais</a>
+    </li>
+    <li>
+        Materiais:
+        <li>
+            <a href="{{ url_for('verMateriais', destino=1) }}?admin_view=true">Editar 1º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+        </li>
+        <li>
+            <a href="{{ url_for('verMateriais', destino=2) }}?admin_view=true">Editar 2º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+        </li>
+        <li>
+            <a href="{{ url_for('verMateriais', destino=3) }}?admin_view=true">Editar 3º ano</a> <!-- VARIAVEL DE AMBIENTE -->
+        </li>
+        <li>
+            <a href="{{ url_for('verMateriais', destino=4) }}?admin_view=true">Editar Olímpiadas</a> <!-- VARIAVEL DE AMBIENTE -->
+        </li>
+    </li>
+</ul>

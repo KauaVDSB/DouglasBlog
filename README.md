@@ -1,4 +1,4 @@
-[![CI](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml/badge.svg)](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml) [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/KauaVDSB/douglasBlog/releases/tag/v1.0.0) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml/badge.svg)](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml) [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/KauaVDSB/douglasBlog/releases/tag/v1.1.0) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 # douglasBlog
 
@@ -10,6 +10,7 @@
 
 ## 📑 Table of Contents
 - [Features](README.md#-features)
+- [Admin Dashboard](README.md#admin-dashboard)
 - [Project Structure](README.md#-project-structure)
 - [Installation & Configuration](README.md#-installation--configuration)
 - [Environment Variables](README.md#-environment-variables)
@@ -32,6 +33,21 @@
 - **Advanced Editor:** CKEditor 5 with a **custom plugin** for in-editor image previews and LaTeX rendering via MathJax.
 - **Responsive Design:** Modular CSS and componentized JavaScript organized by feature.
 - **CI/CD Pipelines:** Automated lint and test workflows in GitHub Actions.
+
+---
+
+## Admin Dashboard
+
+O painel de administração agora conta com:
+
+- **Sidebar fixa** para navegação entre:
+  - Gestão de Posts (criação/edição)
+  - Gestão de Materiais (criação/edição)
+  - Perfil de Usuário
+  - Dashboard (visualização de métricas)
+- **Dashboard de Analytics**:
+  - Gráficos de Visitas Diárias, Semanais e Mensais
+  - Filtro por rota diretamente na sidebar
 
 ---
 

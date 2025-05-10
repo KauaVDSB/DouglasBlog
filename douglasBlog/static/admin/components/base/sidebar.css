@@ -1,0 +1,41 @@
+
+.admin-sidebar {
+    height: calc(100vh - 75px);
+    width: 199px;
+    margin: 0;
+    padding: 8px;
+    border-top: 1px solid var(--color-primary);
+    border-right: 1px solid var(--color-primary);
+    
+    position: sticky;
+    top: 75px;
+
+    background-color: var(--color-primary-dark);
+}
+.admin-sidebar .sidebar-list {
+    margin: 0;
+    padding: 0;
+
+    display: grid;
+    gap: 2px;
+}
+.sidebar-list a {
+    min-height: 28px;
+    width: 100%;
+    align-content: center;
+    
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+    font-size: var(--font-size-scale-md);
+    color: var(--color-text-secondary);
+}
+.sidebar-list li {
+    width: 100%;
+}
+.sidebar-list li i {
+    padding: 0 8px;
+}
+
+.sidebar-list .active, .sidebar-list a:hover {
+    background-color: var(--color-primary);
+}
