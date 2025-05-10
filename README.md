@@ -1,4 +1,4 @@
-[![CI](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml/badge.svg)](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml) [![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/KauaVDSB/douglasBlog/releases/tag/v1.1.0) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml/badge.svg)](https://github.com/KauaVDSB/douglasBlog/actions/workflows/ci.yml) [![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/KauaVDSB/douglasBlog/releases/tag/v1.1.1) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 # douglasBlog
 
