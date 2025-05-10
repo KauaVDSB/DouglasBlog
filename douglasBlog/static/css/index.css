@@ -90,12 +90,17 @@ main::before{
 
 /* Disposição dos banners na section Header */
 .header-banners {
+    width: 100%;
     margin-top: 30px;
+    margin-bottom: -20px;
+    max-width: calc(400px * 2 + 30px);
+    max-height: 400px;
+    justify-self: center;
 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, calc(50% - 5px)));
+    grid-template-rows: repeat(auto-fit, minmax(160px,  100%));
+    gap: 10px;
     align-items: center;
     justify-items: center;
 }
@@ -103,7 +108,8 @@ main::before{
 .header-banners .banner {
     margin: 0;
     padding: 0;
-    height: fit-content;
+    height: 100%;
+    width: 100%;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 0.1);
     transition: all 0.4s ease;
@@ -194,12 +200,14 @@ main::before{
 
 .conteudos{
     display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-start;
+    flex-flow: row wrap;
+    justify-content: center;
     align-items: center;
+    padding-bottom: 50px;
 
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
     overflow: hidden;
 }
 
@@ -229,6 +237,7 @@ main::before{
     color: rgb(143, 142, 142);
     text-align: center;
     font-size: 20px;
+    justify-self: center;
 }
 
 
@@ -253,10 +262,24 @@ main::before{
     border-radius: 50%;
     width: 10vw;
     height: 10vw;
-    background-color: #91a7b6;
     
     align-content: center;
     
+}
+.circle-1 {
+    background: url(../media/bg/1ano.svg) no-repeat center center;
+    background-size: cover;
+}
+.circle-2 {
+    background: url(../media/bg/2ano.svg) no-repeat center center;
+    background-size: cover;
+}
+.circle-3 {
+    background: url(../media/bg/3ano.svg) no-repeat center center;
+    background-size: cover;
+}
+.circle-1, .circle-2, .circle-3 {
+    background-color: #91a7b6;
 }
 .circle p{
     text-align: center;
@@ -295,7 +318,7 @@ main::before{
     
     .descricao {
         margin-bottom: 10px;
-        text-align: left;
+        text-align: center;
         text-indent: 2ch;
     }
 
@@ -303,7 +326,6 @@ main::before{
         flex: 100%;
         margin: 0;
         text-align: center;
-        /* background-color: aqua; */
     }
 
     .header-cards {
@@ -314,6 +336,16 @@ main::before{
         align-items: center;
         /* background-color: #003B5C; */
         height: fit-content;
+    }
+    .header-banners {
+        width: 100%;
+        margin-top: 30px;
+        max-height: 160px;
+    }
+    .header-banners .banner {
+        margin: 0;
+        padding: 0;
+        height: 100%;
     }
     
     .div-1, .div-2{

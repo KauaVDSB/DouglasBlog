@@ -19,17 +19,21 @@
                 semanais que incluem dicas de estudo, resolução de questões e vídeos educativos, buscamos facilitar a 
                 compreensão de conceitos essenciais de Física.
             </p>
-            <p class="descricao">
-                O conteúdo é orientado pelo Professor Douglas Lima, que possui dupla titulação em Física Licenciatura 
-                pela Universidade Federal de Alagoas e pela Universidade de Coimbra, com Mestrado em Ensino de Física 
-                pela Universidade Federal de Alagoas. Atualmente, ele é professor efetivo do estado de Pernambuco, 
-                trazendo sua experiência e dedicação para o desenvolvimento de materiais de alta qualidade para os 
-                estudantes.
-            </p>
         </div>
         
         <div class="header-banners">
-
+            
+            
+                <article class="banner">
+                    <img src="{{ url_for('static', filename='media/img/douglas1.jpg') }}" alt="">
+                </article>
+            
+            
+                <article class="banner">
+                    <img src="{{ url_for('static', filename='media/img/douglas2.jpg') }}" alt="">
+                </article>
+            
+<!-- 
             <a href="http://www.oba.org.br/site/" target="_blank">
                 <article class="banner">
                     <img src="{{ url_for('static', filename='data/post/oba-banner.jpg') }}" alt="">
@@ -44,7 +48,7 @@
                 <article class="banner">
                     <img src="{{ url_for('static', filename='media/img/obfep-banner.png') }}" alt="">
                 </article>
-            </a>
+            </a> -->
 
         </div>
     </section>
@@ -52,14 +56,15 @@
     <section class="conteudos" id="conteudos">
 
         <div class="conteudos-top">
-            <h2>CONTEUDOS<br>
-                ETE
+            <h2>CONTEÚDOS<br>
+                Escola Técnica Estadual Ariano Vilar Suassuna
             </h2>
             <p>
-                Aqui, acreditamos que cada clique é uma oportunidade e cada 
-                visita é uma jornada. O nosso site foi projetado com o intuito de
-                oferecer a você uma experiência única e envolvente.
-
+                O conteúdo é orientado pelo Professor Douglas Lima, que possui dupla titulação em Física Licenciatura 
+                pela Universidade Federal de Alagoas e pela Universidade de Coimbra, com Mestrado em Ensino de Física 
+                pela Universidade Federal de Alagoas. Atualmente, ele é professor efetivo do estado de Pernambuco, 
+                trazendo sua experiência e dedicação para o desenvolvimento de materiais de alta qualidade para os 
+                estudantes.
             </p>
         </div>
 
@@ -69,14 +74,13 @@
             <a href="{{ url_for('verMateriais', destino=1) }}" style="text-decoration: none;">
                 <div class="turma">
                     
-                    <div class="circle">
-                        <p>1</p>
+                    <div class="circle circle-1">
+                        <p>1º</p>
                     </div>
                     <div class="container">
                         <strong>Primeiro ano</strong>
-                        <p> Estudo das ondas, suas
-                            propriedades e análise as relações
-                            entre calor, trabalho e energia
+                        <p>
+                            Cinemática Escalar, Vetores, Dinâmica, Hidrostática
                         </p>
                     </div>
                 </div>
@@ -84,14 +88,13 @@
 
             <a href="{{ url_for('verMateriais', destino=2) }}" style="text-decoration: none;">
                 <div class="turma">
-                    <div class="circle">
-                        <p>2</p>
+                    <div class="circle circle-2">
+                        <p>2º</p>
                     </div>
                     <div class="container">
                         <strong>Segundo ano</strong>
-                        <p> Estudo das ondas, suas
-                            propriedades e análise as relações
-                            entre calor, trabalho e energia
+                        <p>
+                            Termologia, Termodinâmica, Óptica e Ondulatória
                         </p>
                     </div>
                 </div>
@@ -99,14 +102,13 @@
 
             <a href="{{ url_for('verMateriais', destino=3) }}" style="text-decoration: none;">
                 <div class="turma">
-                    <div class="circle">
-                        <p>3</p>
+                    <div class="circle circle-3">
+                        <p>3º</p>
                     </div>
                     <div class="container">
                         <strong>Terceiro ano</strong>
-                        <p> Estudo das ondas, suas
-                            propriedades e análise as relações
-                            entre calor, trabalho e energia
+                        <p>
+                            Eletrostática, Eletrodinâmica, Magnetismo, Física Moderna
                         </p>
                     </div>
                 </div>
