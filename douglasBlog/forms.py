@@ -140,7 +140,9 @@ class MateriaisForm(FlaskForm):
     titulo = StringField("Título", validators=[DataRequired()])
     aula = StringField("Link da aula")
     resumo = FileField("Resumo")
+    atividade = FileField("Atividade")
     lista_exercicios = FileField("Lista de Exercícios")
+    gabarito = FileField("Gabarito")
     btnSubmit = SubmitField("Enviar")
 
     @staticmethod
@@ -170,6 +172,8 @@ class MateriaisForm(FlaskForm):
                 self.aula.data.strip(),
                 self.resumo.data and self.resumo.data.filename,
                 self.lista_exercicios.data and self.lista_exercicios.data.filename,
+                self.atividade.data and self.atividade.data.filename,
+                self.gabarito.data and self.gabarito.data.filename,
             ]
         )
 
@@ -177,6 +181,8 @@ class MateriaisForm(FlaskForm):
         if self.verificarMaterial():
             resumo_url = self.upload_para_supabase(self.resumo.data)
             lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
+            atividade_url = self.upload_para_supabase(self.atividade.data)
+            gabarito_url = self.upload_para_supabase(self.gabarito.data)
 
             material = Material(
                 destino=self.destino.data,
@@ -184,6 +190,8 @@ class MateriaisForm(FlaskForm):
                 aula=self.aula.data.strip() or None,
                 resumo=resumo_url,
                 lista_exercicios=lista_exercicios_url,
+                atividade=atividade_url,
+                gabarito=gabarito_url,
             )
 
             db.session.add(material)
@@ -211,6 +219,21 @@ class MateriaisForm(FlaskForm):
                 )
             material.lista_exercicios = None
 
+        if request.form.get("removerAtividade"):
+            if material.atividade:
+                supabase.storage.from_("material-files").remove(
+                    [material.atividade.split("/")[-1]]
+                )
+            material.atividade = None
+
+        if request.form.get("removerGabarito"):
+            if material.gabarito:
+                supabase.storage.from_("material-files").remove(
+                    [material.gabarito.split("/")[-1]]
+                )
+            material.gabarito = None
+
+
         if self.resumo.data and self.resumo.data.filename:
             if material.resumo:
                 try:
@@ -222,6 +245,7 @@ class MateriaisForm(FlaskForm):
 
             resumo_url = self.upload_para_supabase(self.resumo.data)
             material.resumo = resumo_url
+            
         if self.lista_exercicios.data and self.lista_exercicios.data.filename:
             if material.lista_exercicios:
                 try:
@@ -235,6 +259,34 @@ class MateriaisForm(FlaskForm):
 
             lista_exercicios_url = self.upload_para_supabase(self.lista_exercicios.data)
             material.lista_exercicios = lista_exercicios_url
+
+        if self.atividade.data and self.atividade.data.filename:
+            if material.atividade:
+                try:
+                    supabase.storage.from_("material-files").remove(
+                        [material.atividade.split("/")[-1]]
+                    )
+                except SupabaseManagementFileError as e:
+                    flash(
+                        f"Erro ao excluir o arquivo atividade no Supabase: {e}"
+                    )
+
+            atividade_url = self.upload_para_supabase(self.atividade.data)
+            material.atividade = atividade_url
+
+        if self.gabarito.data and self.gabarito.data.filename:
+            if material.gabarito:
+                try:
+                    supabase.storage.from_("material-files").remove(
+                        [material.gabarito.split("/")[-1]]
+                    )
+                except SupabaseManagementFileError as e:
+                    flash(
+                        f"Erro ao excluir o arquivo gabarito no Supabase: {e}"
+                    )
+
+            gabarito_url = self.upload_para_supabase(self.gabarito.data)
+            material.gabarito = gabarito_url
 
     def delete(self, material):
         if material.resumo:
@@ -252,6 +304,22 @@ class MateriaisForm(FlaskForm):
                 )
             except SupabaseManagementFileError as e:
                 flash(f"Erro ao deletar lista de exercícios: {e}")
+
+        if material.atividade:
+            try:
+                supabase.storage.from_("material-files").remove(
+                    [material.atividade.split("/")[-1]]
+                )
+            except SupabaseManagementFileError as e:
+                flash(f"Erro ao deletar atividade: {e}")
+
+        if material.gabarito:
+            try:
+                supabase.storage.from_("material-files").remove(
+                    [material.gabarito.split("/")[-1]]
+                )
+            except SupabaseManagementFileError as e:
+                flash(f"Erro ao deletar gabarito: {e}")
 
         try:
             db.session.delete(material)

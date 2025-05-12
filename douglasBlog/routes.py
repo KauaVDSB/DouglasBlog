@@ -200,6 +200,8 @@ def editar_material(material_id):
         aula=material.aula,
         resumo=material.resumo,
         lista_exercicios=material.lista_exercicios,
+        atividade=material.atividade,
+        gabarito=material.gabarito,
         destino=material.destino,
     )
 
@@ -256,6 +258,8 @@ def converter_lista_materiais_para_dict(material):
         "aula": material.aula,
         "resumo": material.resumo,
         "lista_exercicios": material.lista_exercicios,
+        "atividade": material.atividade,
+        "gabarito": material.gabarito,
         "data_criacao": material.data_criacao,
     }
 
