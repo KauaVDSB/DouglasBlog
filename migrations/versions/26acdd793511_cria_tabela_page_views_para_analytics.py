@@ -1,6 +1,6 @@
 """Cria tabela page_views para analytics
 
-Revision ID: 96c3283b3425
+Revision ID: 26acdd793511
 Revises: d073d2e3e5ee
 Create Date: 2025-05-06 21:12:38.799731
 
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = "96c3283b3425"
+revision = "26acdd793511"
 down_revision = "d073d2e3e5ee"
 branch_labels = None
 depends_on = None

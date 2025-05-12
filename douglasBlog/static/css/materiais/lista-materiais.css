@@ -39,6 +39,8 @@ main {
 }
 
 .material-div{
+    height: 400px;
+    max-height: 400px;
     border: 2px solid #102e4a;
     border-radius: 18px;
     padding: 5px;
@@ -46,13 +48,15 @@ main {
     flex-flow: column;
     justify-content: flex-start;
     margin-bottom: 20px;
+
+    overflow-y: hidden;
 }
 
 .material-div > h2 {
     background-color: rgba(173, 193, 207, 0.863);
     margin: 0;
     border-radius: 10px;
-    height: 60px;
+    min-height: 60px;
     
     align-content: center;
     text-align: center;
@@ -64,17 +68,33 @@ main {
     grid-template-columns: 100%;
     grid-template-rows: repeat(3, 1fr);
     gap: 5px;
-
+    
     margin-top: 10px;
     padding-bottom: 5px;
-    
+    overflow-y: auto;
 } 
-.conteudo-container > .aula, .conteudo-container > .resumo, .conteudo-container > .lista-exercicios {
+/* Hide scrollbar for Chrome, Safari and Opera */
+.conteudo-container::-webkit-scrollbar {
+    width: 4px;
+    height: 100px;
+    border-radius: 90px;
+    /* background-color: rgba(0, 0, 0, 0.034); */
+    margin-top: 10px;
+}
+.conteudo-container::-webkit-scrollbar-thumb {
+    background: #102e4a46; 
+    border-radius: 90px;
+}
+.conteudo-container::-webkit-scrollbar-track {
+    background: transparent;
+
+}
+.conteudo-container > .link-conteudo-material {
     background-color: #d1cdc756;
     border-radius: 8px;
 }
 
-.aula a, .resumo a, .lista-exercicios a {
+.link-conteudo-material a {
     color: #000;
     text-decoration: none;
     display: flex;
@@ -82,7 +102,7 @@ main {
     align-items: center;
     margin: 0 5px;
 }
-.aula a i, .resumo a i, .lista-exercicios a i {
+.link-conteudo-material a i {
     flex: 20%;
     min-width: 20%;
     max-width: 20%;
@@ -93,15 +113,15 @@ main {
     font-size: 1.8em;
     margin-right: 10px;
 }
-.aula a div, .resumo a div, .lista-exercicios a div{
+.link-conteudo-material a div{
     flex: 80%;
 }
-.aula a h3, .resumo a h3, .lista-exercicios a h3 {
+.link-conteudo-material a h3 {
     margin: 0;
     font-size: 18px;
 }
 
-.aula a div p, .resumo a div p, .lista-exercicios a div p {
+.link-conteudo-material a div p {
     font-size: 0.7em;
     overflow-wrap: normal;
     white-space: normal;

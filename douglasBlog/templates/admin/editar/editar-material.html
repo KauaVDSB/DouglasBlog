@@ -24,6 +24,12 @@
 <p>Exercicio atual</p>
 <a href="{{material.lista_exercicios}}">{{material.lista_exercicios}}</a>
 
+<p>Atividade atual</p>
+<a href="{{material.atividade}}">{{material.atividade}}</a>
+
+<p>Gabarito atual</p>
+<a href="{{material.gabarito}}">{{material.gabarito}}</a>
+
 <form action="" method="post" enctype="multipart/form-data" class="row">
 
     {{ form.csrf_token }}
@@ -49,6 +55,20 @@
     <div class="form-check">
         <input type="checkbox" name="removerListaExercicios" id="removerListaExercicios" class="form-check-input">
         <label for="removerListaExercicios" class="form-check-label">Remover Lista de Exercicios</label>
+    </div>
+    
+    {{ form.atividade.label() }}
+    {{ form.atividade(class='form-control') }}
+    <div class="form-check">
+        <input type="checkbox" name="removerAtividade" id="removerAtividade" class="form-check-input">
+        <label for="removerAtividade" class="form-check-label">Remover Lista de Exercicios</label>
+    </div>
+    
+    {{ form.gabarito.label() }}
+    {{ form.gabarito(class='form-control') }}
+    <div class="form-check">
+        <input type="checkbox" name="removerGabarito" id="removerGabarito" class="form-check-input">
+        <label for="removerGabarito" class="form-check-label">Remover Lista de Exercicios</label>
     </div>
 
     {{ form.btnSubmit(class='btn btn-dark') }}

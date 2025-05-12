@@ -2,7 +2,7 @@ function construirAula(material_aula, conteudo_container){
     const conteudo_aula = material_aula.trim();
 
     const container_aula = document.createElement('div');
-    container_aula.className = 'aula';
+    container_aula.classList = 'link-conteudo-material aula';
     conteudo_container.appendChild(container_aula);
     
     const link_aula = document.createElement('a');
@@ -25,7 +25,7 @@ function construirResumo(material_resumo, conteudo_container, material_titulo){
     const conteudo_resumo = material_resumo.trim();
 
     const container_resumo = document.createElement('div');
-    container_resumo.className = 'resumo';
+    container_resumo.classList = 'link-conteudo-material resumo';
     conteudo_container.appendChild(container_resumo);
 
     const download_resumo = document.createElement('a');
@@ -45,7 +45,7 @@ function construirLista(material_lista_exercicios, conteudo_container){
     const conteudo_lista_exercicios = material_lista_exercicios.trim();
     
     const container_lista_exercicios = document.createElement('div');
-    container_lista_exercicios.className = 'lista-exercicios';
+    container_lista_exercicios.classList = 'link-conteudo-material lista-exercicios';
     conteudo_container.appendChild(container_lista_exercicios);
     
     
@@ -62,7 +62,49 @@ function construirLista(material_lista_exercicios, conteudo_container){
 
     container_lista_exercicios.appendChild(download_lista_exercicios);
 }
+function construirAtividade(material_atividade, conteudo_container){
+    const conteudo_atividade = material_atividade.trim();
+    
+    const container_atividade = document.createElement('div');
+    container_atividade.classList = 'link-conteudo-material atividade';
+    conteudo_container.appendChild(container_atividade);
+    
+    
+    const download_atividade = document.createElement('a');
+    download_atividade.href = conteudo_atividade;
+    download_atividade.download = conteudo_atividade;
+    download_atividade.target = 'blank';
+    download_atividade.innerHTML =
+    `<i class="bi bi-download"></i>
+    <div>
+        <h3>Atividade</h3>
+        <p> Baixe o PDF de atividade da aula. </p>
+    </div>
+    `;
 
+    container_atividade.appendChild(download_atividade);
+}
+function construirGabarito(material_gabarito, conteudo_container){
+    const conteudo_gabarito = material_gabarito.trim();
+    
+    const container_gabarito = document.createElement('div');
+    container_gabarito.classList = 'link-conteudo-material gabarito';
+    conteudo_container.appendChild(container_gabarito);
+    
+    
+    const download_gabarito = document.createElement('a');
+    download_gabarito.href = conteudo_gabarito;
+    download_gabarito.download = conteudo_gabarito;
+    download_gabarito.target = 'blank';
+    download_gabarito.innerHTML =
+    `<i class="bi bi-download"></i>
+    <div>
+        <h3>Gabarito</h3>
+        <p> Baixe o PDF de gabarito da atividade. </p>
+    </div>`;
+
+    container_gabarito.appendChild(download_gabarito);
+}
 
 function temCaminho(caminho){
     if (caminho !== '' && caminho !== null){
@@ -119,6 +161,13 @@ async function carregarMateriais(destino) {
         if (temCaminho(material.lista_exercicios)){
             construirLista(material.lista_exercicios, conteudo_container, material.titulo.replaceAll(" ", "-"));
         }
+        if (temCaminho(material.atividade)){
+            construirAtividade(material.atividade, conteudo_container, material.titulo.replaceAll(" ", "-"));
+        }
+        if (temCaminho(material.gabarito)){
+            construirGabarito(material.gabarito, conteudo_container, material.titulo.replaceAll(" ", "-"));
+        }
+        
 
         material_container.appendChild(material_div);
         material_div.appendChild(titulo);
