@@ -199,7 +199,7 @@ class MateriaisForm(FlaskForm):
         else:
             raise ResourceNotSentError("Nenhum material enviado...")
 
-    def update(self, material):  #pylint: disable=too-many-branches,too-many-statements
+    def update(self, material):  # pylint: disable=too-many-branches,too-many-statements
 
         material.destino = self.destino.data
         material.titulo = self.titulo.data
