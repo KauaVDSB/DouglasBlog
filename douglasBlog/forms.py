@@ -199,7 +199,7 @@ class MateriaisForm(FlaskForm):
         else:
             raise ResourceNotSentError("Nenhum material enviado...")
 
-    def update(self, material):
+    def update(self, material):  #pylint: disable=too-many-branches,too-many-statements
 
         material.destino = self.destino.data
         material.titulo = self.titulo.data
@@ -233,7 +233,6 @@ class MateriaisForm(FlaskForm):
                 )
             material.gabarito = None
 
-
         if self.resumo.data and self.resumo.data.filename:
             if material.resumo:
                 try:
@@ -245,7 +244,7 @@ class MateriaisForm(FlaskForm):
 
             resumo_url = self.upload_para_supabase(self.resumo.data)
             material.resumo = resumo_url
-            
+
         if self.lista_exercicios.data and self.lista_exercicios.data.filename:
             if material.lista_exercicios:
                 try:
@@ -267,9 +266,7 @@ class MateriaisForm(FlaskForm):
                         [material.atividade.split("/")[-1]]
                     )
                 except SupabaseManagementFileError as e:
-                    flash(
-                        f"Erro ao excluir o arquivo atividade no Supabase: {e}"
-                    )
+                    flash(f"Erro ao excluir o arquivo atividade no Supabase: {e}")
 
             atividade_url = self.upload_para_supabase(self.atividade.data)
             material.atividade = atividade_url
@@ -281,9 +278,7 @@ class MateriaisForm(FlaskForm):
                         [material.gabarito.split("/")[-1]]
                     )
                 except SupabaseManagementFileError as e:
-                    flash(
-                        f"Erro ao excluir o arquivo gabarito no Supabase: {e}"
-                    )
+                    flash(f"Erro ao excluir o arquivo gabarito no Supabase: {e}")
 
             gabarito_url = self.upload_para_supabase(self.gabarito.data)
             material.gabarito = gabarito_url
